@@ -320,10 +320,27 @@ select option{background:#0d0b05;}
       <button class="btn btn-ghost btn-sm" onclick="closeReport()">✕ Close</button>
     </div>
     <div class="modal-body">
-      <div style="display:flex;gap:10px;margin-bottom:16px;align-items:flex-end;">
+      <div style="display:flex;gap:10px;margin-bottom:16px;align-items:flex-end;flex-wrap:wrap;">
         <div class="form-group">
           <label class="form-label">Include Past Events</label>
           <select id="report-past" onchange="buildReport()"><option value="no">No</option><option value="yes">Yes</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Theme</label>
+          <select id="report-theme" onchange="buildReport()">
+            <option value="gold">Casino Gold</option>
+            <option value="navy">Royal Navy</option>
+            <option value="red">Casino Red</option>
+            <option value="emerald">Emerald</option>
+            <option value="purple">Royal Purple</option>
+            <option value="slate">Slate</option>
+            <option value="midnight">Midnight Gold</option>
+            <option value="rose">Rose</option>
+            <option value="teal">Teal</option>
+            <option value="bronze">Bronze</option>
+            <option value="ocean">Ocean</option>
+            <option value="charcoal">Charcoal</option>
+          </select>
         </div>
       </div>
       <div class="email-preview-wrap" id="reportContent"></div>
@@ -659,9 +676,28 @@ function markDone(id){
 function delEv(id){if(!confirm('Delete this event?'))return;events=events.filter(e=>e.id!==id);markUnsaved();render();}
 
 // ── REPORT ──
+const EMAIL_THEMES={
+  gold:    {bg:'#fdf8ee', headerBg:'#7a5010', headerText:'#ffffff', accent:'#9e7220', venueBg:'#7a5010', venueText:'#ffffff', rowAlt:'#fdf3dc', border:'#e8d99a', linkColor:'#7a5010', bodyText:'#2a2010', divider:'#c9a84c'},
+  navy:    {bg:'#f0f3f8', headerBg:'#0f2a4a', headerText:'#ffffff', accent:'#14386b', venueBg:'#0f2a4a', venueText:'#ffffff', rowAlt:'#e4ecf7', border:'#b0c4de', linkColor:'#14386b', bodyText:'#0d1e30', divider:'#4a7ab5'},
+  red:     {bg:'#fdf0f0', headerBg:'#6b1414', headerText:'#ffffff', accent:'#8b1a1a', venueBg:'#6b1414', venueText:'#ffffff', rowAlt:'#fce8e8', border:'#e8b4b4', linkColor:'#6b1414', bodyText:'#2a0d0d', divider:'#c04040'},
+  emerald: {bg:'#f0f7f2', headerBg:'#0f4a2a', headerText:'#ffffff', accent:'#1a6b3a', venueBg:'#0f4a2a', venueText:'#ffffff', rowAlt:'#e0f0e6', border:'#9dd4b0', linkColor:'#0f4a2a', bodyText:'#0a2a18', divider:'#3a9a5c'},
+  purple:  {bg:'#f4f0fa', headerBg:'#2a1460', headerText:'#ffffff', accent:'#3d1f8a', venueBg:'#2a1460', venueText:'#ffffff', rowAlt:'#ede6fa', border:'#c4b0e8', linkColor:'#2a1460', bodyText:'#1a0e3a', divider:'#7a55c0'},
+  slate:   {bg:'#f2f4f6', headerBg:'#2c3e50', headerText:'#ffffff', accent:'#34495e', venueBg:'#2c3e50', venueText:'#ffffff', rowAlt:'#e8ecf0', border:'#b8c4cc', linkColor:'#2c3e50', bodyText:'#1a2530', divider:'#607080'},
+  midnight:{bg:'#eef0f8', headerBg:'#0a0a1a', headerText:'#c9a84c', accent:'#1a1a3a', venueBg:'#0a0a1a', venueText:'#c9a84c', rowAlt:'#e4e6f4', border:'#b0b4d8', linkColor:'#1a1a3a', bodyText:'#0a0a1a', divider:'#c9a84c'},
+  rose:    {bg:'#fff5f7', headerBg:'#8b1a3a', headerText:'#ffffff', accent:'#a0204a', venueBg:'#8b1a3a', venueText:'#ffffff', rowAlt:'#ffe4ec', border:'#f4b8c8', linkColor:'#8b1a3a', bodyText:'#2a0a14', divider:'#d4507a'},
+  teal:    {bg:'#f0fafa', headerBg:'#0a4a4a', headerText:'#ffffff', accent:'#0d6060', venueBg:'#0a4a4a', venueText:'#ffffff', rowAlt:'#d8f4f4', border:'#90d4d4', linkColor:'#0a4a4a', bodyText:'#0a2020', divider:'#30a0a0'},
+  bronze:  {bg:'#faf5ee', headerBg:'#5a3010', headerText:'#fde8b0', accent:'#7a4a18', venueBg:'#5a3010', venueText:'#fde8b0', rowAlt:'#f4e8d4', border:'#d4b888', linkColor:'#5a3010', bodyText:'#2a1808', divider:'#b87830'},
+  ocean:   {bg:'#f0f6ff', headerBg:'#0a2060', headerText:'#a0d0ff', accent:'#0a3080', venueBg:'#0a2060', venueText:'#a0d0ff', rowAlt:'#dceeff', border:'#90b8f0', linkColor:'#0a2060', bodyText:'#080e2a', divider:'#4080d0'},
+  charcoal:{bg:'#f8f8f8', headerBg:'#1a1a1a', headerText:'#ffffff', accent:'#333333', venueBg:'#1a1a1a', venueText:'#ffffff', rowAlt:'#f0f0f0', border:'#cccccc', linkColor:'#1a1a1a', bodyText:'#1a1a1a', divider:'#888888'},
+};
+
 function buildReport(){
   const showPast=document.getElementById('report-past').value==='yes';
+  const themeKey=document.getElementById('report-theme').value;
+  const t=EMAIL_THEMES[themeKey]||EMAIL_THEMES.gold;
   const viewUrl='https://ajtmendoza123-tech.github.io/pace_events_tracker.html/?view';
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
 
   let evs=showPast?events:events.filter(e=>!isPast(e));
   evs=[...evs].sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;return a.date-b.date;});
@@ -670,35 +706,76 @@ function buildReport(){
   VENUES_ORDER.forEach(v=>{
     const vevs=evs.filter(e=>e.venue===v);
     if(!vevs.length)return;
-    let lines='';
-    vevs.forEach(e=>{
+    let rows='';
+    vevs.forEach((e,i)=>{
       let d='';
       if(e.type==='recurring') d='Recurring';
-      else if(e.date){
-        d=shortDate(e.date);
-        if(e.endDate) d+=' – '+shortDate(e.endDate);
-      }
-      lines+=`<div style="padding:5px 0;border-bottom:1px solid #eeeeee;font-family:Arial,sans-serif;font-size:14px;color:#333333;">${d?d+' - ':''}${e.name}</div>`;
+      else if(e.date){d=shortDate(e.date);if(e.endDate)d+=' \u2013 '+shortDate(e.endDate);}
+      else d='TBD';
+      const bg=i%2===0?'#ffffff':t.rowAlt;
+      rows+=`<tr style="background:${bg};">
+        <td style="padding:9px 14px;vertical-align:top;border-bottom:1px solid ${t.border};font-family:Arial,sans-serif;font-size:13px;color:${t.bodyText};">
+          <span style="color:${t.accent};font-weight:700;">${d}</span><span style="color:${t.accent};font-weight:700;"> - </span>${e.name}
+        </td>
+      </tr>`;
     });
     venueBlocks+=`
-      <div style="margin-bottom:20px;">
-        <div style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#111111;text-transform:uppercase;letter-spacing:0.08em;padding-bottom:6px;border-bottom:2px solid #111111;margin-bottom:4px;">${v}</div>
-        ${lines}
-      </div>`;
+    <tr><td style="padding:0 28px 18px;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:8px;overflow:hidden;border:1px solid ${t.border};">
+        <tr style="background:${t.venueBg};">
+          <td style="padding:10px 14px;">
+            <span style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:${t.venueText};letter-spacing:0.12em;text-transform:uppercase;">${v}</span>
+          </td>
+        </tr>
+        ${rows}
+      </table>
+    </td></tr>`;
   });
 
-  const html=`<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#333333;">
+  const html=`<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${t.bg};">
+<tr><td>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;margin:0 auto;background:${t.bg};">
 
-  <p style="font-size:14px;line-height:1.7;margin:0 0 6px;">Hi Team,</p>
-  <p style="font-size:14px;line-height:1.7;margin:0 0 6px;">Please see the list of upcoming property events below.</p>
-  <p style="font-size:14px;line-height:1.7;margin:0 0 20px;">For the full list, please click this link to view: <a href="${viewUrl}" style="color:#8a6a1a;">${viewUrl}</a></p>
+  <!-- HEADER -->
+  <tr><td style="padding:0;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:${t.headerBg};border-radius:0 0 0 0;">
+      <tr><td style="padding:32px 28px 28px;">
+        <div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:10px;">PACE PROPERTY EVENTS</div>
+        <div style="font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:bold;color:${t.headerText};line-height:1.2;">Upcoming Property Events</div>
+        <div style="margin-top:14px;height:1px;background:rgba(255,255,255,0.18);"></div>
+        <div style="margin-top:12px;font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.55);">${dateStr}</div>
+      </td></tr>
+    </table>
+  </td></tr>
 
-  <div style="border-top:2px solid #111111;padding-top:20px;">
-    ${venueBlocks}
-  </div>
+  <!-- INTRO -->
+  <tr><td style="padding:24px 28px 18px;">
+    <p style="margin:0 0 8px;font-family:Arial,sans-serif;font-size:14px;color:${t.bodyText};line-height:1.7;">Hi Team,</p>
+    <p style="margin:0 0 8px;font-family:Arial,sans-serif;font-size:14px;color:${t.bodyText};line-height:1.7;">Please see the list of upcoming property events below.</p>
+    <p style="margin:0;font-family:Arial,sans-serif;font-size:14px;color:${t.bodyText};line-height:1.7;">For the full list, please click this link to view: <a href="${viewUrl}" style="color:${t.linkColor};font-weight:600;">${viewUrl}</a></p>
+  </td></tr>
 
-  <p style="font-size:13px;color:#888888;margin-top:24px;">Thank you</p>
-</div>`;
+  <!-- DIVIDER -->
+  <tr><td style="padding:0 28px 20px;">
+    <div style="height:2px;background:${t.divider};border-radius:2px;"></div>
+  </td></tr>
+
+  <!-- VENUE BLOCKS -->
+  ${venueBlocks}
+
+  <!-- FOOTER -->
+  <tr><td style="padding:4px 28px 28px;">
+    <p style="margin:0;font-family:Arial,sans-serif;font-size:13px;color:${t.bodyText};line-height:1.7;">Thank you</p>
+  </td></tr>
+
+  <!-- BOTTOM BAR -->
+  <tr><td style="background:${t.headerBg};padding:14px 28px;border-radius:0;">
+    <span style="font-family:Arial,sans-serif;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;">PACE Property Events Intelligence</span>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>`;
 
   document.getElementById('reportContent').innerHTML=html;
   return {html,evs};
