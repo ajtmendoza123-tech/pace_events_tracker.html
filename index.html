@@ -6,6 +6,18 @@
 <title>PACE Property Events</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Raleway:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* ── SEARCH & ENHANCEMENTS ── */
+.search-wrap{position:relative;display:flex;align-items:center;}
+.search-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:12px;padding:6px 12px 6px 32px;border-radius:3px;width:180px;transition:all .2s;outline:none;}
+.search-input:focus{border-color:var(--gold);width:220px;box-shadow:0 0 0 2px var(--gold-glow);}
+.search-input::placeholder{color:var(--muted);}
+.search-icon{position:absolute;left:10px;font-size:12px;color:var(--muted);pointer-events:none;}
+.search-clear{position:absolute;right:8px;font-size:10px;color:var(--muted);cursor:pointer;display:none;background:none;border:none;padding:2px;}
+.search-clear.visible{display:block;}
+.countdown{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:0.05em;padding:2px 6px;border-radius:2px;background:var(--gold-glow);color:var(--gold);border:1px solid var(--border);margin-left:6px;vertical-align:middle;}
+.countdown.today{background:rgba(80,200,80,0.12);color:#5abf80;border-color:rgba(80,200,80,0.3);}
+.countdown.soon{background:rgba(255,165,0,0.1);color:#e8a430;border-color:rgba(255,165,0,0.3);}
+.export-btn{font-size:10px;letter-spacing:0.08em;}
 /* ── THEMES ── */
 :root{
   --black:#080808;--deep:#0d0c0a;--surface:#111008;--surface2:#181510;--surface3:#1f1b12;
@@ -296,6 +308,237 @@
 [data-theme="dice"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(232,64,64,0.2);}
 [data-theme="dice"] .logo-suits{color:#e84040;opacity:0.9;}
 
+/* COPPER THEME — warm burnished copper */
+[data-theme="copper"]{
+  --deep:#0e0804;--surface:#180e06;--surface2:#221408;--surface3:#2c1a0c;
+  --gold:#c87840;--gold-light:#e8a060;--gold-bright:#f8c880;--gold-dim:#804820;--gold-glow:rgba(200,120,64,0.12);
+  --text:#fff0e0;--text-dim:#d4a07a;--muted:#806040;
+  --border:rgba(200,120,64,0.22);--border-bright:rgba(200,120,64,0.48);
+}
+[data-theme="copper"] body{
+  background-image:
+    radial-gradient(ellipse at 20% 0%,rgba(200,120,64,0.14) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 100%,rgba(140,60,20,0.12) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(200,120,64,0.022) 39px,rgba(200,120,64,0.022) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(200,120,64,0.014) 39px,rgba(200,120,64,0.014) 40px);
+}
+[data-theme="copper"] body::before{content:'◉  ◎  ◉  ◎  ◉  ◎  ◉  ◎';color:rgba(200,120,64,0.04);font-size:72px;}
+[data-theme="copper"] header{background:linear-gradient(135deg,#060300 0%,#180e06 60%,#0e0804 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 60px rgba(200,120,64,0.08),0 1px 0 rgba(200,120,64,0.38);}
+[data-theme="copper"] .sidebar{background:linear-gradient(180deg,#0a0502 0%,#180e06 100%);}
+[data-theme="copper"] .logo-text{background:linear-gradient(135deg,#804820 0%,#f8c880 50%,#804820 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="copper"] .event-card{background:rgba(10,5,2,0.97);}
+[data-theme="copper"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(200,120,64,0.22);}
+
+/* MIDNIGHT BLUE THEME — deep ink blue with silver */
+[data-theme="midnight-blue"]{
+  --deep:#02040e;--surface:#040812;--surface2:#07101e;--surface3:#0c1828;
+  --gold:#a0b8e0;--gold-light:#c8d8f4;--gold-bright:#e0ecff;--gold-dim:#4a6090;--gold-glow:rgba(160,184,224,0.1);
+  --text:#e8f0ff;--text-dim:#8898c0;--muted:#384868;
+  --border:rgba(160,184,224,0.18);--border-bright:rgba(160,184,224,0.4);
+}
+[data-theme="midnight-blue"] body{
+  background-image:
+    radial-gradient(ellipse at 50% 0%,rgba(60,100,200,0.12) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 100%,rgba(0,0,40,0.4) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(160,184,224,0.015) 59px,rgba(160,184,224,0.015) 60px),
+    repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(160,184,224,0.01) 59px,rgba(160,184,224,0.01) 60px);
+}
+[data-theme="midnight-blue"] body::before{content:'✦  ★  ✦  ★  ✦  ★  ✦  ★';color:rgba(160,184,224,0.03);font-size:72px;}
+[data-theme="midnight-blue"] header{background:linear-gradient(135deg,#010208 0%,#040812 60%,#02040e 100%);box-shadow:0 2px 50px rgba(0,0,0,0.98),0 0 80px rgba(60,100,200,0.06),0 1px 0 rgba(160,184,224,0.28);}
+[data-theme="midnight-blue"] .sidebar{background:linear-gradient(180deg,#020510 0%,#040812 100%);}
+[data-theme="midnight-blue"] .logo-text{background:linear-gradient(135deg,#4a6090 0%,#e0ecff 50%,#4a6090 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="midnight-blue"] .event-card{background:rgba(1,2,8,0.98);}
+[data-theme="midnight-blue"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 30px rgba(160,184,224,0.16);}
+
+/* SUNSET THEME — warm orange-to-purple gradient */
+[data-theme="sunset"]{
+  --deep:#0e040e;--surface:#180a14;--surface2:#22101c;--surface3:#2c1626;
+  --gold:#e87840;--gold-light:#f4a060;--gold-bright:#ffcc80;--gold-dim:#a04820;--gold-glow:rgba(232,120,64,0.12);
+  --text:#fff0e8;--text-dim:#d49070;--muted:#805040;
+  --border:rgba(232,120,64,0.2);--border-bright:rgba(232,120,64,0.44);
+}
+[data-theme="sunset"] body{
+  background-image:
+    radial-gradient(ellipse at 20% 0%,rgba(232,80,40,0.16) 0%,transparent 45%),
+    radial-gradient(ellipse at 80% 60%,rgba(140,40,160,0.12) 0%,transparent 45%),
+    radial-gradient(ellipse at 50% 100%,rgba(60,0,80,0.2) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(232,120,64,0.02) 39px,rgba(232,120,64,0.02) 40px);
+}
+[data-theme="sunset"] body::before{content:'☀  ◐  ☽  ◑  ☀  ◐  ☽  ◑';color:rgba(232,120,64,0.04);font-size:72px;}
+[data-theme="sunset"] header{background:linear-gradient(135deg,#06020a 0%,#180a14 60%,#0e040e 100%);box-shadow:0 2px 40px rgba(0,0,0,0.92),0 0 60px rgba(232,80,40,0.07),0 1px 0 rgba(232,120,64,0.35);}
+[data-theme="sunset"] .sidebar{background:linear-gradient(180deg,#0a0208 0%,#180a14 100%);}
+[data-theme="sunset"] .logo-text{background:linear-gradient(135deg,#a04820 0%,#ffcc80 45%,#c060a0 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="sunset"] .event-card{background:rgba(10,2,10,0.97);}
+[data-theme="sunset"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(232,120,64,0.2);}
+
+/* ARCTIC THEME — icy white-blue, light mode */
+[data-theme="arctic"]{
+  --black:#f0f6ff;--deep:#e8f2fc;--surface:#f4f8ff;--surface2:#eaf2ff;--surface3:#ddeeff;
+  --gold:#1a6ab0;--gold-light:#2a8ad0;--gold-bright:#40a8f0;--gold-dim:#0a4a80;--gold-glow:rgba(26,106,176,0.08);
+  --text:#0a1e38;--text-dim:#2a5080;--muted:#6090c0;
+  --border:rgba(26,106,176,0.18);--border-bright:rgba(26,106,176,0.38);
+}
+[data-theme="arctic"] body{background:var(--deep);color:var(--text);
+  background-image:
+    radial-gradient(ellipse at 20% 0%,rgba(100,180,255,0.18) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 100%,rgba(200,230,255,0.2) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(26,106,176,0.04) 39px,rgba(26,106,176,0.04) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(26,106,176,0.025) 39px,rgba(26,106,176,0.025) 40px);
+}
+[data-theme="arctic"] body::before{content:'❄  ✦  ❄  ✦  ❄  ✦  ❄  ✦';color:rgba(26,106,176,0.06);font-size:72px;}
+[data-theme="arctic"] header{background:linear-gradient(135deg,#c8e4f8 0%,#e8f4ff 60%,#d8eeff 100%);border-bottom:1px solid rgba(26,106,176,0.25);box-shadow:0 2px 20px rgba(0,60,120,0.12),0 1px 0 rgba(26,106,176,0.2);}
+[data-theme="arctic"] .sidebar{background:linear-gradient(180deg,#ddeeff 0%,#eaf4ff 100%);border-right:1px solid rgba(26,106,176,0.18);}
+[data-theme="arctic"] .logo-text{background:linear-gradient(135deg,#0a4a80 0%,#40a8f0 50%,#0a4a80 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="arctic"] .event-card{background:rgba(248,252,255,0.97);border-color:rgba(26,106,176,0.15);color:#0a1e38;}
+[data-theme="arctic"] .event-card:hover{box-shadow:0 2px 20px rgba(26,106,176,0.12);}
+[data-theme="arctic"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 24px rgba(26,106,176,0.18);}
+[data-theme="arctic"] .sidebar-label{color:#4a7090;}
+[data-theme="arctic"] .venue-btn{color:#1a4a70;}
+[data-theme="arctic"] .group-label{color:#1a5a90;border-bottom-color:rgba(26,106,176,0.2);}
+
+[data-theme="arctic"] .sidebar-label{color:#4a7090;}
+[data-theme="arctic"] .venue-btn{color:#1a4a70;}
+[data-theme="arctic"] .group-label{color:#1a5a90;border-bottom-color:rgba(26,106,176,0.2);}
+
+/* BUBBLEGUM THEME — hot pink + neon bubbly girly */
+[data-theme="bubblegum"]{
+  --deep:#1a0218;--surface:#280328;--surface2:#340438;--surface3:#420548;
+  --gold:#ff6eb4;--gold-light:#ff9ece;--gold-bright:#ffd6ee;--gold-dim:#cc2080;--gold-glow:rgba(255,110,180,0.14);
+  --text:#fff0f8;--text-dim:#ffb8dc;--muted:#a04878;
+  --border:rgba(255,110,180,0.24);--border-bright:rgba(255,110,180,0.52);
+}
+[data-theme="bubblegum"] body{
+  background-image:
+    radial-gradient(ellipse at 10% 0%,rgba(255,80,160,0.22) 0%,transparent 45%),
+    radial-gradient(ellipse at 90% 60%,rgba(200,0,200,0.14) 0%,transparent 45%),
+    radial-gradient(ellipse at 50% 100%,rgba(100,0,80,0.2) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,110,180,0.025) 39px,rgba(255,110,180,0.025) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,110,180,0.015) 39px,rgba(255,110,180,0.015) 40px);
+}
+[data-theme="bubblegum"] body::before{content:'💗  🌸  💗  🌸  💗  🌸  💗  🌸';color:rgba(255,110,180,0.06);font-size:60px;}
+[data-theme="bubblegum"] header{background:linear-gradient(135deg,#0e010e 0%,#280328 60%,#1a0218 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 70px rgba(255,80,160,0.1),0 1px 0 rgba(255,110,180,0.5);}
+[data-theme="bubblegum"] .sidebar{background:linear-gradient(180deg,#120118 0%,#280328 100%);}
+[data-theme="bubblegum"] .logo-text{background:linear-gradient(135deg,#cc2080 0%,#ffd6ee 50%,#cc2080 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="bubblegum"] .event-card{background:rgba(18,0,18,0.97);}
+[data-theme="bubblegum"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(255,110,180,0.28);}
+[data-theme="bubblegum"] .logo-suits{color:#ff6eb4;opacity:0.9;}
+
+/* ROSEGOLD THEME — sophisticated blush rose gold light mode */
+[data-theme="rosegold"]{
+  --deep:#fdf0f0;--surface:#fff4f4;--surface2:#ffe8e8;--surface3:#fddada;
+  --gold:#b05070;--gold-light:#d07090;--gold-bright:#e898a8;--gold-dim:#804050;--gold-glow:rgba(176,80,112,0.08);
+  --text:#2a0e18;--text-dim:#805060;--muted:#c09090;
+  --border:rgba(176,80,112,0.2);--border-bright:rgba(176,80,112,0.42);
+}
+[data-theme="rosegold"] body{background:var(--deep);color:var(--text);
+  background-image:
+    radial-gradient(ellipse at 15% 0%,rgba(255,180,180,0.35) 0%,transparent 50%),
+    radial-gradient(ellipse at 85% 100%,rgba(255,200,210,0.3) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(176,80,112,0.04) 39px,rgba(176,80,112,0.04) 40px);
+}
+[data-theme="rosegold"] body::before{content:'✿  ♡  ✿  ♡  ✿  ♡  ✿  ♡';color:rgba(176,80,112,0.07);font-size:70px;}
+[data-theme="rosegold"] header{background:linear-gradient(135deg,#f4d0d8 0%,#fce8ec 60%,#f8dce4 100%);border-bottom:1px solid rgba(176,80,112,0.25);box-shadow:0 2px 20px rgba(120,40,60,0.12);}
+[data-theme="rosegold"] .sidebar{background:linear-gradient(180deg,#fce8ec 0%,#fff4f4 100%);border-right:1px solid rgba(176,80,112,0.15);}
+[data-theme="rosegold"] .logo-text{background:linear-gradient(135deg,#804050 0%,#e898a8 50%,#c8a090 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="rosegold"] .event-card{background:rgba(255,248,248,0.98);border-color:rgba(176,80,112,0.15);color:#2a0e18;}
+[data-theme="rosegold"] .event-card:hover{box-shadow:0 2px 18px rgba(176,80,112,0.12);}
+[data-theme="rosegold"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 24px rgba(176,80,112,0.2);}
+[data-theme="rosegold"] .sidebar-label{color:#a06070;}
+[data-theme="rosegold"] .venue-btn{color:#703050;}
+[data-theme="rosegold"] .group-label{color:#803050;border-bottom-color:rgba(176,80,112,0.18);}
+
+/* CHERRY BLOSSOM — soft sakura pink + white petals */
+[data-theme="sakura"]{
+  --deep:#0e0610;--surface:#180c1a;--surface2:#221226;--surface3:#2c1832;
+  --gold:#f48fb1;--gold-light:#f8b8cc;--gold-bright:#fde0ec;--gold-dim:#c06080;--gold-glow:rgba(244,143,177,0.12);
+  --text:#fff0f8;--text-dim:#f0b8d0;--muted:#906878;
+  --border:rgba(244,143,177,0.22);--border-bright:rgba(244,143,177,0.5);
+}
+[data-theme="sakura"] body{
+  background-image:
+    radial-gradient(ellipse at 20% 0%,rgba(255,150,180,0.15) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 100%,rgba(200,80,140,0.1) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(244,143,177,0.022) 39px,rgba(244,143,177,0.022) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(244,143,177,0.014) 39px,rgba(244,143,177,0.014) 40px);
+}
+[data-theme="sakura"] body::before{content:'🌸  🌺  🌸  🌺  🌸  🌺  🌸  🌺';color:rgba(244,143,177,0.05);font-size:60px;}
+[data-theme="sakura"] header{background:linear-gradient(135deg,#060208 0%,#180c1a 60%,#0e0610 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 60px rgba(255,120,160,0.08),0 1px 0 rgba(244,143,177,0.44);}
+[data-theme="sakura"] .sidebar{background:linear-gradient(180deg,#0a0410 0%,#180c1a 100%);}
+[data-theme="sakura"] .logo-text{background:linear-gradient(135deg,#c06080 0%,#fde0ec 50%,#c06080 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="sakura"] .event-card{background:rgba(12,4,14,0.97);}
+[data-theme="sakura"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(244,143,177,0.24);}
+[data-theme="sakura"] .logo-suits{color:#f48fb1;opacity:0.9;}
+
+/* NEON CASINO SIGN — hot neon pink + electric yellow, Vegas strip */
+[data-theme="neon-casino"]{
+  --deep:#050002;--surface:#0a0005;--surface2:#120008;--surface3:#1a000c;
+  --gold:#ff1493;--gold-light:#ff69b4;--gold-bright:#ffb3d9;--gold-dim:#cc0066;--gold-glow:rgba(255,20,147,0.14);
+  --text:#fff0f8;--text-dim:#ff90c0;--muted:#882255;
+  --border:rgba(255,20,147,0.26);--border-bright:rgba(255,20,147,0.56);
+}
+[data-theme="neon-casino"] body{
+  background-image:
+    radial-gradient(ellipse at 30% 20%,rgba(255,20,147,0.18) 0%,transparent 40%),
+    radial-gradient(ellipse at 70% 80%,rgba(255,215,0,0.06) 0%,transparent 40%),
+    radial-gradient(ellipse at 50% 50%,rgba(80,0,40,0.6) 0%,transparent 70%),
+    repeating-linear-gradient(0deg,transparent,transparent 19px,rgba(255,20,147,0.025) 19px,rgba(255,20,147,0.025) 20px),
+    repeating-linear-gradient(90deg,transparent,transparent 19px,rgba(255,215,0,0.012) 19px,rgba(255,215,0,0.012) 20px);
+}
+[data-theme="neon-casino"] body::before{content:'🎰  🃏  🎰  🃏  🎰  🃏  🎰  🃏';color:rgba(255,20,147,0.06);font-size:60px;}
+[data-theme="neon-casino"] header{background:linear-gradient(135deg,#020001 0%,#0a0005 60%,#050002 100%);box-shadow:0 2px 50px rgba(0,0,0,0.98),0 0 80px rgba(255,20,147,0.12),0 1px 0 rgba(255,20,147,0.6);border-bottom:1px solid rgba(255,20,147,0.4);}
+[data-theme="neon-casino"] .sidebar{background:linear-gradient(180deg,#040001 0%,#0a0005 100%);}
+[data-theme="neon-casino"] .logo-text{background:linear-gradient(135deg,#cc0066 0%,#ffb3d9 45%,#ffd700 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="neon-casino"] .event-card{background:rgba(4,0,4,0.98);}
+[data-theme="neon-casino"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 30px rgba(255,20,147,0.3);}
+[data-theme="neon-casino"] .logo-suits{color:#ff1493;opacity:1;text-shadow:0 0 8px rgba(255,20,147,0.8);}
+
+/* LOLLIPOP THEME — rainbow candy pastel light mode */
+[data-theme="lollipop"]{
+  --deep:#fff8fc;--surface:#fff0f8;--surface2:#ffe8f4;--surface3:#ffdcee;
+  --gold:#e040a0;--gold-light:#f070b8;--gold-bright:#f8a0d0;--gold-dim:#b02070;--gold-glow:rgba(224,64,160,0.08);
+  --text:#1a0418;--text-dim:#804060;--muted:#c080a0;
+  --border:rgba(224,64,160,0.18);--border-bright:rgba(224,64,160,0.4);
+}
+[data-theme="lollipop"] body{background:var(--deep);color:var(--text);
+  background-image:
+    radial-gradient(ellipse at 0% 0%,rgba(255,100,180,0.2) 0%,transparent 45%),
+    radial-gradient(ellipse at 100% 50%,rgba(100,200,255,0.12) 0%,transparent 40%),
+    radial-gradient(ellipse at 50% 100%,rgba(180,100,255,0.1) 0%,transparent 45%),
+    repeating-linear-gradient(45deg,transparent,transparent 19px,rgba(224,64,160,0.025) 19px,rgba(224,64,160,0.025) 20px);
+}
+[data-theme="lollipop"] body::before{content:'🍭  🍬  🍭  🍬  🍭  🍬  🍭  🍬';color:rgba(224,64,160,0.07);font-size:62px;}
+[data-theme="lollipop"] header{background:linear-gradient(135deg,#fce0f0 0%,#fff0f8 60%,#f8e0f4 100%);border-bottom:1px solid rgba(224,64,160,0.3);box-shadow:0 2px 20px rgba(160,40,100,0.12);}
+[data-theme="lollipop"] .sidebar{background:linear-gradient(180deg,#ffe8f4 0%,#fff4fc 100%);border-right:1px solid rgba(224,64,160,0.15);}
+[data-theme="lollipop"] .logo-text{background:linear-gradient(135deg,#b02070 0%,#e040a0 35%,#4080ff 65%,#b02070 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="lollipop"] .event-card{background:rgba(255,252,255,0.98);border-color:rgba(224,64,160,0.15);color:#1a0418;}
+[data-theme="lollipop"] .event-card:hover{box-shadow:0 2px 18px rgba(224,64,160,0.1);}
+[data-theme="lollipop"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 22px rgba(224,64,160,0.2);}
+[data-theme="lollipop"] .sidebar-label{color:#a04070;}
+[data-theme="lollipop"] .venue-btn{color:#802050;}
+[data-theme="lollipop"] .group-label{color:#903060;border-bottom-color:rgba(224,64,160,0.18);}
+
+/* VELVET CASINO — rich deep burgundy + gold, glamour casino */
+[data-theme="velvet"]{
+  --deep:#0e0308;--surface:#180510;--surface2:#240818;--surface3:#300c22;
+  --gold:#d4a843;--gold-light:#f0cc70;--gold-bright:#fde68a;--gold-dim:#8a6e22;--gold-glow:rgba(212,168,67,0.12);
+  --text:#fff0f4;--text-dim:#e0a8b8;--muted:#886070;
+  --border:rgba(212,168,67,0.22);--border-bright:rgba(212,168,67,0.48);
+}
+[data-theme="velvet"] body{
+  background-image:
+    radial-gradient(ellipse at 20% 0%,rgba(180,20,80,0.2) 0%,transparent 45%),
+    radial-gradient(ellipse at 80% 100%,rgba(212,168,67,0.08) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(212,168,67,0.022) 39px,rgba(212,168,67,0.022) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(212,168,67,0.014) 39px,rgba(212,168,67,0.014) 40px);
+}
+[data-theme="velvet"] body::before{content:'♠  ♥  ♦  ♣  ♠  ♥  ♦  ♣';color:rgba(212,168,67,0.04);font-size:72px;}
+[data-theme="velvet"] header{background:linear-gradient(135deg,#060102 0%,#180510 60%,#0e0308 100%);box-shadow:0 2px 40px rgba(0,0,0,0.96),0 0 60px rgba(180,20,80,0.08),0 1px 0 rgba(212,168,67,0.4);}
+[data-theme="velvet"] .sidebar{background:linear-gradient(180deg,#0a0206 0%,#180510 100%);}
+[data-theme="velvet"] .logo-text{background:linear-gradient(135deg,#8a6e22 0%,#fde68a 50%,#8a6e22 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="velvet"] .event-card{background:rgba(10,2,6,0.97);}
+[data-theme="velvet"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 30px rgba(212,168,67,0.22);}
+[data-theme="velvet"] .logo-suits{color:#d4a843;opacity:0.9;}
+
 /* BASE STYLES */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
@@ -356,6 +599,16 @@ header{
 .theme-dot[data-t="ghibli"]{background:linear-gradient(135deg,#141c0c,#a8c060);box-shadow:0 0 4px rgba(168,192,96,0.5);}
 .theme-dot[data-t="poker"]{background:linear-gradient(135deg,#061508,#f5e642);box-shadow:0 0 4px rgba(245,230,66,0.5);}
 .theme-dot[data-t="dice"]{background:linear-gradient(135deg,#101010,#e84040);box-shadow:0 0 4px rgba(232,64,64,0.5);}
+.theme-dot[data-t="copper"]{background:linear-gradient(135deg,#180e06,#c87840);box-shadow:0 0 4px rgba(200,120,64,0.55);}
+.theme-dot[data-t="midnight-blue"]{background:linear-gradient(135deg,#02040e,#a0b8e0);box-shadow:0 0 4px rgba(160,184,224,0.5);}
+.theme-dot[data-t="sunset"]{background:linear-gradient(135deg,#e84020,#c060a0);box-shadow:0 0 4px rgba(232,120,64,0.55);}
+.theme-dot[data-t="arctic"]{background:linear-gradient(135deg,#c8e4f8,#1a6ab0);box-shadow:0 0 4px rgba(26,106,176,0.5);}
+.theme-dot[data-t="bubblegum"]{background:linear-gradient(135deg,#280328,#ff6eb4);box-shadow:0 0 5px rgba(255,110,180,0.7);}
+.theme-dot[data-t="rosegold"]{background:linear-gradient(135deg,#fce0e8,#b05070,#c8a090);box-shadow:0 0 4px rgba(176,80,112,0.5);}
+.theme-dot[data-t="sakura"]{background:linear-gradient(135deg,#180c1a,#f48fb1);box-shadow:0 0 5px rgba(244,143,177,0.65);}
+.theme-dot[data-t="neon-casino"]{background:linear-gradient(135deg,#050002,#ff1493,#ffd700);box-shadow:0 0 6px rgba(255,20,147,0.8);}
+.theme-dot[data-t="lollipop"]{background:linear-gradient(135deg,#ff64b4,#4080ff,#a040c0);box-shadow:0 0 5px rgba(224,64,160,0.6);}
+.theme-dot[data-t="velvet"]{background:linear-gradient(135deg,#180510,#d4a843,#8a0030);box-shadow:0 0 4px rgba(212,168,67,0.5);}
 
 /* BUTTONS */
 .btn{font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.07em;
@@ -610,6 +863,15 @@ select option{background:#0d0b05;}
   </aside>
 
   <main class="main">
+    <!-- View-only filter bar (visible in ?view mode) -->
+    <div id="viewFilterBar" style="display:none;align-items:center;gap:8px;padding:10px 16px 0;flex-wrap:wrap;">
+      <div class="filter-pills" style="margin:0;">
+        <div class="pill active" onclick="setFilter('all',this)">All</div>
+        <div class="pill" onclick="setFilter('upcoming',this)">Upcoming</div>
+        <div class="pill" onclick="setFilter('week',this)">This Week</div>
+        <div class="pill past-pill" onclick="setFilter('past',this)">Past</div>
+      </div>
+    </div>
     <div class="stats-bar">
       <div class="stat"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Total</div></div>
       <div class="stat"><div class="stat-num" id="stat-upcoming">0</div><div class="stat-label">Upcoming</div></div>
@@ -618,10 +880,18 @@ select option{background:#0d0b05;}
     </div>
     <div class="toolbar">
       <div class="toolbar-title" id="toolbarTitle">All Venues</div>
-      <div class="filter-pills">
-        <div class="pill active" onclick="setFilter('all',this)">All</div>
-        <div class="pill" onclick="setFilter('upcoming',this)">Upcoming</div>
-        <div class="pill past-pill" onclick="setFilter('past',this)">Past</div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="searchInput" placeholder="Search events…" oninput="onSearch(this)">
+          <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+        </div>
+        <div class="filter-pills">
+          <div class="pill active" onclick="setFilter('all',this)">All</div>
+          <div class="pill" onclick="setFilter('upcoming',this)">Upcoming</div>
+          <div class="pill" onclick="setFilter('week',this)">This Week</div>
+          <div class="pill past-pill" onclick="setFilter('past',this)">Past</div>
+        </div>
       </div>
     </div>
     <div class="events-container">
@@ -738,7 +1008,36 @@ select option{background:#0d0b05;}
             <option value="pace-navy">◈ PACE Gaming Navy</option>
             <option value="pace-gold">◈ PACE Gaming Gold</option>
             </optgroup>
+            <optgroup label="── New Themes ──">
+            <option value="copper">🟤 Copper Luxe</option>
+            <option value="midnight-blue">🌌 Midnight Blue</option>
+            <option value="sunset">🌅 Sunset</option>
+            <option value="arctic">❄ Arctic</option>
+            </optgroup>
+            <optgroup label="── Girly & Fun ──">
+            <option value="bubblegum">💗 Bubblegum</option>
+            <option value="rosegold">🌹 Rose Gold</option>
+            <option value="sakura">🌸 Sakura</option>
+            <option value="lollipop">🍭 Lollipop</option>
+            </optgroup>
+            <optgroup label="── Casino Glam ──">
+            <option value="neon-casino">🎰 Neon Casino</option>
+            <option value="velvet">🍷 Velvet Casino</option>
+            </optgroup>
           </select>
+        </div>
+      </div>
+
+      <!-- Personalization Fields -->
+      <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);width:100%;margin-bottom:4px;">✏ Personalize Email</div>
+        <div class="form-group" style="min-width:220px;flex:2;">
+          <label class="form-label">Custom Subject Line</label>
+          <input type="text" id="custom-subject" placeholder="Leave blank to use draft default" style="font-size:12px;" oninput="buildReport()">
+        </div>
+        <div class="form-group" style="min-width:260px;flex:3;">
+          <label class="form-label">Custom Closing / Sign-off</label>
+          <textarea id="custom-closing" placeholder="Leave blank to use draft default" rows="2" style="font-size:12px;resize:vertical;width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:3px;font-family:inherit;" oninput="buildReport()"></textarea>
         </div>
       </div>
 
@@ -754,6 +1053,8 @@ select option{background:#0d0b05;}
         <div class="email-tab" onclick="setDraft('weekly',this)">📅 Weekly Digest</div>
         <div class="email-tab" onclick="setDraft('newalerts',this)">🚨 New Alert</div>
         <div class="email-tab" onclick="setDraft('client',this)">🤝 Client-Facing</div>
+        <div class="email-tab" onclick="setDraft('urgency',this)">🔥 Urgency</div>
+        <div class="email-tab" onclick="setDraft('newsletter',this)">📰 Newsletter</div>
       </div>
 
       <div class="email-preview-wrap" id="reportContent"></div>
@@ -769,7 +1070,7 @@ select option{background:#0d0b05;}
 const IS_VIEW = new URLSearchParams(location.search).has('view');
 
 // ── THEME SWITCHER ──
-const THEMES=['gold','navy','emerald','purple','red','slate','casino','pace','pace-dark','pace-navy','pace-gold','flamingo','pastel','ghibli','poker','dice'];
+const THEMES=['gold','navy','emerald','purple','red','slate','casino','pace','pace-dark','pace-navy','pace-gold','flamingo','pastel','ghibli','poker','dice','copper','midnight-blue','sunset','arctic','bubblegum','rosegold','sakura','neon-casino','lollipop','velvet'];
 const _urlTheme = new URLSearchParams(location.search).get('theme');
 let currentCRMTheme = (_urlTheme && THEMES.includes(_urlTheme))
   ? _urlTheme
@@ -791,12 +1092,18 @@ function applyTheme(t){
     else if(t==='poker'){suits.innerHTML='♠ <span style="color:#f5e642">♣</span> ♠';}
     else if(t==='dice'){suits.innerHTML='⚀ <span style="color:#e84040">⚄</span> ⚀';}
     else if(t==='casino'){suits.innerHTML='♠ <span class="red">♥</span> <span style="color:#00e676">♦</span> ♣';}
+    else if(t==='bubblegum'){suits.innerHTML='💗 <span style="color:#ff9ece">🌸</span> 💗';}
+    else if(t==='rosegold'){suits.innerHTML='✿ <span style="color:#b05070">♡</span> ✿';}
+    else if(t==='sakura'){suits.innerHTML='🌸 <span style="color:#f48fb1">🌺</span> 🌸';}
+    else if(t==='neon-casino'){suits.innerHTML='🎰 <span style="color:#ffd700;text-shadow:0 0 8px gold">🃏</span> 🎰';}
+    else if(t==='lollipop'){suits.innerHTML='🍭 <span style="color:#4080ff">🍬</span> 🍭';}
+    else if(t==='velvet'){suits.innerHTML='♠ <span style="color:#d4a843">♥</span> ♠';}
     else{suits.innerHTML='♠ <span class="red">♥</span> <span class="red">♦</span> ♣';}
   }
   localStorage.setItem('pace_crm_theme',t);
 }
 
-const THEME_LABELS={gold:'Gold',navy:'Navy',emerald:'Emerald',purple:'Purple',red:'Red',slate:'Slate',casino:'🃏 Casino',pace:'◈ PACE','pace-dark':'◈ PACE Dark','pace-navy':'◈ PACE Navy','pace-gold':'◈ PACE Gold',flamingo:'🦩 Flamingo',pastel:'🌸 Pastel',ghibli:'🌿 Ghibli',poker:'♠ Poker Night',dice:'🎲 Dice'};
+const THEME_LABELS={gold:'Gold',navy:'Navy',emerald:'Emerald',purple:'Purple',red:'Red',slate:'Slate',casino:'🃏 Casino',pace:'◈ PACE','pace-dark':'◈ PACE Dark','pace-navy':'◈ PACE Navy','pace-gold':'◈ PACE Gold',flamingo:'🦩 Flamingo',pastel:'🌸 Pastel',ghibli:'🌿 Ghibli',poker:'♠ Poker Night',dice:'🎲 Dice',copper:'🟤 Copper','midnight-blue':'🌌 Midnight Blue',sunset:'🌅 Sunset',arctic:'❄ Arctic',bubblegum:'💗 Bubblegum',rosegold:'🌹 Rose Gold',sakura:'🌸 Sakura','neon-casino':'🎰 Neon Casino',lollipop:'🍭 Lollipop',velvet:'🍷 Velvet Casino'};
 function buildThemeDots(){
   return THEMES.map(t=>`<div class="theme-dot${t===currentCRMTheme?' active':''}" data-t="${t}" title="${THEME_LABELS[t]||t} Theme" onclick="applyTheme('${t}')"></div>`).join('');
 }
@@ -805,11 +1112,23 @@ function buildThemeDots(){
 (function setupHeader(){
   const wrap = document.getElementById('headerActions');
   if (IS_VIEW) {
-    wrap.innerHTML = '<span class="view-badge">♦ View Only</span>';
+    wrap.innerHTML = `
+      <span class="view-badge">♦ View Only</span>
+      <div class="search-wrap" style="margin-left:8px;">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInputView" placeholder="Search events…" oninput="onSearch(this)">
+        <button class="search-clear" id="searchClearView" onclick="clearSearch()">✕</button>
+      </div>
+    `;
+    // Also show filter pills below header for view mode
+    const filterBar = document.getElementById('viewFilterBar');
+    if(filterBar) filterBar.style.display = 'flex';
   } else {
     wrap.innerHTML = `
       <div class="theme-switcher" title="Switch CRM Theme">${buildThemeDots()}</div>
       <button class="btn btn-ghost btn-sm" onclick="toggleAdd()">♣ Add Event</button>
+      <button class="btn btn-ghost btn-sm export-btn" onclick="exportCSV()" title="Export all events as CSV">⬇ CSV</button>
+      <button class="btn btn-ghost btn-sm export-btn" onclick="printView()" title="Print-friendly view">🖨 Print</button>
       <button class="btn btn-gold btn-sm" onclick="saveData()" id="saveBtn" style="display:none;">💾 Save</button>
       <button class="btn btn-outline btn-sm" onclick="openReport()">♦ Generate Email</button>
       <button class="btn btn-ghost btn-sm" onclick="openShare()" style="border-color:rgba(201,168,76,0.3);color:var(--gold-light);">⬡ Share ↗</button>
@@ -839,6 +1158,22 @@ let events = [];
 let currentVenue = 'ALL';
 let currentFilter = 'all';
 let currentDraft = 'standard';
+let searchQuery = '';
+
+function onSearch(inp){
+  searchQuery = inp.value.trim().toLowerCase();
+  const clr = document.getElementById('searchClear') || document.getElementById('searchClearView');
+  if(clr) clr.classList.toggle('visible', searchQuery.length > 0);
+  render();
+}
+function clearSearch(){
+  const inp = document.getElementById('searchInput') || document.getElementById('searchInputView');
+  if(inp) inp.value = '';
+  searchQuery = '';
+  const clr = document.getElementById('searchClear') || document.getElementById('searchClearView');
+  if(clr) clr.classList.remove('visible');
+  render();
+}
 
 function parseDate(s){
   if(!s)return null;
@@ -1023,6 +1358,8 @@ function render(){
   if(currentVenue!=='ALL')fl=fl.filter(e=>e.venue===currentVenue);
   if(currentFilter==='upcoming')fl=fl.filter(e=>!isPast(e));
   if(currentFilter==='past')fl=fl.filter(e=>isPast(e));
+  if(currentFilter==='week')fl=fl.filter(e=>isSoon(e)&&!isPast(e));
+  if(searchQuery)fl=fl.filter(e=>e.name.toLowerCase().includes(searchQuery)||(e.venue||'').toLowerCase().includes(searchQuery)||(e.note||'').toLowerCase().includes(searchQuery));
   fl.sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;return a.date-b.date;});
 
   const pool=currentVenue==='ALL'?events:events.filter(e=>e.venue===currentVenue);
@@ -1062,6 +1399,16 @@ function mkCard(e){
   const day=e.date?e.date.getDate().toString().padStart(2,'0'):'—';
   const mon=e.date?e.date.toLocaleDateString('en-US',{month:'short'}).toUpperCase():'';
   const endDay=e.endDate?'–'+e.endDate.getDate().toString().padStart(2,'0'):'';
+
+  // Countdown badge
+  let cdBadge='';
+  if(e.date&&!past&&e.type!=='recurring'){
+    const diff=Math.round((e.date-today())/864e5);
+    if(diff===0)cdBadge='<span class="countdown today">TODAY</span>';
+    else if(diff===1)cdBadge='<span class="countdown soon">Tomorrow</span>';
+    else if(diff<=7)cdBadge=`<span class="countdown soon">In ${diff}d</span>`;
+    else if(diff<=30)cdBadge=`<span class="countdown">In ${diff}d</span>`;
+  }
   let badges='';
   if(e.type==='big')badges+='<span class="badge badge-big">⭐ Big</span>';
   if(e.type==='recurring')badges+='<span class="badge badge-rec">🔁 Recurring</span>';
@@ -1081,7 +1428,7 @@ function mkCard(e){
       ${endDay?`<div class="date-end">${endDay}</div>`:''}
     </div>
     <div class="event-info">
-      <div class="event-name">${e.name}</div>
+      <div class="event-name">${e.name}${cdBadge}</div>
       <div class="event-venue-label">${e.venue}</div>
       <div class="event-enddate">${e.endDate?'⇒ Ends: '+shortDate(e.endDate):''}</div>
       ${e.note?`<div class="event-note">${e.note}</div>`:''}
@@ -1156,6 +1503,16 @@ const EMAIL_THEMES={
   'pace-dark':{bg:'#e8f8fc',headerBg:'#010810',headerText:'#00d4c8',accent:'#007a78',venueBg:'#030f1e',venueText:'#4de8e0',rowAlt:'#d4f2f8',border:'#60c8d8',linkColor:'#006068',bodyText:'#04121e',divider:'#00d4c8',logo:true},
   'pace-navy':{bg:'#eef4ff',headerBg:'#030818',headerText:'#3a9cff',accent:'#1060c0',venueBg:'#050d28',venueText:'#80c0ff',rowAlt:'#dce8ff',border:'#80aae0',linkColor:'#0848a0',bodyText:'#040a20',divider:'#3a9cff',logo:true},
   'pace-gold':{bg:'#faf8f2',headerBg:'#080a0e',headerText:'#d4a843',accent:'#8a6e22',venueBg:'#0e1016',venueText:'#f0cc70',rowAlt:'#f4efd8',border:'#d8c880',linkColor:'#6a5018',bodyText:'#0e0c08',divider:'#1cc8c8',logo:true},
+  copper:  {bg:'#fff8f0',headerBg:'#3a1a04',headerText:'#f8c880',accent:'#804820',venueBg:'#2c1208',venueText:'#f8c880',rowAlt:'#faeede',border:'#e0a860',linkColor:'#804820',bodyText:'#200e04',divider:'#c87840'},
+  'midnight-blue':{bg:'#f0f4ff',headerBg:'#02040e',headerText:'#c8d8f4',accent:'#1a3060',venueBg:'#04081a',venueText:'#c8d8f4',rowAlt:'#e0e8ff',border:'#90a8d8',linkColor:'#1a3060',bodyText:'#060a1a',divider:'#a0b8e0'},
+  sunset:  {bg:'#fff5ee',headerBg:'#18060c',headerText:'#ffcc80',accent:'#a04820',venueBg:'#200810',venueText:'#ffcc80',rowAlt:'#ffe8d8',border:'#e8a078',linkColor:'#a04820',bodyText:'#1a0808',divider:'#e87840'},
+  arctic:  {bg:'#f0f8ff',headerBg:'#1a4a80',headerText:'#e0f0ff',accent:'#0a4070',venueBg:'#0d3a6a',venueText:'#c8e8ff',rowAlt:'#deeeff',border:'#90c0e8',linkColor:'#0a4070',bodyText:'#061830',divider:'#2a8ad0'},
+  bubblegum:{bg:'#fff0f8',headerBg:'#280328',headerText:'#ff9ece',accent:'#cc2080',venueBg:'#1a0220',venueText:'#ff9ece',rowAlt:'#ffe0f4',border:'#f4a8d0',linkColor:'#aa1870',bodyText:'#1a0218',divider:'#ff6eb4',suits:'💗 🌸 💗'},
+  rosegold:{bg:'#fff8fa',headerBg:'#3a1020',headerText:'#f8c8d8',accent:'#804050',venueBg:'#2c0c18',venueText:'#f0b0c8',rowAlt:'#faeaee',border:'#e8b0c0',linkColor:'#803050',bodyText:'#200a14',divider:'#b05070'},
+  sakura:  {bg:'#fff5fa',headerBg:'#180c1a',headerText:'#fde0ec',accent:'#c06080',venueBg:'#100810',venueText:'#f8b8cc',rowAlt:'#fde8f4',border:'#f4b8cc',linkColor:'#a04868',bodyText:'#180810',divider:'#f48fb1',suits:'🌸 🌺 🌸'},
+  'neon-casino':{bg:'#0a0005',headerBg:'#050002',headerText:'#ff69b4',accent:'#ff1493',venueBg:'#0a0005',venueText:'#ffb3d9',rowAlt:'#120008',border:'#ff149355',linkColor:'#ff69b4',bodyText:'#fff0f8',divider:'#ff1493',dark:true,suits:'🎰 🃏 🎰'},
+  lollipop:{bg:'#fff8fc',headerBg:'#fce0f0',headerText:'#b02070',accent:'#e040a0',venueBg:'#fcdcec',venueText:'#901858',rowAlt:'#ffecf8',border:'#f0a8cc',linkColor:'#a01860',bodyText:'#1a0418',divider:'#e040a0',suits:'🍭 🍬 🍭'},
+  velvet:  {bg:'#fdf5f8',headerBg:'#180510',headerText:'#d4a843',accent:'#8a0030',venueBg:'#120408',venueText:'#f0cc70',rowAlt:'#f8eaef',border:'#e8c0a0',linkColor:'#6a0020',bodyText:'#18040c',divider:'#d4a843',suits:'♠ ♥ ♠'},
 };
 
 const DRAFT_CONFIGS = {
@@ -1228,6 +1585,20 @@ const DRAFT_CONFIGS = {
     link: 'Explore the full events calendar here:',
     closing: "We'd love to discuss how we can tailor these opportunities for you. Please don't hesitate to reach out.\n\nWarm regards,\nYour PACE Gaming Events Specialist",
     subject: 'Upcoming Property Events — PACE Gaming'
+  },
+  urgency: {
+    greeting: '⚡ Action Required — PACE Gaming Events Team,',
+    intro: '🔥 Time-sensitive: Several high-value property events are approaching FAST. Seats and packages are limited. Please review the events below and confirm client interest immediately — these windows are closing.',
+    link: '🔗 Lock in your spots now — full calendar:',
+    closing: "Don't wait on this — first come, first served!\n\n— PACE Gaming Events Team",
+    subject: '⚡ URGENT: Limited Spots Remaining — PACE Gaming Events'
+  },
+  newsletter: {
+    greeting: '◈ PACE Gaming — Monthly Events Newsletter,',
+    intro: "Welcome to this month's edition of the PACE Gaming Events Newsletter. We've curated the best upcoming experiences across our premier portfolio of properties — from world-class tournaments to exclusive concerts and VIP packages. Scroll through, share with your clients, and let's make memories.",
+    link: '📬 View the full interactive calendar at:',
+    closing: "Until next month — keep playing, keep winning.\n\nWith excitement,\nThe PACE Gaming Events Team\n\nTo unsubscribe, reply with 'REMOVE'.",
+    subject: '◈ PACE Gaming Monthly Events Newsletter'
   }
 };
 
@@ -1242,7 +1613,17 @@ function buildReport(){
   const showPast=document.getElementById('report-past').value==='yes';
   const themeKey=document.getElementById('report-theme').value;
   const t=EMAIL_THEMES[themeKey]||EMAIL_THEMES.gold;
-  const draft=DRAFT_CONFIGS[currentDraft]||DRAFT_CONFIGS.standard;
+  const baseDraft=DRAFT_CONFIGS[currentDraft]||DRAFT_CONFIGS.standard;
+
+  // Apply personalizations
+  const customSubject = (document.getElementById('custom-subject')||{}).value||'';
+  const customClosing = (document.getElementById('custom-closing')||{}).value||'';
+  const draft = {
+    ...baseDraft,
+    closing: customClosing || baseDraft.closing,
+    subject: customSubject || baseDraft.subject
+  };
+
   const viewUrl='https://ajtmendoza123-tech.github.io/pace_events_tracker.html/?view';
   const now=new Date();
   const dateStr=now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
@@ -1300,7 +1681,11 @@ function buildReport(){
 
   const closingHtml=draft.closing.split('\n').map(l=>`<p style="margin:0;font-family:Arial,sans-serif;font-size:13px;color:${t.bodyText};line-height:1.7;">${l}</p>`).join('');
 
-  const html=`<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${t.bg};${bgExtra}">
+  const html=`<div style="background:${t.dark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.04)'};border:1px solid ${t.border};border-radius:4px;padding:8px 14px;margin-bottom:12px;font-family:Arial,sans-serif;">
+  <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:${t.bodyText};opacity:0.5;">Subject: </span>
+  <span style="font-size:13px;font-weight:600;color:${t.bodyText};">${draft.subject}</span>
+</div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${t.bg};${bgExtra}">
 <tr><td>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;margin:0 auto;background:${t.bg};font-family:Arial,sans-serif;">
 
@@ -1318,7 +1703,7 @@ function buildReport(){
         </div>
 
         <!-- Email title -->
-        <div style="${titleStyle}">Upcoming Property Events</div>
+        <div style="${titleStyle}">${draft.subject}</div>
         ${suitsBar}
 
         <!-- Divider + date -->
@@ -1444,6 +1829,44 @@ function copyShareLink(){
     b.textContent = '✓ Copied!';
     setTimeout(()=>b.textContent='Copy Link', 2000);
   });
+}
+
+// ── EXPORT CSV ──
+function exportCSV(){
+  const cols=['Venue','Event Name','Start Date','End Date','Type','Note'];
+  const rows=[cols.join(',')];
+  events.forEach(e=>{
+    const fmt=d=>d?(d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear():'';
+    rows.push([
+      `"${e.venue}"`,`"${e.name.replace(/"/g,'""')}"`,fmt(e.date),fmt(e.endDate),e.type,`"${(e.note||'').replace(/"/g,'""')}"`
+    ].join(','));
+  });
+  const blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='pace_events_'+(new Date().toISOString().slice(0,10))+'.csv';
+  a.click();
+}
+
+// ── PRINT VIEW ──
+function printView(){
+  const printWin=window.open('','_blank','width=900,height=700');
+  const upcomingEvs=events.filter(e=>!isPast(e)).sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;return a.date-b.date;});
+  let tableRows='';
+  VENUES_ORDER.forEach(v=>{
+    const vevs=upcomingEvs.filter(e=>e.venue===v);
+    if(!vevs.length)return;
+    tableRows+=`<tr><td colspan="4" style="background:#0d2240;color:#1cc8c8;font-weight:700;padding:8px 12px;font-size:12px;letter-spacing:.1em;">${v}</td></tr>`;
+    vevs.forEach(e=>{
+      const ds=e.date?(e.date.getMonth()+1)+'/'+e.date.getDate():'—';
+      const de=e.endDate?'–'+(e.endDate.getMonth()+1)+'/'+e.endDate.getDate():'';
+      const type=e.type==='big'?'⭐ Big':e.type==='recurring'?'🔁 Recurring':'';
+      tableRows+=`<tr><td style="padding:7px 12px;border-bottom:1px solid #e0e0e0;font-size:12px;">${ds}${de}</td><td style="padding:7px 12px;border-bottom:1px solid #e0e0e0;font-size:13px;font-weight:500;">${e.name}</td><td style="padding:7px 12px;border-bottom:1px solid #e0e0e0;font-size:11px;color:#666;">${type}</td><td style="padding:7px 12px;border-bottom:1px solid #e0e0e0;font-size:11px;color:#888;">${e.note||''}</td></tr>`;
+    });
+  });
+  const dateStr=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  printWin.document.write(`<!DOCTYPE html><html><head><title>PACE Gaming — Events</title><style>*{box-sizing:border-box;}body{font-family:Arial,sans-serif;margin:0;padding:20px;color:#111;}h1{color:#0d2240;border-bottom:3px solid #1cc8c8;padding-bottom:10px;}table{width:100%;border-collapse:collapse;}@media print{.no-print{display:none;}}</style></head><body><h1>◈ PACE Gaming — Upcoming Property Events</h1><p style="color:#666;font-size:12px;">Generated: ${dateStr} &nbsp;|&nbsp; ${upcomingEvs.length} upcoming events</p><table><thead><tr style="background:#f5f5f5;"><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">DATE</th><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">EVENT</th><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">TYPE</th><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">NOTES</th></tr></thead><tbody>${tableRows}</tbody></table><p class="no-print" style="margin-top:20px;"><button onclick="window.print()" style="padding:10px 20px;background:#0d2240;color:white;border:none;border-radius:4px;cursor:pointer;font-size:14px;">🖨 Print / Save as PDF</button></p></body></html>`);
+  printWin.document.close();
 }
 
 render();
