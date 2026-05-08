@@ -349,8 +349,8 @@ select option{background:#0d0b05;}
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost btn-sm" onclick="closeReport()">Close</button>
-      <button class="btn btn-outline btn-sm" onclick="copyHtml()">Copy HTML</button>
-      <button class="btn btn-gold btn-sm" onclick="copyText()">📋 Copy Plain Text</button>
+      <button class="btn btn-outline btn-sm" onclick="copyHtml(this)">Copy HTML</button>
+      <button class="btn btn-gold btn-sm" onclick="copyText(this)">📋 Copy Plain Text</button>
     </div>
   </div>
 </div>
@@ -395,7 +395,7 @@ function today(){const n=new Date();return new Date(n.getFullYear(),n.getMonth()
 function isPast(e){const t=today(),d=e.endDate||e.date;return d&&d<t;}
 function isToday(e){const t=today();return e.date&&e.date.getTime()===t.getTime();}
 function isSoon(e){const t=today(),d=e.date-t;return d>=0&&d<=7*864e5;}
-function shortDate(d){if(!d)return'';return d.toLocaleDateString('en-US',{month:'long',day:'numeric'});}
+function shortDate(d){if(!d)return'';return (d.getMonth()+1)+'/'+(d.getDate());}
 function numDate(d){if(!d)return'';const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return m+'/'+day;}
 function uid(){return Math.random().toString(36).slice(2);}
 
@@ -809,14 +809,14 @@ function openReport(){
 }
 function closeReport(){document.getElementById('reportModal').classList.remove('open');}
 
-function copyHtml(){
+function copyHtml(btn){
   const {html}=buildReport();
   navigator.clipboard.writeText(html).then(()=>{
-    const b=event.target;b.textContent='✓ Copied!';
-    setTimeout(()=>b.textContent='Copy HTML',2000);
+    btn.textContent='✓ Copied!';
+    setTimeout(()=>btn.textContent='Copy HTML',2000);
   });
 }
-function copyText(){
+function copyText(btn){
   const {evs,title,dateStr,to}=buildReport();
   let t=`${title}\n${dateStr}\nTo: ${to}\n\n`;
   VENUES_ORDER.forEach(v=>{
@@ -831,8 +831,8 @@ function copyText(){
     t+='\n';
   });
   navigator.clipboard.writeText(t.trimEnd()).then(()=>{
-    const b=event.target;b.textContent='✓ Copied!';
-    setTimeout(()=>b.textContent='📋 Copy Plain Text',2000);
+    btn.textContent='✓ Copied!';
+    setTimeout(()=>btn.textContent='📋 Copy Plain Text',2000);
   });
 }
 
