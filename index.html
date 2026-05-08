@@ -76,6 +76,116 @@
 [data-theme="slate"] .sidebar{background:linear-gradient(180deg,#04080c 0%,#101520 100%);}
 [data-theme="slate"] .logo-text{background:linear-gradient(135deg,#4a6e90 0%,#d0e4f8 50%,#4a6e90 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 
+/* CASINO THEME — neon green felt */
+[data-theme="casino"]{
+  --deep:#030f06;--surface:#051409;--surface2:#081c0d;--surface3:#0d2614;
+  --gold:#00e676;--gold-light:#69f0ae;--gold-bright:#b9f6ca;--gold-dim:#00a152;--gold-glow:rgba(0,230,118,0.12);
+  --text:#e8fff2;--text-dim:#80e8a8;--muted:#3a7a58;
+  --border:rgba(0,230,118,0.2);--border-bright:rgba(0,230,118,0.45);
+}
+[data-theme="casino"] body{
+  background-image:
+    radial-gradient(ellipse at 20% 10%,rgba(0,230,118,0.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 90%,rgba(0,180,80,0.06) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 19px,rgba(0,230,118,0.025) 19px,rgba(0,230,118,0.025) 20px),
+    repeating-linear-gradient(90deg,transparent,transparent 19px,rgba(0,230,118,0.015) 19px,rgba(0,230,118,0.015) 20px);
+}
+[data-theme="casino"] body::before{content:'♠  ♥  ♦  ♣  ♠  ♥  ♦  ♣';color:rgba(0,230,118,0.04);font-size:80px;}
+[data-theme="casino"] header{background:linear-gradient(180deg,#010802 0%,#051409 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 60px rgba(0,230,118,0.06),0 1px 0 rgba(0,230,118,0.3);}
+[data-theme="casino"] .sidebar{background:linear-gradient(180deg,#020a04 0%,#051409 100%);}
+[data-theme="casino"] .logo-text{background:linear-gradient(135deg,#00a152 0%,#b9f6ca 50%,#00a152 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="casino"] .event-card{background:rgba(5,18,8,0.97);}
+[data-theme="casino"] .event-card:hover{box-shadow:0 2px 20px rgba(0,0,0,0.5),0 0 15px rgba(0,230,118,0.05);}
+[data-theme="casino"] .event-card.is-today{box-shadow:0 0 28px rgba(0,230,118,0.2),0 0 8px rgba(0,230,118,0.1);}
+
+/* PACE BRAND THEME — teal + navy from logo */
+[data-theme="pace"]{
+  --deep:#030e14;--surface:#051520;--surface2:#091e2e;--surface3:#0d2640;
+  --gold:#1cc8c8;--gold-light:#5de8e8;--gold-bright:#a0f4f4;--gold-dim:#0a8a8a;--gold-glow:rgba(28,200,200,0.12);
+  --text:#e0f8ff;--text-dim:#7ad4e0;--muted:#386878;
+  --border:rgba(28,200,200,0.22);--border-bright:rgba(28,200,200,0.48);
+}
+[data-theme="pace"] body{
+  background-image:
+    radial-gradient(ellipse at 15% 0%,rgba(28,200,200,0.10) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 100%,rgba(18,40,90,0.15) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(28,200,200,0.025) 39px,rgba(28,200,200,0.025) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(28,200,200,0.015) 39px,rgba(28,200,200,0.015) 40px);
+}
+[data-theme="pace"] body::before{content:'◈  ◆  ◈  ◆  ◈  ◆  ◈  ◆';color:rgba(28,200,200,0.04);font-size:60px;}
+[data-theme="pace"] header{background:linear-gradient(135deg,#091830 0%,#051520 60%,#030e14 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 60px rgba(28,200,200,0.07),0 1px 0 rgba(28,200,200,0.35);}
+[data-theme="pace"] .sidebar{background:linear-gradient(180deg,#04101c 0%,#051520 100%);}
+[data-theme="pace"] .logo-text{background:linear-gradient(135deg,#0a8a8a 0%,#a0f4f4 45%,#1a3a7a 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="pace"] .event-card{background:rgba(3,12,22,0.97);}
+[data-theme="pace"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(28,200,200,0.18);}
+[data-theme="pace"] .logo-suits{color:#1cc8c8;opacity:0.9;}
+
+/* PACE DARK THEME — deep navy with teal accents, premium feel */
+[data-theme="pace-dark"]{
+  --deep:#010810;--surface:#030f1e;--surface2:#06182e;--surface3:#0a1f3a;
+  --gold:#00d4c8;--gold-light:#4de8e0;--gold-bright:#90f8f4;--gold-dim:#008a86;--gold-glow:rgba(0,212,200,0.12);
+  --text:#dff8fc;--text-dim:#6ac8d4;--muted:#2a6070;
+  --border:rgba(0,212,200,0.2);--border-bright:rgba(0,212,200,0.42);
+}
+[data-theme="pace-dark"] body{
+  background-image:
+    radial-gradient(ellipse at 0% 0%,rgba(0,212,200,0.14) 0%,transparent 45%),
+    radial-gradient(ellipse at 100% 100%,rgba(10,20,60,0.2) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(0,212,200,0.02) 59px,rgba(0,212,200,0.02) 60px),
+    repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(0,212,200,0.012) 59px,rgba(0,212,200,0.012) 60px);
+}
+[data-theme="pace-dark"] body::before{content:'◈  ◆  ◈  ◆  ◈  ◆  ◈  ◆';color:rgba(0,212,200,0.035);font-size:64px;}
+[data-theme="pace-dark"] header{background:linear-gradient(135deg,#000a1a 0%,#03101e 60%,#010810 100%);box-shadow:0 2px 50px rgba(0,0,0,0.95),0 0 70px rgba(0,212,200,0.08),0 1px 0 rgba(0,212,200,0.4);}
+[data-theme="pace-dark"] .sidebar{background:linear-gradient(180deg,#010a16 0%,#03101e 100%);}
+[data-theme="pace-dark"] .logo-text{background:linear-gradient(135deg,#008a86 0%,#90f8f4 45%,#1a2a6a 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="pace-dark"] .event-card{background:rgba(2,10,20,0.98);}
+[data-theme="pace-dark"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 30px rgba(0,212,200,0.2);}
+[data-theme="pace-dark"] .logo-suits{color:#00d4c8;opacity:0.9;}
+
+/* PACE NAVY THEME — rich navy blue brand feel */
+[data-theme="pace-navy"]{
+  --deep:#030818;--surface:#050d28;--surface2:#08143a;--surface3:#0d1c4e;
+  --gold:#3a9cff;--gold-light:#80c0ff;--gold-bright:#b8daff;--gold-dim:#1a60c0;--gold-glow:rgba(58,156,255,0.1);
+  --text:#dceeff;--text-dim:#7aaae0;--muted:#3a5880;
+  --border:rgba(58,156,255,0.2);--border-bright:rgba(58,156,255,0.42);
+}
+[data-theme="pace-navy"] body{
+  background-image:
+    radial-gradient(ellipse at 20% 0%,rgba(28,100,200,0.14) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 100%,rgba(0,40,120,0.18) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(58,156,255,0.018) 39px,rgba(58,156,255,0.018) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(58,156,255,0.012) 39px,rgba(58,156,255,0.012) 40px);
+}
+[data-theme="pace-navy"] body::before{content:'◈  ◆  ◈  ◆  ◈  ◆  ◈  ◆';color:rgba(58,156,255,0.03);font-size:64px;}
+[data-theme="pace-navy"] header{background:linear-gradient(135deg,#010510 0%,#050d28 60%,#030818 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 60px rgba(58,156,255,0.07),0 1px 0 rgba(58,156,255,0.35);}
+[data-theme="pace-navy"] .sidebar{background:linear-gradient(180deg,#020614 0%,#050d28 100%);}
+[data-theme="pace-navy"] .logo-text{background:linear-gradient(135deg,#1a60c0 0%,#b8daff 45%,#1a60c0 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="pace-navy"] .event-card{background:rgba(2,6,20,0.97);}
+[data-theme="pace-navy"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(58,156,255,0.18);}
+[data-theme="pace-navy"] .logo-suits{color:#3a9cff;opacity:0.9;}
+
+/* PACE GOLD THEME — PACE brand with casino gold luxury */
+[data-theme="pace-gold"]{
+  --deep:#080a0e;--surface:#0e1016;--surface2:#161820;--surface3:#1c1e28;
+  --gold:#d4a843;--gold-light:#f0cc70;--gold-bright:#fde68a;--gold-dim:#8a6e22;--gold-glow:rgba(212,168,67,0.1);
+  --text:#f8f0d8;--text-dim:#c4a85a;--muted:#806a3a;
+  --border:rgba(212,168,67,0.2);--border-bright:rgba(212,168,67,0.42);
+}
+[data-theme="pace-gold"] body{
+  background-image:
+    radial-gradient(ellipse at 15% 0%,rgba(28,160,160,0.08) 0%,transparent 45%),
+    radial-gradient(ellipse at 85% 100%,rgba(212,168,67,0.07) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(212,168,67,0.025) 39px,rgba(212,168,67,0.025) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(212,168,67,0.015) 39px,rgba(212,168,67,0.015) 40px);
+}
+[data-theme="pace-gold"] body::before{content:'◈  ◆  ◈  ◆  ◈  ◆  ◈  ◆';color:rgba(212,168,67,0.03);font-size:64px;}
+[data-theme="pace-gold"] header{background:linear-gradient(135deg,#04060a 0%,#0e1016 60%,#080a0e 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 50px rgba(212,168,67,0.06),0 1px 0 rgba(28,200,200,0.35);}
+[data-theme="pace-gold"] .sidebar{background:linear-gradient(180deg,#060808 0%,#0e1016 100%);}
+[data-theme="pace-gold"] .logo-text{background:linear-gradient(135deg,#1cc8c8 0%,#fde68a 50%,#1cc8c8 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="pace-gold"] .event-card{background:rgba(6,7,10,0.97);}
+[data-theme="pace-gold"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(212,168,67,0.18);}
+[data-theme="pace-gold"] .logo-suits{color:#1cc8c8;opacity:0.9;}
+
 /* BASE STYLES */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
@@ -126,6 +236,11 @@ header{
 .theme-dot[data-t="purple"]{background:linear-gradient(135deg,#2a1460,#9b6dde);}
 .theme-dot[data-t="red"]{background:linear-gradient(135deg,#6b1414,#d94040);}
 .theme-dot[data-t="slate"]{background:linear-gradient(135deg,#2c3e50,#8aaed4);}
+.theme-dot[data-t="casino"]{background:linear-gradient(135deg,#030f06,#00e676);box-shadow:0 0 4px rgba(0,230,118,0.5);}
+.theme-dot[data-t="pace"]{background:linear-gradient(135deg,#091830,#1cc8c8);box-shadow:0 0 4px rgba(28,200,200,0.5);}
+.theme-dot[data-t="pace-dark"]{background:linear-gradient(135deg,#010810,#00d4c8);box-shadow:0 0 4px rgba(0,212,200,0.6);}
+.theme-dot[data-t="pace-navy"]{background:linear-gradient(135deg,#030818,#3a9cff);box-shadow:0 0 4px rgba(58,156,255,0.5);}
+.theme-dot[data-t="pace-gold"]{background:linear-gradient(135deg,#080a0e,#1cc8c8,#d4a843);box-shadow:0 0 4px rgba(212,168,67,0.4);}
 
 /* BUTTONS */
 .btn{font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.07em;
@@ -444,7 +559,7 @@ select option{background:#0d0b05;}
     </div>
     <div class="modal-body" style="padding:20px 18px;">
       <div style="margin-bottom:16px;font-size:13px;color:var(--text-dim);line-height:1.6;">
-        Share this link with your team. They can view all events but cannot make changes.
+        Share this link with your team. They can view all events but cannot make changes. Your current theme is included in the link.
       </div>
       <div style="display:flex;gap:8px;margin-bottom:16px;">
         <input type="text" id="shareUrl" readonly style="flex:1;font-size:11px;color:var(--text-dim);">
@@ -484,18 +599,27 @@ select option{background:#0d0b05;}
         <div class="form-group" style="min-width:140px;">
           <label class="form-label">Email Theme</label>
           <select id="report-theme" onchange="buildReport()">
-            <option value="gold">Casino Gold</option>
-            <option value="navy">Royal Navy</option>
-            <option value="red">Casino Red</option>
-            <option value="emerald">Emerald</option>
-            <option value="purple">Royal Purple</option>
-            <option value="slate">Slate</option>
-            <option value="midnight">Midnight Gold</option>
-            <option value="rose">Rose</option>
-            <option value="teal">Teal</option>
-            <option value="bronze">Bronze</option>
-            <option value="ocean">Ocean</option>
-            <option value="charcoal">Charcoal</option>
+            <option value="gold">🟡 Casino Gold</option>
+            <option value="navy">🔵 Royal Navy</option>
+            <option value="red">🔴 Casino Red</option>
+            <option value="emerald">🟢 Emerald</option>
+            <option value="purple">🟣 Royal Purple</option>
+            <option value="slate">⬛ Slate</option>
+            <option value="midnight">✨ Midnight Gold</option>
+            <option value="rose">🌸 Rose</option>
+            <option value="teal">🩵 Teal</option>
+            <option value="bronze">🟤 Bronze</option>
+            <option value="ocean">🌊 Ocean</option>
+            <option value="charcoal">🖤 Charcoal</option>
+            <optgroup label="── Casino Fun ──">
+            <option value="casino">🃏 Casino Night</option>
+            <option value="neon">💜 Vegas Neon</option>
+            <option value="jackpot">7️⃣ Jackpot Red</option>
+            <option value="felt">♠️ Felt Green</option>
+            </optgroup>
+            <optgroup label="── PACE Brand ──">
+            <option value="pace">◈ PACE Gaming</option>
+            </optgroup>
           </select>
         </div>
       </div>
@@ -522,8 +646,11 @@ select option{background:#0d0b05;}
 const IS_VIEW = new URLSearchParams(location.search).has('view');
 
 // ── THEME SWITCHER ──
-const THEMES=['gold','navy','emerald','purple','red','slate'];
-let currentCRMTheme = localStorage.getItem('pace_crm_theme')||'gold';
+const THEMES=['gold','navy','emerald','purple','red','slate','casino','pace','pace-dark','pace-navy','pace-gold'];
+const _urlTheme = new URLSearchParams(location.search).get('theme');
+let currentCRMTheme = (_urlTheme && THEMES.includes(_urlTheme))
+  ? _urlTheme
+  : (localStorage.getItem('pace_crm_theme') || 'gold');
 
 function applyTheme(t){
   currentCRMTheme=t;
@@ -531,11 +658,20 @@ function applyTheme(t){
   document.querySelectorAll('.theme-dot').forEach(d=>{
     d.classList.toggle('active',d.dataset.t===t);
   });
+  // Update logo suits symbol for pace/casino themes
+  const suits = document.querySelector('.logo-suits');
+  if(suits){
+    if(t==='pace'||t==='pace-dark'||t==='pace-navy'||t==='pace-gold'){suits.innerHTML='◈ <span style="color:var(--gold)">◆</span> ◈';}
+    else if(t==='casino'){suits.innerHTML='♠ <span class="red">♥</span> <span style="color:#00e676">♦</span> ♣';}
+    else{suits.innerHTML='♠ <span class="red">♥</span> <span class="red">♦</span> ♣';}
+  }
   localStorage.setItem('pace_crm_theme',t);
 }
 
+const THEME_LABELS={gold:'Gold',navy:'Navy',emerald:'Emerald',purple:'Purple',red:'Red',slate:'Slate',casino:'🃏 Casino',pace:'◈ PACE',
+  'pace-dark':'◈ PACE Dark','pace-navy':'◈ PACE Navy','pace-gold':'◈ PACE Gold'};
 function buildThemeDots(){
-  return THEMES.map(t=>`<div class="theme-dot${t===currentCRMTheme?' active':''}" data-t="${t}" title="${t.charAt(0).toUpperCase()+t.slice(1)} Theme" onclick="applyTheme('${t}')"></div>`).join('');
+  return THEMES.map(t=>`<div class="theme-dot${t===currentCRMTheme?' active':''}" data-t="${t}" title="${THEME_LABELS[t]||t} Theme" onclick="applyTheme('${t}')"></div>`).join('');
 }
 
 // ── HEADER ──
@@ -884,6 +1020,12 @@ const EMAIL_THEMES={
   bronze:  {bg:'#faf5ee',headerBg:'#5a3010',headerText:'#fde8b0',accent:'#7a4a18',venueBg:'#5a3010',venueText:'#fde8b0',rowAlt:'#f4e8d4',border:'#d4b888',linkColor:'#5a3010',bodyText:'#2a1808',divider:'#b87830'},
   ocean:   {bg:'#f0f6ff',headerBg:'#0a2060',headerText:'#a0d0ff',accent:'#0a3080',venueBg:'#0a2060',venueText:'#a0d0ff',rowAlt:'#dceeff',border:'#90b8f0',linkColor:'#0a2060',bodyText:'#080e2a',divider:'#4080d0'},
   charcoal:{bg:'#f8f8f8',headerBg:'#1a1a1a',headerText:'#ffffff',accent:'#333333',venueBg:'#1a1a1a',venueText:'#ffffff',rowAlt:'#f0f0f0',border:'#cccccc',linkColor:'#1a1a1a',bodyText:'#1a1a1a',divider:'#888888'},
+  // NEW THEMES
+  casino:  {bg:'#e8fff2',headerBg:'#031a08',headerText:'#00e676',accent:'#00a152',venueBg:'#041f0a',venueText:'#69f0ae',rowAlt:'#d4f5e4',border:'#80d8a8',linkColor:'#007c3a',bodyText:'#0a2018',divider:'#00c853',suits:'♠ ♥ ♦ ♣'},
+  neon:    {bg:'#0a0a14',headerBg:'#000008',headerText:'#ff00ff',accent:'#ff00ff',venueBg:'#100010',venueText:'#00ffff',rowAlt:'#0e0e1a',border:'#ff00ff55',linkColor:'#ff00ff',bodyText:'#e0e0ff',divider:'#00ffff',dark:true,suits:'★ ✦ ★ ✦'},
+  jackpot: {bg:'#1a0000',headerBg:'#2a0000',headerText:'#ffd700',accent:'#ff4444',venueBg:'#200000',venueText:'#ffd700',rowAlt:'#1f0505',border:'#8b0000',linkColor:'#ff6b6b',bodyText:'#ffe0e0',divider:'#cc0000',dark:true,suits:'7 ♠ 7 ♣'},
+  felt:    {bg:'#f5fff8',headerBg:'#1a4a2e',headerText:'#f5e642',accent:'#1a7a3a',venueBg:'#1a4a2e',venueText:'#f5e642',rowAlt:'#e0f5e8',border:'#a0d4b0',linkColor:'#0f6030',bodyText:'#0a2a18',divider:'#2ea84e',suits:'♦ ♠ ♦ ♣'},
+  pace:    {bg:'#f0fbff',headerBg:'#0d2240',headerText:'#1cc8c8',accent:'#0a6e8a',venueBg:'#091c38',venueText:'#1cc8c8',rowAlt:'#ddf5ff',border:'#7adce8',linkColor:'#0a5a70',bodyText:'#061828',divider:'#1cc8c8',logo:true},
 };
 
 const DRAFT_CONFIGS = {
@@ -943,6 +1085,29 @@ function buildReport(){
   let evs=showPast?events:events.filter(e=>!isPast(e));
   evs=[...evs].sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;return a.date-b.date;});
 
+  // PACE Gaming SVG logo (inline, email-safe as inline HTML)
+  const PACE_LOGO_SVG = `<svg width="120" height="38" viewBox="0 0 360 114" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="80" height="80" rx="18" fill="#1cc8c8"/>
+    <polygon points="42,14 68,42 42,70 16,42" fill="white"/>
+    <circle cx="42" cy="42" r="13" fill="#122d50"/>
+    <text x="102" y="58" font-family="Arial,sans-serif" font-size="52" font-weight="900" fill="#122d50">pace</text>
+    <text x="265" y="58" font-family="Arial,sans-serif" font-size="52" font-weight="900" fill="#1cc8c8">gaming</text>
+  </svg>`;
+
+  // Casino decorative suits bar
+  const suitsBar = t.suits ? `<div style="font-size:18px;letter-spacing:12px;color:${t.headerText};opacity:0.4;margin-top:10px;">${t.suits}</div>` : '';
+  // Neon glow style for neon/jackpot
+  const headerStyle = t.dark
+    ? `background:${t.headerBg};border-bottom:2px solid ${t.divider};`
+    : `background:${t.headerBg};`;
+  const titleStyle = t.dark
+    ? `font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:${t.headerText};line-height:1.2;text-shadow:0 0 20px ${t.headerText}88;`
+    : `font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:${t.headerText};line-height:1.2;`;
+  const bgExtra = t.dark ? `border:2px solid ${t.divider};` : '';
+
+  // Row style: dark themes keep dark rows
+  const rowBg1 = t.dark ? t.bg : '#ffffff';
+
   let venueBlocks='';
   VENUES_ORDER.forEach(v=>{
     const vevs=evs.filter(e=>e.venue===v);
@@ -953,7 +1118,7 @@ function buildReport(){
       if(e.type==='recurring') d='Recurring';
       else if(e.date){d=shortDate(e.date);if(e.endDate)d+=' – '+shortDate(e.endDate);}
       else d='TBD';
-      const bg=i%2===0?'#ffffff':t.rowAlt;
+      const bg=i%2===0?rowBg1:t.rowAlt;
       rows+=`<tr style="background:${bg};">
         <td style="padding:9px 14px;vertical-align:top;border-bottom:1px solid ${t.border};font-family:Arial,sans-serif;font-size:13px;color:${t.bodyText};">
           <span style="color:${t.accent};font-weight:700;">${d}</span><span style="color:${t.accent};font-weight:700;"> - </span>${e.name}
@@ -973,17 +1138,17 @@ function buildReport(){
     </td></tr>`;
   });
 
-  // Format closing with line breaks
   const closingHtml=draft.closing.split('\n').map(l=>`<p style="margin:0;font-family:Arial,sans-serif;font-size:13px;color:${t.bodyText};line-height:1.7;">${l}</p>`).join('');
 
-  const html=`<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${t.bg};">
+  const html=`<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${t.bg};${bgExtra}">
 <tr><td>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;margin:0 auto;background:${t.bg};">
   <tr><td style="padding:0;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="background:${t.headerBg};">
+    <table width="100%" cellpadding="0" cellspacing="0" style="${headerStyle}">
       <tr><td style="padding:28px 28px 24px;">
-        <div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:10px;">PACE PROPERTY EVENTS</div>
-        <div style="font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:${t.headerText};line-height:1.2;">Upcoming Property Events</div>
+        ${t.logo ? `<div style="margin-bottom:14px;">${PACE_LOGO_SVG}</div>` : `<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:10px;">PACE PROPERTY EVENTS</div>`}
+        <div style="${titleStyle}">Upcoming Property Events</div>
+        ${suitsBar}
         <div style="margin-top:14px;height:1px;background:rgba(255,255,255,0.18);"></div>
         <div style="margin-top:10px;font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.55);">${dateStr}</div>
       </td></tr>
@@ -995,12 +1160,15 @@ function buildReport(){
     <p style="margin:0;font-family:Arial,sans-serif;font-size:14px;color:${t.bodyText};line-height:1.7;">${draft.link} <a href="${viewUrl}" style="color:${t.linkColor};font-weight:600;">${viewUrl}</a></p>
   </td></tr>
   <tr><td style="padding:0 28px 20px;">
-    <div style="height:2px;background:${t.divider};border-radius:2px;"></div>
+    <div style="height:2px;background:${t.divider};border-radius:2px;${t.dark?'box-shadow:0 0 8px '+t.divider+'88;':''}"></div>
   </td></tr>
   ${venueBlocks}
   <tr><td style="padding:4px 28px 24px;">${closingHtml}</td></tr>
-  <tr><td style="background:${t.headerBg};padding:14px 28px;">
-    <span style="font-family:Arial,sans-serif;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;">PACE Property Events Intelligence</span>
+  <tr><td style="${headerStyle}padding:14px 28px;">
+    ${t.logo
+      ? `<span style="font-family:Arial,sans-serif;font-size:10px;color:#1cc8c8;letter-spacing:0.1em;text-transform:uppercase;">PACE Gaming — Property Events Intelligence</span>`
+      : `<span style="font-family:Arial,sans-serif;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;">PACE Property Events Intelligence</span>`
+    }
   </td></tr>
 </table>
 </td></tr>
@@ -1052,7 +1220,8 @@ function fallbackCopy(btn){
 
 // ── SHARE ──
 function openShare(){
-  const url = location.href.split('?')[0] + '?view';
+  const themeParam = currentCRMTheme !== 'gold' ? '&theme=' + currentCRMTheme : '';
+  const url = location.href.split('?')[0] + '?view' + themeParam;
   document.getElementById('shareUrl').value = url;
   document.getElementById('openShareLink').href = url;
   document.getElementById('shareModal').classList.add('open');
