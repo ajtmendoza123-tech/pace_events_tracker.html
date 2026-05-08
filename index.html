@@ -349,8 +349,7 @@ select option{background:#0d0b05;}
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost btn-sm" onclick="closeReport()">Close</button>
-      <button class="btn btn-outline btn-sm" onclick="copyHtml(this)">Copy HTML</button>
-      <button class="btn btn-gold btn-sm" onclick="copyText(this)">📋 Copy Plain Text</button>
+      <button class="btn btn-gold btn-sm" onclick="copyEmail(this)">📋 Copy Email</button>
     </div>
   </div>
 </div>
@@ -679,6 +678,10 @@ function markDone(id){
 function delEv(id){if(!confirm('Delete this event?'))return;events=events.filter(e=>e.id!==id);markUnsaved();render();}
 
 // ── REPORT ──
+function accentLight(hex){
+  // produce a very light tint of accent for alternating rows
+  return hex+'18';
+}
 function buildReport(){
   const title=document.getElementById('report-title').value;
   const to=document.getElementById('report-to').value;
@@ -686,11 +689,47 @@ function buildReport(){
   const accent=document.getElementById('report-color').value;
   const now=new Date();
   const dateStr=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const totalCount=events.filter(e=>!isPast(e)).length;
+  const upcomingCount=events.filter(e=>!isPast(e)&&e.type!=='recurring').length;
+  const recurringCount=events.filter(e=>e.type==='recurring').length;
+  const venueCount=VENUES_ORDER.filter(v=>events.some(e=>e.venue===v&&!isPast(e))).length;
 
   let evs=showPast?events:events.filter(e=>!isPast(e));
   evs=[...evs].sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;return a.date-b.date;});
 
+  // ── STAT BOXES ──
+  const statsRow=`
+  <tr><td style="padding:0 28px 28px;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td width="33%" style="padding:0 6px 0 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;border:1px solid #e8e2d4;overflow:hidden;">
+            <tr><td style="padding:18px 16px;text-align:center;">
+              <div style="font-family:Georgia,'Times New Roman',serif;font-size:32px;font-weight:bold;color:${accent};line-height:1;">${upcomingCount}</div>
+              <div style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#aaa;margin-top:5px;">Upcoming Events</div>
+            </td></tr>
+          </table>
+        </td>
+        <td width="33%" style="padding:0 3px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;border:1px solid #e8e2d4;overflow:hidden;">
+            <tr><td style="padding:18px 16px;text-align:center;">
+              <div style="font-family:Georgia,'Times New Roman',serif;font-size:32px;font-weight:bold;color:${accent};line-height:1;">${venueCount}</div>
+              <div style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#aaa;margin-top:5px;">Active Venues</div>
+            </td></tr>
+          </table>
+        </td>
+        <td width="33%" style="padding:0 0 0 6px;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;border:1px solid #e8e2d4;overflow:hidden;">
+            <tr><td style="padding:18px 16px;text-align:center;">
+              <div style="font-family:Georgia,'Times New Roman',serif;font-size:32px;font-weight:bold;color:${accent};line-height:1;">${recurringCount}</div>
+              <div style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#aaa;margin-top:5px;">Weekly Recurring</div>
+            </td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </td></tr>`;
+
+  // ── VENUE SECTIONS ──
   let sections='';
   VENUES_ORDER.forEach(v=>{
     const vevs=evs.filter(e=>e.venue===v);
@@ -699,45 +738,44 @@ function buildReport(){
     let eventRows='';
     vevs.forEach((e,i)=>{
       let datePart='';
-      if(e.type==='recurring') datePart='<span style="background:#e8f4ec;color:#2e7a4e;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:0.05em;">🔁 RECURRING</span>';
-      else if(e.date){ datePart=`<span style="font-family:Georgia,serif;font-size:13px;font-weight:bold;color:${accent};">${numDate(e.date)}</span>`; if(e.endDate) datePart+=`<span style="font-size:11px;color:#999;"> – ${numDate(e.endDate)}</span>`; }
+      if(e.type==='recurring'){
+        datePart=`<span style="display:inline-block;background:#eaf6ef;color:#2a7a4a;font-family:Arial,sans-serif;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.06em;border:1px solid #c5e8d4;">🔁 RECURRING</span>`;
+      } else if(e.date){
+        datePart=`<span style="font-family:Georgia,serif;font-size:15px;font-weight:bold;color:${accent};">${shortDate(e.date)}</span>`;
+        if(e.endDate) datePart+=`<span style="font-family:Arial,sans-serif;font-size:11px;color:#bbb;"> &ndash; ${shortDate(e.endDate)}</span>`;
+      }
       const isBig=e.type==='big';
-      const rowBg=i%2===0?'#ffffff':'#f9f6f0';
+      const rowBg=i%2===0?'#ffffff':'#faf7f2';
+      const nameSuffix=isBig?` <span style="display:inline-block;background:${accent};color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:0.08em;vertical-align:middle;margin-left:6px;">BIG EVENT</span>`:'';
       eventRows+=`
         <tr style="background:${rowBg};">
-          <td style="padding:10px 14px;width:130px;vertical-align:middle;border-bottom:1px solid #ede8db;">
-            ${datePart||'<span style="color:#ccc;font-size:11px;">—</span>'}
+          <td style="padding:12px 16px;width:120px;vertical-align:top;border-bottom:1px solid #ede8db;">
+            ${datePart||'<span style="color:#ddd;font-size:11px;">—</span>'}
           </td>
-          <td style="padding:10px 14px;vertical-align:middle;border-bottom:1px solid #ede8db;">
-            ${isBig?'<span style="font-size:13px;margin-right:5px;">⭐</span>':''}
-            <span style="font-family:Arial,sans-serif;font-size:13px;color:#1a1a1a;font-weight:${isBig?'700':'400'};">${e.name}</span>
-            ${e.note?`<div style="font-family:Arial,sans-serif;font-size:11px;color:#999;font-style:italic;margin-top:2px;">📌 ${e.note}</div>`:''}
+          <td style="padding:12px 16px;vertical-align:top;border-bottom:1px solid #ede8db;">
+            <span style="font-family:Arial,sans-serif;font-size:13px;color:#1a1a1a;font-weight:${isBig?'700':'500'};line-height:1.4;">${e.name}${nameSuffix}</span>
+            ${e.note?`<div style="font-family:Arial,sans-serif;font-size:11px;color:#999;font-style:italic;margin-top:4px;padding-top:4px;border-top:1px dashed #ede8db;">📌 ${e.note}</div>`:''}
           </td>
         </tr>`;
     });
 
     sections+=`
-    <!-- VENUE SECTION -->
-    <tr><td style="padding:22px 24px 0;">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:6px;overflow:hidden;border:1px solid #e0dbd0;">
-        <!-- Venue Header -->
+    <tr><td style="padding:24px 28px 0;">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:10px;overflow:hidden;border:1px solid #e0dbd0;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
         <tr style="background:${accent};">
-          <td colspan="2" style="padding:11px 14px;">
-            <table width="100%" cellpadding="0" cellspacing="0">
-              <tr>
-                <td><span style="font-family:Georgia,'Times New Roman',serif;font-size:14px;font-weight:bold;color:#ffffff;letter-spacing:0.14em;text-transform:uppercase;">♦ ${v}</span></td>
-                <td align="right"><span style="font-family:Arial,sans-serif;font-size:10px;color:rgba(255,255,255,0.6);letter-spacing:0.05em;">${vevs.length} EVENT${vevs.length!==1?'S':''}</span></td>
-              </tr>
-            </table>
+          <td colspan="2" style="padding:13px 16px;">
+            <table width="100%" cellpadding="0" cellspacing="0"><tr>
+              <td><span style="font-family:Georgia,'Times New Roman',serif;font-size:13px;font-weight:bold;color:#ffffff;letter-spacing:0.16em;text-transform:uppercase;">♦ &nbsp;${v}</span></td>
+              <td align="right"><span style="font-family:Arial,sans-serif;font-size:10px;color:rgba(255,255,255,0.65);letter-spacing:0.08em;">${vevs.length} EVENT${vevs.length!==1?'S':''}</span></td>
+            </tr></table>
           </td>
         </tr>
-        <!-- Column Headers -->
-        <tr style="background:#f2ede2;">
-          <td style="padding:6px 14px;width:130px;border-bottom:2px solid ${accent};">
-            <span style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;color:#999;letter-spacing:0.12em;text-transform:uppercase;">DATE</span>
+        <tr style="background:#f5f1e8;">
+          <td style="padding:7px 16px;width:120px;border-bottom:2px solid ${accent};">
+            <span style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;color:#bbb;letter-spacing:0.14em;text-transform:uppercase;">DATE</span>
           </td>
-          <td style="padding:6px 14px;border-bottom:2px solid ${accent};">
-            <span style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;color:#999;letter-spacing:0.12em;text-transform:uppercase;">EVENT</span>
+          <td style="padding:7px 16px;border-bottom:2px solid ${accent};">
+            <span style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;color:#bbb;letter-spacing:0.14em;text-transform:uppercase;">EVENT</span>
           </td>
         </tr>
         ${eventRows}
@@ -746,56 +784,83 @@ function buildReport(){
   });
 
   const html=`
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f0e8;max-width:680px;margin:0 auto;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f0ece0;font-family:Arial,Helvetica,sans-serif;">
+<tr><td>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:660px;margin:0 auto;background:#f0ece0;">
 
-  <!-- HEADER BANNER -->
-  <tr><td style="background:${accent};padding:0;">
-    <table width="100%" cellpadding="0" cellspacing="0">
+  <!-- TOP LABEL -->
+  <tr><td style="padding:20px 28px 0;text-align:center;">
+    <span style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#aaa;">PACE PROPERTY EVENTS INTELLIGENCE</span>
+  </td></tr>
+
+  <!-- HERO HEADER -->
+  <tr><td style="padding:12px 28px 0;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${accent};border-radius:12px;overflow:hidden;">
       <tr>
-        <td style="padding:32px 28px 24px;">
-          <div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;color:rgba(255,255,255,0.55);text-transform:uppercase;margin-bottom:8px;">♠ ♥ ♦ ♣ &nbsp; PACE PROPERTY EVENTS</div>
-          <div style="font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:bold;color:#ffffff;letter-spacing:0.06em;text-transform:uppercase;line-height:1.2;">${title}</div>
-          <div style="margin-top:12px;height:1px;background:rgba(255,255,255,0.2);"></div>
-          <div style="margin-top:12px;font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.7);">${dateStr}</div>
-        </td>
-        <td style="padding:28px 28px 24px;text-align:right;vertical-align:top;">
-          <div style="display:inline-block;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:12px 18px;text-align:center;">
-            <div style="font-family:Georgia,serif;font-size:28px;font-weight:bold;color:#ffffff;">${totalCount}</div>
-            <div style="font-family:Arial,sans-serif;font-size:9px;color:rgba(255,255,255,0.65);letter-spacing:0.12em;text-transform:uppercase;margin-top:2px;">Upcoming</div>
-          </div>
+        <td style="padding:36px 32px 28px;">
+          <!-- Suits watermark row -->
+          <div style="font-size:11px;letter-spacing:8px;color:rgba(255,255,255,0.2);margin-bottom:16px;">♠ ♥ ♦ ♣</div>
+          <!-- Title -->
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:30px;font-weight:bold;color:#ffffff;letter-spacing:0.05em;text-transform:uppercase;line-height:1.2;">${title}</div>
+          <!-- Divider -->
+          <div style="margin:16px 0;height:1px;background:rgba(255,255,255,0.2);"></div>
+          <!-- Meta row -->
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td>
+                <div style="font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.7);">${dateStr}</div>
+                <div style="font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;">TO: <strong style="color:rgba(255,255,255,0.85);">${to}</strong></div>
+              </td>
+              <td align="right" style="vertical-align:middle;">
+                <div style="display:inline-block;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.28);border-radius:8px;padding:10px 20px;text-align:center;">
+                  <div style="font-family:Georgia,serif;font-size:30px;font-weight:bold;color:#ffffff;line-height:1;">${upcomingCount}</div>
+                  <div style="font-family:Arial,sans-serif;font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:0.14em;text-transform:uppercase;margin-top:3px;">Upcoming</div>
+                </div>
+              </td>
+            </tr>
+          </table>
         </td>
       </tr>
     </table>
   </td></tr>
 
-  <!-- TO BAR -->
-  <tr><td style="background:#ffffff;padding:12px 28px;border-bottom:3px solid ${accent};">
-    <table width="100%" cellpadding="0" cellspacing="0">
-      <tr>
-        <td><span style="font-family:Arial,sans-serif;font-size:11px;color:#888;">TO:</span> <strong style="font-family:Arial,sans-serif;font-size:12px;color:#333;">${to}</strong></td>
-        <td align="right"><span style="font-family:Arial,sans-serif;font-size:10px;color:#aaa;">Prepared by PACE Events Intelligence</span></td>
-      </tr>
-    </table>
+  <!-- STAT BOXES -->
+  ${statsRow}
+
+  <!-- SECTION LABEL -->
+  <tr><td style="padding:0 28px 12px;">
+    <table width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td style="border-top:2px solid ${accent};padding-top:10px;">
+        <span style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:${accent};">EVENTS BY VENUE</span>
+      </td>
+    </tr></table>
   </td></tr>
 
   <!-- VENUE SECTIONS -->
   ${sections}
 
   <!-- SPACER -->
-  <tr><td style="padding:20px;"></td></tr>
+  <tr><td style="padding:28px;"></td></tr>
 
   <!-- FOOTER -->
-  <tr><td style="background:${accent};padding:20px 28px;">
-    <table width="100%" cellpadding="0" cellspacing="0">
-      <tr>
-        <td><span style="font-family:Georgia,serif;font-size:11px;color:#ffffff;font-weight:bold;letter-spacing:0.1em;">PACE PROPERTY EVENTS</span><br>
-          <span style="font-family:Arial,sans-serif;font-size:10px;color:rgba(255,255,255,0.55);letter-spacing:0.06em;">Events Intelligence Report</span>
-        </td>
-        <td align="right" style="font-family:Arial,sans-serif;font-size:18px;color:rgba(255,255,255,0.3);letter-spacing:6px;">♠ ♥ ♦ ♣</td>
-      </tr>
+  <tr><td style="padding:0 28px 28px;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:${accent};border-radius:10px;overflow:hidden;">
+      <tr><td style="padding:22px 28px;">
+        <table width="100%" cellpadding="0" cellspacing="0"><tr>
+          <td>
+            <div style="font-family:Georgia,serif;font-size:13px;font-weight:bold;color:#ffffff;letter-spacing:0.1em;">PACE PROPERTY EVENTS</div>
+            <div style="font-family:Arial,sans-serif;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.08em;margin-top:3px;">Events Intelligence Report &nbsp;·&nbsp; Confidential</div>
+          </td>
+          <td align="right">
+            <span style="font-family:Arial,sans-serif;font-size:20px;color:rgba(255,255,255,0.25);letter-spacing:8px;">♠ ♥ ♦ ♣</span>
+          </td>
+        </tr></table>
+      </td></tr>
     </table>
   </td></tr>
 
+</table>
+</td></tr>
 </table>`;
 
   document.getElementById('reportContent').innerHTML=html;
@@ -809,30 +874,36 @@ function openReport(){
 }
 function closeReport(){document.getElementById('reportModal').classList.remove('open');}
 
-function copyHtml(btn){
+function copyEmail(btn){
   const {html}=buildReport();
-  navigator.clipboard.writeText(html).then(()=>{
-    btn.textContent='✓ Copied!';
-    setTimeout(()=>btn.textContent='Copy HTML',2000);
-  });
+  // Try to copy as rich HTML first (works in Gmail/Outlook when pasted)
+  try{
+    const blob=new Blob([html],{type:'text/html'});
+    const item=new ClipboardItem({'text/html':blob});
+    navigator.clipboard.write([item]).then(()=>{
+      btn.textContent='✓ Copied!';
+      setTimeout(()=>btn.textContent='📋 Copy Email',2000);
+    }).catch(()=>fallbackCopyText(btn));
+  }catch(e){fallbackCopyText(btn);}
 }
-function copyText(btn){
+function fallbackCopyText(btn){
+  // Plain text fallback
   const {evs,title,dateStr,to}=buildReport();
   let t=`${title}\n${dateStr}\nTo: ${to}\n\n`;
   VENUES_ORDER.forEach(v=>{
     const vevs=evs.filter(e=>e.venue===v);if(!vevs.length)return;
-    t+=`${v}\n`;
+    t+=`── ${v} ──\n`;
     vevs.forEach(e=>{
       let d='';
       if(e.type==='recurring')d='Recurring';
       else if(e.date){d=shortDate(e.date);if(e.endDate)d+=' – '+shortDate(e.endDate);}
-      t+=`${d?d+' - ':''}${e.name}\n`;
+      t+=`${d?d+' · ':''}${e.name}${e.note?' ('+e.note+')':''}\n`;
     });
     t+='\n';
   });
   navigator.clipboard.writeText(t.trimEnd()).then(()=>{
     btn.textContent='✓ Copied!';
-    setTimeout(()=>btn.textContent='📋 Copy Plain Text',2000);
+    setTimeout(()=>btn.textContent='📋 Copy Email',2000);
   });
 }
 
