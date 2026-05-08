@@ -186,6 +186,116 @@
 [data-theme="pace-gold"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(212,168,67,0.18);}
 [data-theme="pace-gold"] .logo-suits{color:#1cc8c8;opacity:0.9;}
 
+
+/* FLAMINGO THEME — hot pink & gold glam */
+[data-theme="flamingo"]{
+  --deep:#1a0810;--surface:#280d18;--surface2:#361220;--surface3:#421828;
+  --gold:#f06292;--gold-light:#f48fb1;--gold-bright:#fce4ec;--gold-dim:#c2185b;--gold-glow:rgba(240,98,146,0.12);
+  --text:#fce4ec;--text-dim:#f48fb1;--muted:#8a4060;
+  --border:rgba(240,98,146,0.22);--border-bright:rgba(240,98,146,0.48);
+}
+[data-theme="flamingo"] body{
+  background-image:
+    radial-gradient(ellipse at 20% 0%,rgba(240,98,146,0.14) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 100%,rgba(255,182,193,0.08) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(240,98,146,0.025) 39px,rgba(240,98,146,0.025) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(240,98,146,0.015) 39px,rgba(240,98,146,0.015) 40px);
+}
+[data-theme="flamingo"] body::before{content:'♡  ♡  ♡  ♡  ♡  ♡  ♡  ♡';color:rgba(240,98,146,0.04);font-size:72px;}
+[data-theme="flamingo"] header{background:linear-gradient(135deg,#0f040a 0%,#280d18 60%,#1a0810 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 60px rgba(240,98,146,0.08),0 1px 0 rgba(240,98,146,0.4);}
+[data-theme="flamingo"] .sidebar{background:linear-gradient(180deg,#120610 0%,#280d18 100%);}
+[data-theme="flamingo"] .logo-text{background:linear-gradient(135deg,#c2185b 0%,#fce4ec 50%,#c2185b 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="flamingo"] .event-card{background:rgba(20,5,12,0.97);}
+[data-theme="flamingo"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(240,98,146,0.2);}
+[data-theme="flamingo"] .logo-suits{color:#f06292;opacity:0.9;}
+
+/* PASTEL THEME — soft lavender & rose */
+[data-theme="pastel"]{
+  --deep:#1a1424;--surface:#221a2e;--surface2:#2c2238;--surface3:#362a44;
+  --gold:#c9a0dc;--gold-light:#e8c8f4;--gold-bright:#f4e4ff;--gold-dim:#9b6bb8;--gold-glow:rgba(201,160,220,0.1);
+  --text:#f4eeff;--text-dim:#d4b8ec;--muted:#806898;
+  --border:rgba(201,160,220,0.2);--border-bright:rgba(201,160,220,0.42);
+}
+[data-theme="pastel"] body{
+  background-image:
+    radial-gradient(ellipse at 10% 0%,rgba(255,182,193,0.1) 0%,transparent 50%),
+    radial-gradient(ellipse at 90% 100%,rgba(176,224,230,0.1) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(201,160,220,0.02) 39px,rgba(201,160,220,0.02) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(201,160,220,0.012) 39px,rgba(201,160,220,0.012) 40px);
+}
+[data-theme="pastel"] body::before{content:'✿  ✦  ✿  ✦  ✿  ✦  ✿  ✦';color:rgba(201,160,220,0.04);font-size:72px;}
+[data-theme="pastel"] header{background:linear-gradient(135deg,#0e0a18 0%,#221a2e 60%,#1a1424 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 60px rgba(201,160,220,0.07),0 1px 0 rgba(201,160,220,0.35);}
+[data-theme="pastel"] .sidebar{background:linear-gradient(180deg,#100c1c 0%,#221a2e 100%);}
+[data-theme="pastel"] .logo-text{background:linear-gradient(135deg,#9b6bb8 0%,#ffd6e8 45%,#9b6bb8 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="pastel"] .event-card{background:rgba(16,10,24,0.97);}
+[data-theme="pastel"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(201,160,220,0.18);}
+[data-theme="pastel"] .logo-suits{color:#c9a0dc;opacity:0.9;}
+
+/* GHIBLI THEME — earthy sage & warm gold, Studio Ghibli inspired */
+[data-theme="ghibli"]{
+  --deep:#0e1408;--surface:#141c0c;--surface2:#1c2812;--surface3:#243418;
+  --gold:#a8c060;--gold-light:#c8e090;--gold-bright:#e8f4c0;--gold-dim:#6a8a30;--gold-glow:rgba(168,192,96,0.1);
+  --text:#f0f4e0;--text-dim:#b8cc88;--muted:#6a7848;
+  --border:rgba(168,192,96,0.2);--border-bright:rgba(168,192,96,0.42);
+}
+[data-theme="ghibli"] body{
+  background-image:
+    radial-gradient(ellipse at 20% 0%,rgba(168,192,96,0.1) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 100%,rgba(180,140,80,0.08) 0%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(168,192,96,0.02) 39px,rgba(168,192,96,0.02) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(168,192,96,0.012) 39px,rgba(168,192,96,0.012) 40px);
+}
+[data-theme="ghibli"] body::before{content:'✦  ❋  ✦  ❋  ✦  ❋  ✦  ❋';color:rgba(168,192,96,0.04);font-size:72px;}
+[data-theme="ghibli"] header{background:linear-gradient(135deg,#060c04 0%,#141c0c 60%,#0e1408 100%);box-shadow:0 2px 40px rgba(0,0,0,0.9),0 0 60px rgba(168,192,96,0.07),0 1px 0 rgba(168,192,96,0.35);}
+[data-theme="ghibli"] .sidebar{background:linear-gradient(180deg,#080e06 0%,#141c0c 100%);}
+[data-theme="ghibli"] .logo-text{background:linear-gradient(135deg,#6a8a30 0%,#e8f4c0 45%,#6a8a30 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="ghibli"] .event-card{background:rgba(8,12,4,0.97);}
+[data-theme="ghibli"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(168,192,96,0.18);}
+[data-theme="ghibli"] .logo-suits{color:#a8c060;opacity:0.9;}
+
+/* POKER NIGHT THEME — deep felt green + ivory */
+[data-theme="poker"]{
+  --deep:#030e06;--surface:#061508;--surface2:#0a1e0c;--surface3:#0e2810;
+  --gold:#f5e642;--gold-light:#fff176;--gold-bright:#ffff8d;--gold-dim:#b8a800;--gold-glow:rgba(245,230,66,0.1);
+  --text:#fffff0;--text-dim:#c8e0b0;--muted:#4a7060;
+  --border:rgba(245,230,66,0.2);--border-bright:rgba(245,230,66,0.42);
+}
+[data-theme="poker"] body{
+  background-image:
+    radial-gradient(ellipse at 50% 50%,rgba(10,40,16,0.8) 0%,transparent 70%),
+    repeating-linear-gradient(0deg,transparent,transparent 19px,rgba(245,230,66,0.018) 19px,rgba(245,230,66,0.018) 20px),
+    repeating-linear-gradient(90deg,transparent,transparent 19px,rgba(245,230,66,0.012) 19px,rgba(245,230,66,0.012) 20px);
+}
+[data-theme="poker"] body::before{content:'♠  ♥  ♦  ♣  ♠  ♥  ♦  ♣';color:rgba(245,230,66,0.04);font-size:72px;}
+[data-theme="poker"] header{background:linear-gradient(180deg,#010802 0%,#061508 100%);box-shadow:0 2px 40px rgba(0,0,0,0.95),0 0 60px rgba(245,230,66,0.06),0 1px 0 rgba(245,230,66,0.3);}
+[data-theme="poker"] .sidebar{background:linear-gradient(180deg,#020a04 0%,#061508 100%);}
+[data-theme="poker"] .logo-text{background:linear-gradient(135deg,#b8a800 0%,#ffff8d 50%,#b8a800 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="poker"] .event-card{background:rgba(3,10,4,0.97);}
+[data-theme="poker"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(245,230,66,0.18);}
+[data-theme="poker"] .logo-suits{color:#f5e642;opacity:0.9;}
+
+/* DICE THEME — crisp white & black with red pips */
+[data-theme="dice"]{
+  --deep:#080808;--surface:#101010;--surface2:#181818;--surface3:#202020;
+  --gold:#e84040;--gold-light:#ff7070;--gold-bright:#ffaaaa;--gold-dim:#a02020;--gold-glow:rgba(232,64,64,0.1);
+  --text:#f8f8f8;--text-dim:#c0c0c0;--muted:#707070;
+  --border:rgba(232,64,64,0.22);--border-bright:rgba(232,64,64,0.45);
+}
+[data-theme="dice"] body{
+  background-image:
+    radial-gradient(ellipse at 30% 20%,rgba(232,64,64,0.06) 0%,transparent 40%),
+    radial-gradient(ellipse at 70% 80%,rgba(232,64,64,0.04) 0%,transparent 40%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,0.02) 39px,rgba(255,255,255,0.02) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,0.015) 39px,rgba(255,255,255,0.015) 40px);
+}
+[data-theme="dice"] body::before{content:'⚀  ⚁  ⚂  ⚃  ⚄  ⚅  ⚀  ⚁';color:rgba(255,255,255,0.03);font-size:72px;}
+[data-theme="dice"] header{background:linear-gradient(180deg,#020202 0%,#101010 100%);box-shadow:0 2px 40px rgba(0,0,0,0.95),0 0 50px rgba(232,64,64,0.05),0 1px 0 rgba(232,64,64,0.3);}
+[data-theme="dice"] .sidebar{background:linear-gradient(180deg,#040404 0%,#101010 100%);}
+[data-theme="dice"] .logo-text{background:linear-gradient(135deg,#a02020 0%,#ffaaaa 50%,#a02020 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+[data-theme="dice"] .event-card{background:rgba(6,6,6,0.97);}
+[data-theme="dice"] .event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(232,64,64,0.2);}
+[data-theme="dice"] .logo-suits{color:#e84040;opacity:0.9;}
+
 /* BASE STYLES */
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
@@ -241,6 +351,11 @@ header{
 .theme-dot[data-t="pace-dark"]{background:linear-gradient(135deg,#010810,#00d4c8);box-shadow:0 0 4px rgba(0,212,200,0.6);}
 .theme-dot[data-t="pace-navy"]{background:linear-gradient(135deg,#030818,#3a9cff);box-shadow:0 0 4px rgba(58,156,255,0.5);}
 .theme-dot[data-t="pace-gold"]{background:linear-gradient(135deg,#080a0e,#1cc8c8,#d4a843);box-shadow:0 0 4px rgba(212,168,67,0.4);}
+.theme-dot[data-t="flamingo"]{background:linear-gradient(135deg,#280d18,#f06292);box-shadow:0 0 4px rgba(240,98,146,0.6);}
+.theme-dot[data-t="pastel"]{background:linear-gradient(135deg,#221a2e,#c9a0dc,#ffd6e8);box-shadow:0 0 4px rgba(201,160,220,0.5);}
+.theme-dot[data-t="ghibli"]{background:linear-gradient(135deg,#141c0c,#a8c060);box-shadow:0 0 4px rgba(168,192,96,0.5);}
+.theme-dot[data-t="poker"]{background:linear-gradient(135deg,#061508,#f5e642);box-shadow:0 0 4px rgba(245,230,66,0.5);}
+.theme-dot[data-t="dice"]{background:linear-gradient(135deg,#101010,#e84040);box-shadow:0 0 4px rgba(232,64,64,0.5);}
 
 /* BUTTONS */
 .btn{font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.07em;
@@ -450,7 +565,7 @@ select option{background:#0d0b05;}
       <span class="logo-suits">♠ <span class="red">♥</span> <span class="red">♦</span> ♣</span>
       <div>
         <div class="logo-text">PACE EVENTS</div>
-        <div class="logo-sub">Property Events Intelligence</div>
+        <div class="logo-sub">Gaming Events Tracker</div>
       </div>
     </div>
   </div>
@@ -618,19 +733,27 @@ select option{background:#0d0b05;}
             <option value="felt">♠️ Felt Green</option>
             </optgroup>
             <optgroup label="── PACE Brand ──">
-            <option value="pace">◈ PACE Gaming</option>
+            <option value="pace">◈ PACE Gaming Teal</option>
+            <option value="pace-dark">◈ PACE Gaming Dark</option>
+            <option value="pace-navy">◈ PACE Gaming Navy</option>
+            <option value="pace-gold">◈ PACE Gaming Gold</option>
             </optgroup>
           </select>
         </div>
       </div>
 
       <!-- Draft Tabs -->
-      <div class="email-tabs">
+      <div class="email-tabs" style="flex-wrap:wrap;">
         <div class="email-tab active" onclick="setDraft('standard',this)">📋 Standard</div>
         <div class="email-tab" onclick="setDraft('brief',this)">⚡ Brief</div>
         <div class="email-tab" onclick="setDraft('formal',this)">🎩 Formal</div>
         <div class="email-tab" onclick="setDraft('excited',this)">🎉 Exciting</div>
         <div class="email-tab" onclick="setDraft('reminder',this)">🔔 Reminder</div>
+        <div class="email-tab" onclick="setDraft('vip',this)">💎 VIP</div>
+        <div class="email-tab" onclick="setDraft('sales',this)">🎯 Sales Push</div>
+        <div class="email-tab" onclick="setDraft('weekly',this)">📅 Weekly Digest</div>
+        <div class="email-tab" onclick="setDraft('newalerts',this)">🚨 New Alert</div>
+        <div class="email-tab" onclick="setDraft('client',this)">🤝 Client-Facing</div>
       </div>
 
       <div class="email-preview-wrap" id="reportContent"></div>
@@ -646,7 +769,7 @@ select option{background:#0d0b05;}
 const IS_VIEW = new URLSearchParams(location.search).has('view');
 
 // ── THEME SWITCHER ──
-const THEMES=['gold','navy','emerald','purple','red','slate','casino','pace','pace-dark','pace-navy','pace-gold'];
+const THEMES=['gold','navy','emerald','purple','red','slate','casino','pace','pace-dark','pace-navy','pace-gold','flamingo','pastel','ghibli','poker','dice'];
 const _urlTheme = new URLSearchParams(location.search).get('theme');
 let currentCRMTheme = (_urlTheme && THEMES.includes(_urlTheme))
   ? _urlTheme
@@ -662,14 +785,18 @@ function applyTheme(t){
   const suits = document.querySelector('.logo-suits');
   if(suits){
     if(t==='pace'||t==='pace-dark'||t==='pace-navy'||t==='pace-gold'){suits.innerHTML='◈ <span style="color:var(--gold)">◆</span> ◈';}
+    else if(t==='flamingo'){suits.innerHTML='♡ <span style="color:#f06292">♡</span> ♡';}
+    else if(t==='pastel'){suits.innerHTML='✿ <span style="color:#c9a0dc">✦</span> ✿';}
+    else if(t==='ghibli'){suits.innerHTML='✦ <span style="color:#a8c060">❋</span> ✦';}
+    else if(t==='poker'){suits.innerHTML='♠ <span style="color:#f5e642">♣</span> ♠';}
+    else if(t==='dice'){suits.innerHTML='⚀ <span style="color:#e84040">⚄</span> ⚀';}
     else if(t==='casino'){suits.innerHTML='♠ <span class="red">♥</span> <span style="color:#00e676">♦</span> ♣';}
     else{suits.innerHTML='♠ <span class="red">♥</span> <span class="red">♦</span> ♣';}
   }
   localStorage.setItem('pace_crm_theme',t);
 }
 
-const THEME_LABELS={gold:'Gold',navy:'Navy',emerald:'Emerald',purple:'Purple',red:'Red',slate:'Slate',casino:'🃏 Casino',pace:'◈ PACE',
-  'pace-dark':'◈ PACE Dark','pace-navy':'◈ PACE Navy','pace-gold':'◈ PACE Gold'};
+const THEME_LABELS={gold:'Gold',navy:'Navy',emerald:'Emerald',purple:'Purple',red:'Red',slate:'Slate',casino:'🃏 Casino',pace:'◈ PACE','pace-dark':'◈ PACE Dark','pace-navy':'◈ PACE Navy','pace-gold':'◈ PACE Gold',flamingo:'🦩 Flamingo',pastel:'🌸 Pastel',ghibli:'🌿 Ghibli',poker:'♠ Poker Night',dice:'🎲 Dice'};
 function buildThemeDots(){
   return THEMES.map(t=>`<div class="theme-dot${t===currentCRMTheme?' active':''}" data-t="${t}" title="${THEME_LABELS[t]||t} Theme" onclick="applyTheme('${t}')"></div>`).join('');
 }
@@ -1025,7 +1152,10 @@ const EMAIL_THEMES={
   neon:    {bg:'#0a0a14',headerBg:'#000008',headerText:'#ff00ff',accent:'#ff00ff',venueBg:'#100010',venueText:'#00ffff',rowAlt:'#0e0e1a',border:'#ff00ff55',linkColor:'#ff00ff',bodyText:'#e0e0ff',divider:'#00ffff',dark:true,suits:'★ ✦ ★ ✦'},
   jackpot: {bg:'#1a0000',headerBg:'#2a0000',headerText:'#ffd700',accent:'#ff4444',venueBg:'#200000',venueText:'#ffd700',rowAlt:'#1f0505',border:'#8b0000',linkColor:'#ff6b6b',bodyText:'#ffe0e0',divider:'#cc0000',dark:true,suits:'7 ♠ 7 ♣'},
   felt:    {bg:'#f5fff8',headerBg:'#1a4a2e',headerText:'#f5e642',accent:'#1a7a3a',venueBg:'#1a4a2e',venueText:'#f5e642',rowAlt:'#e0f5e8',border:'#a0d4b0',linkColor:'#0f6030',bodyText:'#0a2a18',divider:'#2ea84e',suits:'♦ ♠ ♦ ♣'},
-  pace:    {bg:'#f0fbff',headerBg:'#0d2240',headerText:'#1cc8c8',accent:'#0a6e8a',venueBg:'#091c38',venueText:'#1cc8c8',rowAlt:'#ddf5ff',border:'#7adce8',linkColor:'#0a5a70',bodyText:'#061828',divider:'#1cc8c8',logo:true},
+  pace:       {bg:'#f0fbff',headerBg:'#0d2240',headerText:'#1cc8c8',accent:'#0a6e8a',venueBg:'#091c38',venueText:'#1cc8c8',rowAlt:'#ddf5ff',border:'#7adce8',linkColor:'#0a5a70',bodyText:'#061828',divider:'#1cc8c8',logo:true},
+  'pace-dark':{bg:'#e8f8fc',headerBg:'#010810',headerText:'#00d4c8',accent:'#007a78',venueBg:'#030f1e',venueText:'#4de8e0',rowAlt:'#d4f2f8',border:'#60c8d8',linkColor:'#006068',bodyText:'#04121e',divider:'#00d4c8',logo:true},
+  'pace-navy':{bg:'#eef4ff',headerBg:'#030818',headerText:'#3a9cff',accent:'#1060c0',venueBg:'#050d28',venueText:'#80c0ff',rowAlt:'#dce8ff',border:'#80aae0',linkColor:'#0848a0',bodyText:'#040a20',divider:'#3a9cff',logo:true},
+  'pace-gold':{bg:'#faf8f2',headerBg:'#080a0e',headerText:'#d4a843',accent:'#8a6e22',venueBg:'#0e1016',venueText:'#f0cc70',rowAlt:'#f4efd8',border:'#d8c880',linkColor:'#6a5018',bodyText:'#0e0c08',divider:'#1cc8c8',logo:true},
 };
 
 const DRAFT_CONFIGS = {
@@ -1033,36 +1163,71 @@ const DRAFT_CONFIGS = {
     greeting: 'Hi Team,',
     intro: 'Please see the list of upcoming property events below.',
     link: 'For the full list, please click this link to view:',
-    closing: 'Thank you',
+    closing: 'Thank you,\nPACE Gaming — Property Events Team',
     subject: 'Upcoming Property Events'
   },
   brief: {
     greeting: 'Team,',
-    intro: 'Quick update — here are upcoming property events:',
+    intro: 'Quick update — here are the upcoming property events:',
     link: 'Full list:',
-    closing: 'Thanks',
+    closing: 'Thanks,\nPACE Gaming',
     subject: 'Property Events Update'
   },
   formal: {
     greeting: 'Dear Team,',
     intro: 'I hope this message finds you well. Please find below a comprehensive overview of the upcoming property events scheduled across all venues.',
     link: 'For complete event details and real-time updates, please visit our events tracker:',
-    closing: 'Best regards,\nPACE Property Events Team',
-    subject: 'PACE Property Events — Upcoming Schedule'
+    closing: 'Best regards,\nPACE Gaming Events Team',
+    subject: 'PACE Gaming — Upcoming Property Events Schedule'
   },
   excited: {
     greeting: '🎉 Hey Team!',
     intro: "We have an incredible lineup of upcoming property events — don't miss out on these amazing opportunities!",
     link: '🔗 See the full lineup here:',
-    closing: "Let's make it happen! 🚀",
+    closing: "Let's make it happen! 🚀\n— PACE Gaming Events Team",
     subject: '🎰 Exciting Property Events Coming Up!'
   },
   reminder: {
     greeting: 'Hi Team,',
     intro: 'Friendly reminder — please take note of the upcoming property events. Ensure all arrangements are confirmed in advance.',
     link: '📅 View the complete events calendar:',
-    closing: 'Thank you for your attention.\nPACE Property Events',
+    closing: 'Thank you for your attention.\nPACE Gaming — Property Events',
     subject: '⏰ Reminder: Upcoming Property Events'
+  },
+  vip: {
+    greeting: 'Dear Valued Partner,',
+    intro: 'We are pleased to share an exclusive preview of our upcoming property events. These carefully curated experiences represent the finest opportunities across our premier venues — reserved for our most valued guests and partners.',
+    link: 'Access the full VIP events calendar here:',
+    closing: 'We look forward to welcoming you.\n\nWith warm regards,\nPACE Gaming — VIP Events & Hospitality',
+    subject: '◈ PACE Gaming — Exclusive Upcoming Events Preview'
+  },
+  sales: {
+    greeting: 'Hi Team,',
+    intro: "Here's your sales push update — these are the events you should be actively promoting this period. Focus on high-value opportunities and ensure your clients are aware of key dates before they fill up.",
+    link: '🎯 Full events tracker for reference:',
+    closing: "Push hard — these windows close fast!\n\nGood selling,\nPACE Gaming — Sales & Events",
+    subject: '🎯 Sales Push: Property Events to Promote Now'
+  },
+  weekly: {
+    greeting: 'Hi Team — Weekly Events Digest,',
+    intro: "Here's your weekly roundup of all active and upcoming property events across our portfolio. Use this to stay aligned with scheduling, confirm logistics, and keep clients informed.",
+    link: 'Live events tracker:',
+    closing: 'Have a great week ahead.\n\nPACE Gaming Events Team\nIssued every Monday',
+    subject: '📅 Weekly Events Digest — PACE Gaming'
+  },
+  newalerts: {
+    greeting: 'Hi Team,',
+    intro: '🚨 New events have been added to the PACE Gaming property calendar. Please review the updated list below and flag anything that needs immediate action or client communication.',
+    link: '🔔 View the live updated tracker:',
+    closing: 'Stay sharp — more events may be added soon.\n\nPACE Gaming Events Team',
+    subject: '🚨 New Events Added — PACE Gaming Property Calendar'
+  },
+  client: {
+    greeting: 'Dear [Client Name],',
+    intro: "We're excited to share the latest lineup of upcoming property events available through PACE Gaming. These events span premier venues across Las Vegas, international destinations, and more — offering exceptional experiences for your guests.",
+    link: 'Explore the full events calendar here:',
+    closing: "We'd love to discuss how we can tailor these opportunities for you. Please don't hesitate to reach out.\n\nWarm regards,\nYour PACE Gaming Events Specialist",
+    subject: 'Upcoming Property Events — PACE Gaming'
   }
 };
 
@@ -1085,14 +1250,9 @@ function buildReport(){
   let evs=showPast?events:events.filter(e=>!isPast(e));
   evs=[...evs].sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;return a.date-b.date;});
 
-  // PACE Gaming SVG logo (inline, email-safe as inline HTML)
-  const PACE_LOGO_SVG = `<svg width="120" height="38" viewBox="0 0 360 114" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="2" width="80" height="80" rx="18" fill="#1cc8c8"/>
-    <polygon points="42,14 68,42 42,70 16,42" fill="white"/>
-    <circle cx="42" cy="42" r="13" fill="#122d50"/>
-    <text x="102" y="58" font-family="Arial,sans-serif" font-size="52" font-weight="900" fill="#122d50">pace</text>
-    <text x="265" y="58" font-family="Arial,sans-serif" font-size="52" font-weight="900" fill="#1cc8c8">gaming</text>
-  </svg>`;
+  const PACE_LOGO_SVG_FULL = `<svg width="220" height="56" viewBox="0 0 220 56" xmlns="http://www.w3.org/2000/svg"><path d="M4,10 Q4,4 10,4 L42,4 Q48,4 48,10 L48,42 Q48,48 42,48 L18,48 Q10,56 4,48 Z" fill="#1cc8c8"/><rect x="14" y="14" width="20" height="20" rx="2" transform="rotate(45 24 24)" fill="white"/><circle cx="24" cy="24" r="7" fill="#1a2a5a"/><text x="58" y="37" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" fill="#1a2a5a" letter-spacing="-0.5">pace</text><text x="122" y="37" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" fill="#1cc8c8" letter-spacing="-0.5">gaming</text></svg>`;
+
+  const PACE_LOGO_SVG_SMALL = `<svg width="130" height="33" viewBox="0 0 220 56" xmlns="http://www.w3.org/2000/svg"><path d="M4,10 Q4,4 10,4 L42,4 Q48,4 48,10 L48,42 Q48,48 42,48 L18,48 Q10,56 4,48 Z" fill="#1cc8c8"/><rect x="14" y="14" width="20" height="20" rx="2" transform="rotate(45 24 24)" fill="white"/><circle cx="24" cy="24" r="7" fill="#1a2a5a"/><text x="58" y="37" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" fill="#1a2a5a" letter-spacing="-0.5">pace</text><text x="122" y="37" font-family="Arial,Helvetica,sans-serif" font-size="28" font-weight="700" fill="#1cc8c8" letter-spacing="-0.5">gaming</text></svg>`;
 
   // Casino decorative suits bar
   const suitsBar = t.suits ? `<div style="font-size:18px;letter-spacing:12px;color:${t.headerText};opacity:0.4;margin-top:10px;">${t.suits}</div>` : '';
@@ -1142,34 +1302,84 @@ function buildReport(){
 
   const html=`<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${t.bg};${bgExtra}">
 <tr><td>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;margin:0 auto;background:${t.bg};">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;margin:0 auto;background:${t.bg};font-family:Arial,sans-serif;">
+
+  <!-- HEADER BAND -->
   <tr><td style="padding:0;">
     <table width="100%" cellpadding="0" cellspacing="0" style="${headerStyle}">
-      <tr><td style="padding:28px 28px 24px;">
-        ${t.logo ? `<div style="margin-bottom:14px;">${PACE_LOGO_SVG}</div>` : `<div style="font-family:Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:10px;">PACE PROPERTY EVENTS</div>`}
+      <tr><td style="padding:26px 28px 20px;">
+
+        <!-- PACE GAMING LOGO — always shown -->
+        <div style="margin-bottom:16px;">${PACE_LOGO_SVG_FULL}</div>
+
+        <!-- Tagline strip -->
+        <div style="display:inline-block;background:rgba(28,200,200,0.15);border:1px solid rgba(28,200,200,0.35);border-radius:3px;padding:3px 10px;margin-bottom:14px;">
+          <span style="font-family:Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#1cc8c8;">PACE Gaming Events Tracker</span>
+        </div>
+
+        <!-- Email title -->
         <div style="${titleStyle}">Upcoming Property Events</div>
         ${suitsBar}
-        <div style="margin-top:14px;height:1px;background:rgba(255,255,255,0.18);"></div>
-        <div style="margin-top:10px;font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.55);">${dateStr}</div>
+
+        <!-- Divider + date -->
+        <div style="margin-top:16px;height:1px;background:linear-gradient(90deg,${t.divider},transparent);"></div>
+        <div style="margin-top:10px;font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.5);">Generated ${dateStr} &nbsp;·&nbsp; PACE Gaming</div>
       </td></tr>
     </table>
   </td></tr>
+
+  <!-- BODY COPY -->
   <tr><td style="padding:22px 28px 16px;">
-    <p style="margin:0 0 8px;font-family:Arial,sans-serif;font-size:14px;color:${t.bodyText};line-height:1.7;">${draft.greeting}</p>
-    <p style="margin:0 0 8px;font-family:Arial,sans-serif;font-size:14px;color:${t.bodyText};line-height:1.7;">${draft.intro}</p>
-    <p style="margin:0;font-family:Arial,sans-serif;font-size:14px;color:${t.bodyText};line-height:1.7;">${draft.link} <a href="${viewUrl}" style="color:${t.linkColor};font-weight:600;">${viewUrl}</a></p>
+    <p style="margin:0 0 8px;font-size:14px;color:${t.bodyText};line-height:1.8;">${draft.greeting}</p>
+    <p style="margin:0 0 8px;font-size:14px;color:${t.bodyText};line-height:1.8;">${draft.intro}</p>
+    <p style="margin:0;font-size:14px;color:${t.bodyText};line-height:1.8;">${draft.link} <a href="${viewUrl}" style="color:${t.linkColor};font-weight:700;">${viewUrl}</a></p>
   </td></tr>
+
+  <!-- ACCENT DIVIDER -->
   <tr><td style="padding:0 28px 20px;">
-    <div style="height:2px;background:${t.divider};border-radius:2px;${t.dark?'box-shadow:0 0 8px '+t.divider+'88;':''}"></div>
+    <div style="height:2px;background:linear-gradient(90deg,${t.divider},rgba(28,200,200,0.2),transparent);border-radius:2px;${t.dark?'box-shadow:0 0 8px '+t.divider+'66;':''}"></div>
   </td></tr>
+
+  <!-- EVENT VENUE BLOCKS -->
   ${venueBlocks}
-  <tr><td style="padding:4px 28px 24px;">${closingHtml}</td></tr>
-  <tr><td style="${headerStyle}padding:14px 28px;">
-    ${t.logo
-      ? `<span style="font-family:Arial,sans-serif;font-size:10px;color:#1cc8c8;letter-spacing:0.1em;text-transform:uppercase;">PACE Gaming — Property Events Intelligence</span>`
-      : `<span style="font-family:Arial,sans-serif;font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;">PACE Property Events Intelligence</span>`
-    }
+
+  <!-- CLOSING -->
+  <tr><td style="padding:4px 28px 28px;">${closingHtml}</td></tr>
+
+  <!-- BRANDED FOOTER -->
+  <tr><td style="padding:0;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="${headerStyle}border-top:2px solid ${t.divider};">
+      <tr><td style="padding:18px 28px 14px;">
+
+        <!-- Footer logo -->
+        <div style="margin-bottom:10px;">${PACE_LOGO_SVG_SMALL}</div>
+
+        <!-- Footer info row -->
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="vertical-align:top;">
+              <div style="font-size:10px;color:rgba(255,255,255,0.5);line-height:1.8;letter-spacing:0.04em;">
+                <span style="color:#1cc8c8;font-weight:700;">PACE Gaming</span> &nbsp;·&nbsp; Events Tracker<br>
+                This email was generated by the PACE Events Tracker.<br>
+                <a href="${viewUrl}" style="color:rgba(28,200,200,0.7);text-decoration:none;">View live events calendar ↗</a>
+              </div>
+            </td>
+            <td style="text-align:right;vertical-align:top;white-space:nowrap;">
+              <div style="font-size:9px;color:rgba(255,255,255,0.25);letter-spacing:0.1em;text-transform:uppercase;line-height:1.8;">
+                Confidential<br>Internal Use Only
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Footer divider & tagline -->
+        <div style="margin-top:12px;height:1px;background:rgba(28,200,200,0.15);"></div>
+        <div style="margin-top:8px;font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.15em;text-transform:uppercase;">◈ &nbsp; PACE GAMING — EVENTS TRACKER &nbsp; ◈</div>
+
+      </td></tr>
+    </table>
   </td></tr>
+
 </table>
 </td></tr>
 </table>`;
@@ -1221,7 +1431,7 @@ function fallbackCopy(btn){
 // ── SHARE ──
 function openShare(){
   const themeParam = currentCRMTheme !== 'gold' ? '&theme=' + currentCRMTheme : '';
-  const url = location.href.split('?')[0] + '?view' + themeParam;
+  const url = 'https://ajtmendoza123-tech.github.io/pace_events_tracker.html?view' + themeParam;
   document.getElementById('shareUrl').value = url;
   document.getElementById('openShareLink').href = url;
   document.getElementById('shareModal').classList.add('open');
