@@ -399,8 +399,11 @@ function uid(){return Math.random().toString(36).slice(2);}
 
 const STORAGE_KEY = 'pace_events_v1';
 
-// ── SAVE / LOAD ──
+// ── SAVE / LOAD (localStorage — works on GitHub Pages) ──
 function saveData(){
+  // Purge past events before saving
+  events = events.filter(e => e.type === 'recurring' || !isPast(e));
+
   const toSave = events.map(e=>({
     id:e.id, venue:e.venue, name:e.name,
     date:e.date?e.date.toISOString():null,
@@ -408,20 +411,31 @@ function saveData(){
     note:e.note, type:e.type
   }));
   localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+
   const b = document.getElementById('saveBtn');
-  if(b){ b.textContent='✓ Saved!'; b.style.background='linear-gradient(135deg,#1a4a2e,#2e7a4e)';
-    setTimeout(()=>{ b.textContent='💾 Save'; b.style.background=''; }, 2000); }
+  if(b){
+    b.textContent = '✓ Saved!';
+    b.style.background = 'linear-gradient(135deg,#1a4a2e,#2e7a4e)';
+    b.style.color = '#80ffb0';
+    setTimeout(()=>{
+      b.textContent = '💾 Save';
+      b.style.background = '';
+      b.style.color = '';
+      b.style.display = 'none';
+    }, 2500);
+  }
+  render();
 }
 
 function markUnsaved(){
   const b = document.getElementById('saveBtn');
-  if(b && !IS_VIEW){ b.style.display='inline-block'; b.style.animation='none'; }
+  if(b && !IS_VIEW){ b.style.display = 'inline-block'; }
 }
 
 function loadEvents(){
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if(saved){
-    try{
+  try{
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(saved){
       const arr = JSON.parse(saved);
       return arr.map(r=>({
         id:r.id, venue:r.venue, name:r.name,
@@ -429,8 +443,8 @@ function loadEvents(){
         endDate:r.endDate?new Date(r.endDate):null,
         note:r.note||'', type:r.type||'regular'
       }));
-    } catch(e){ console.warn('Failed to load saved events'); }
-  }
+    }
+  } catch(e){ console.warn('Failed to load saved events:', e); }
   return null;
 }
 
@@ -536,7 +550,7 @@ const raw=[
   {v:'DRAFTKINGS',n:'NBA Finals'},
 ];
 
-// Load from localStorage or fall back to default raw data
+// Load from embedded save / localStorage, or fall back to default raw data
 const savedEvents = loadEvents();
 if(savedEvents){
   events = savedEvents;
@@ -548,13 +562,12 @@ if(savedEvents){
   }));
 }
 
-// Auto-remove past events (keep recurring — they have no expiry)
-function purgePastEvents(){
+// Silently remove past events on load (keep recurring — they never expire)
+(function purgePastOnLoad(){
   const before = events.length;
   events = events.filter(e => e.type === 'recurring' || !isPast(e));
-  if(events.length < before) saveData(); // auto-save after purge
-}
-purgePastEvents();
+  if(events.length < before) markUnsaved(); // show save button so user knows it changed
+})();
 
 function render(){
   const t=today();
