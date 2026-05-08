@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PACE Property Events</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Raleway:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#080808;--deep:#0d0c0a;--surface:#111008;--surface2:#181510;--surface3:#1f1b12;
+  --gold:#c9a84c;--gold-light:#e8cc7a;--gold-bright:#f5df8a;--gold-dim:#6b5520;--gold-glow:rgba(201,168,76,0.1);
+  --text:#e8e0cc;--text-dim:#a09070;--muted:#5a5040;
+  --border:rgba(201,168,76,0.14);--border-bright:rgba(201,168,76,0.32);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:var(--deep);
+  background-image:
+    radial-gradient(ellipse at 15% 0%,rgba(201,168,76,0.10) 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 100%,rgba(201,168,76,0.06) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(120,30,30,0.04) 0%,transparent 70%),
+    repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(201,168,76,0.03) 39px,rgba(201,168,76,0.03) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(201,168,76,0.018) 39px,rgba(201,168,76,0.018) 40px);
+  color:var(--text);font-family:'Raleway',sans-serif;font-size:14px;min-height:100vh;
+}
+/* Casino watermark suits */
+body::before{
+  content:'♠  ♥  ♦  ♣  ♠  ♥  ♦  ♣  ♠  ♥  ♦  ♣';
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:72px;color:rgba(201,168,76,0.025);white-space:nowrap;
+  pointer-events:none;z-index:0;letter-spacing:18px;
+}
+/* HEADER */
+header{
+  border-bottom:1px solid var(--border-bright);
+  padding:0 28px;display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(180deg,#060400 0%,#0d0b05 100%);
+  height:66px;position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 40px rgba(0,0,0,0.9),0 1px 0 rgba(201,168,76,0.25),0 0 80px rgba(201,168,76,0.04);
+}
+.logo-wrap{display:flex;align-items:center;gap:14px;}
+.logo-suits{font-size:18px;opacity:0.7;letter-spacing:4px;}
+.logo-suits .red{color:#c04040;}
+.logo-text{font-family:'Playfair Display',serif;font-size:23px;font-weight:900;letter-spacing:0.14em;
+  background:linear-gradient(135deg,#b8922a 0%,#f5df8a 50%,#b8922a 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo-sub{font-size:9px;font-weight:600;letter-spacing:0.25em;color:var(--muted);text-transform:uppercase;margin-top:1px;}
+.view-badge{background:rgba(120,30,30,0.35);border:1px solid rgba(180,60,60,0.4);color:#e08080;
+  font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:3px;}
+.header-actions{display:flex;gap:8px;align-items:center;}
+/* BUTTONS */
+.btn{font-family:'Raleway',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.07em;
+  text-transform:uppercase;padding:8px 16px;border-radius:3px;border:none;cursor:pointer;transition:all 0.15s;}
+.btn-gold{background:linear-gradient(135deg,#9e7220,#e8cc7a,#9e7220);color:#060400;border:1px solid var(--gold);}
+.btn-gold:hover{background:linear-gradient(135deg,#b8922a,#f5df8a,#b8922a);}
+.btn-outline{background:transparent;color:var(--gold);border:1px solid var(--gold-dim);}
+.btn-outline:hover{border-color:var(--gold);background:var(--gold-glow);}
+.btn-ghost{background:transparent;color:var(--text-dim);border:1px solid rgba(255,255,255,0.08);font-size:11px;}
+.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,0.18);}
+.btn-danger{background:transparent;color:#b05050;border:1px solid rgba(180,80,80,0.22);font-size:10px;}
+.btn-danger:hover{background:rgba(180,80,80,0.08);}
+.btn-sm{padding:5px 11px;font-size:10px;}
+/* LAYOUT */
+.layout{display:flex;height:calc(100vh - 66px);}
+/* SIDEBAR */
+.sidebar{width:228px;flex-shrink:0;border-right:1px solid var(--border);
+  background:linear-gradient(180deg,#090700 0%,#0d0b05 100%);overflow-y:auto;padding:18px 0;}
+.sidebar-section{margin-bottom:8px;}
+.sidebar-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;color:var(--muted);
+  padding:6px 16px 3px;text-transform:uppercase;border-bottom:1px solid rgba(201,168,76,0.05);margin-bottom:2px;}
+.venue-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:7px 16px;
+  background:transparent;border:none;color:var(--text-dim);cursor:pointer;
+  font-family:'Raleway',sans-serif;font-size:12px;font-weight:500;text-align:left;
+  transition:all 0.12s;border-left:2px solid transparent;}
+.venue-btn:hover{background:var(--gold-glow);color:var(--text);}
+.venue-btn.active{background:rgba(201,168,76,0.08);border-left-color:var(--gold);color:var(--gold);}
+.venue-count{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.05);
+  border-radius:10px;padding:1px 6px;min-width:18px;text-align:center;}
+/* MAIN */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+.stats-bar{display:flex;border-bottom:1px solid var(--border);background:rgba(0,0,0,0.45);flex-shrink:0;}
+.stat{flex:1;text-align:center;padding:10px 8px;border-right:1px solid rgba(201,168,76,0.07);}
+.stat:last-child{border-right:none;}
+.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold);line-height:1;}
+.stat-label{font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;}
+.toolbar{padding:12px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;
+  background:rgba(0,0,0,0.3);flex-shrink:0;}
+.toolbar-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);flex:1;}
+.filter-pills{display:flex;gap:5px;}
+.pill{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:4px 12px;
+  border-radius:2px;cursor:pointer;border:1px solid rgba(255,255,255,0.06);transition:all 0.12s;
+  color:var(--muted);background:transparent;}
+.pill:hover{color:var(--text);}
+.pill.active{background:rgba(201,168,76,0.1);border-color:var(--gold-dim);color:var(--gold);}
+.pill.past-pill.active{background:rgba(120,30,30,0.15);border-color:rgba(180,60,60,0.35);color:#e08080;}
+.events-container{flex:1;padding:20px 24px;overflow-y:auto;}
+/* CARDS */
+.event-card{display:grid;grid-template-columns:80px 1fr auto;gap:0 16px;align-items:start;
+  padding:11px 14px;border-radius:4px;border:1px solid var(--border);
+  background:rgba(12,10,4,0.97);margin-bottom:7px;transition:all 0.18s;position:relative;overflow:hidden;}
+.event-card::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,0.03) 0%,transparent 60%);pointer-events:none;}
+.event-card::after{content:'♦';position:absolute;right:12px;top:10px;font-size:9px;color:var(--gold-dim);
+  opacity:0;transition:opacity 0.15s;}
+.event-card:hover::after{opacity:IS_VIEW?0:0;}
+.event-card:hover{border-color:rgba(201,168,76,0.32);background:rgba(18,15,5,0.99);
+  box-shadow:0 2px 20px rgba(0,0,0,0.5),inset 0 0 30px rgba(201,168,76,0.02);}
+.event-card.is-past{opacity:0.38;border-color:rgba(120,30,30,0.18);background:rgba(10,5,4,0.9);}
+.event-card.is-past .event-name{text-decoration:line-through;color:var(--muted);}
+.event-card.is-today{border-color:var(--gold);box-shadow:0 0 28px rgba(201,168,76,0.12),0 0 8px rgba(201,168,76,0.06);}
+.event-card.is-soon{border-color:rgba(201,168,76,0.3);}
+.date-block{text-align:center;padding-top:2px;}
+.date-month{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+.date-day{font-family:'Playfair Display',serif;font-size:27px;font-weight:700;line-height:1.1;color:var(--gold);}
+.date-end{font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;}
+.event-info{min-width:0;}
+.event-name{font-weight:600;font-size:13px;color:var(--text);margin-bottom:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.event-venue-label{font-size:11px;color:var(--muted);}
+.event-note{font-size:11px;color:var(--gold-dim);margin-top:3px;font-style:italic;}
+.event-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px;}
+.badge{font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 6px;border-radius:2px;}
+.badge-big{background:rgba(201,168,76,0.14);color:var(--gold);border:1px solid rgba(201,168,76,0.22);}
+.badge-rec{background:rgba(26,74,46,0.25);color:#5abf80;border:1px solid rgba(26,74,46,0.45);}
+.badge-past{background:rgba(120,30,30,0.2);color:#e08080;border:1px solid rgba(120,30,30,0.3);}
+.badge-today{background:rgba(201,168,76,0.22);color:var(--gold-bright);border:1px solid var(--gold-dim);}
+.event-actions{display:flex;flex-direction:column;gap:4px;align-items:flex-end;opacity:0;transition:opacity 0.15s;}
+.event-card:hover .event-actions{opacity:1;}
+.done-stamp{position:absolute;top:50%;right:14px;transform:translateY(-50%);
+  font-family:'Playfair Display',serif;font-size:10px;letter-spacing:0.12em;
+  color:rgba(120,30,30,0.38);pointer-events:none;font-style:italic;}
+/* ADD FORM */
+.add-form{background:var(--surface3);border:1px solid var(--border-bright);border-radius:5px;
+  padding:18px;margin-bottom:18px;display:none;}
+.add-form.open{display:block;}
+.add-form-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;
+  color:var(--gold);margin-bottom:14px;letter-spacing:0.05em;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.form-row-3{grid-template-columns:1fr 1fr 1fr;}
+.form-group{display:flex;flex-direction:column;gap:4px;}
+.form-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+input,select,textarea{font-family:'Raleway',sans-serif;font-size:13px;background:rgba(0,0,0,0.5);
+  border:1px solid rgba(201,168,76,0.14);border-radius:3px;color:var(--text);
+  padding:7px 10px;outline:none;transition:border-color 0.12s;width:100%;}
+input:focus,select:focus,textarea:focus{border-color:var(--gold-dim);}
+select option{background:#0d0b05;}
+.form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;
+  padding-top:12px;border-top:1px solid var(--border);}
+/* GROUP LABEL */
+.group-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--gold-dim);
+  padding:12px 4px 5px;border-bottom:1px solid rgba(201,168,76,0.07);
+  margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.group-label span:first-child{flex:1;}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:200;
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px);}
+.modal-overlay.open{display:flex;}
+.modal{width:740px;max-height:90vh;background:var(--surface);
+  border:1px solid var(--border-bright);border-radius:6px;
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 50px 120px rgba(0,0,0,0.95);}
+.modal-header{padding:18px 22px 14px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(180deg,#0d0b05,#111008);}
+.modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;
+  letter-spacing:0.06em;color:var(--gold);}
+.modal-body{flex:1;overflow-y:auto;padding:20px 22px;}
+.modal-footer{padding:14px 22px;border-top:1px solid var(--border);
+  display:flex;gap:8px;justify-content:flex-end;background:rgba(0,0,0,0.3);}
+/* EMAIL PREVIEW */
+.email-preview-wrap{border:1px solid rgba(201,168,76,0.12);border-radius:4px;
+  max-height:460px;overflow-y:auto;background:#f5f0e8;}
+/* EMPTY */
+.empty-state{text-align:center;padding:60px 24px;color:var(--muted);}
+.empty-icon{font-size:32px;margin-bottom:10px;opacity:0.3;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-wrap">
+    <span class="logo-suits">♠ <span class="red">♥</span> <span class="red">♦</span> ♣</span>
+    <div>
+      <div class="logo-text">PACE EVENTS</div>
+      <div class="logo-sub">Property Events Intelligence</div>
+    </div>
+  </div>
+  <div class="header-actions" id="headerActions"></div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">All</div>
+      <button class="venue-btn active" onclick="filterVenue('ALL')" id="venue-ALL">♦ All Venues <span class="venue-count" id="count-ALL">0</span></button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">International</div>
+      <button class="venue-btn" onclick="filterVenue('BIG EVENT')" id="venue-BIG EVENT">⭐ Big Events <span class="venue-count" id="count-BIG EVENT">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('BAHA MAR')" id="venue-BAHA MAR">🏖 Baha Mar <span class="venue-count" id="count-BAHA MAR">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('CASINO ROYALE')" id="venue-CASINO ROYALE">♠ Casino Royale <span class="venue-count" id="count-CASINO ROYALE">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('HARD ROCK PUNTA CANA')" id="venue-HARD ROCK PUNTA CANA">🎸 HR Punta Cana <span class="venue-count" id="count-HARD ROCK PUNTA CANA">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('HARD ROCK HOLLYWOOD')" id="venue-HARD ROCK HOLLYWOOD">🎸 HR Hollywood <span class="venue-count" id="count-HARD ROCK HOLLYWOOD">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('MOHEGAN SUN')" id="venue-MOHEGAN SUN">☀ Mohegan Sun <span class="venue-count" id="count-MOHEGAN SUN">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('MONTE CARLO')" id="venue-MONTE CARLO">🎲 Monte Carlo <span class="venue-count" id="count-MONTE CARLO">0</span></button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Las Vegas</div>
+      <button class="venue-btn" onclick="filterVenue('ALLEGIANT STADIUM')" id="venue-ALLEGIANT STADIUM">🏟 Allegiant Stadium <span class="venue-count" id="count-ALLEGIANT STADIUM">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('DURANGO')" id="venue-DURANGO">🎰 Durango <span class="venue-count" id="count-DURANGO">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('MGM GRAND')" id="venue-MGM GRAND">💎 MGM Grand <span class="venue-count" id="count-MGM GRAND">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('RED ROCK')" id="venue-RED ROCK">🏔 Red Rock <span class="venue-count" id="count-RED ROCK">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('SUNSET STATION')" id="venue-SUNSET STATION">🌅 Sunset Station <span class="venue-count" id="count-SUNSET STATION">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('T-MOBILE ARENA')" id="venue-T-MOBILE ARENA">📱 T-Mobile Arena <span class="venue-count" id="count-T-MOBILE ARENA">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('VIRGIN LAS VEGAS')" id="venue-VIRGIN LAS VEGAS">✈ Virgin LV <span class="venue-count" id="count-VIRGIN LAS VEGAS">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('WYNN LAS VEGAS')" id="venue-WYNN LAS VEGAS">🌸 Wynn Las Vegas <span class="venue-count" id="count-WYNN LAS VEGAS">0</span></button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Other</div>
+      <button class="venue-btn" onclick="filterVenue('CRUISE')" id="venue-CRUISE">🚢 Cruise <span class="venue-count" id="count-CRUISE">0</span></button>
+      <button class="venue-btn" onclick="filterVenue('DRAFTKINGS')" id="venue-DRAFTKINGS">🎯 DraftKings <span class="venue-count" id="count-DRAFTKINGS">0</span></button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Total</div></div>
+      <div class="stat"><div class="stat-num" id="stat-upcoming">0</div><div class="stat-label">Upcoming</div></div>
+      <div class="stat"><div class="stat-num" id="stat-month">0</div><div class="stat-label">This Month</div></div>
+      <div class="stat"><div class="stat-num" id="stat-past">0</div><div class="stat-label">Completed</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="toolbar-title" id="toolbarTitle">All Venues</div>
+      <div class="filter-pills">
+        <div class="pill active" onclick="setFilter('all',this)">All</div>
+        <div class="pill" onclick="setFilter('upcoming',this)">Upcoming</div>
+        <div class="pill past-pill" onclick="setFilter('past',this)">Past</div>
+      </div>
+    </div>
+    <div class="events-container">
+      <div class="add-form" id="addForm">
+        <div class="add-form-title">♣ Add New Event</div>
+        <div class="form-row form-row-3">
+          <div class="form-group"><label class="form-label">Venue</label>
+            <select id="f-venue">
+              <option value="BIG EVENT">Big Events</option><option value="BAHA MAR">Baha Mar</option>
+              <option value="CASINO ROYALE">Casino Royale</option><option value="HARD ROCK PUNTA CANA">HR Punta Cana</option>
+              <option value="HARD ROCK HOLLYWOOD">HR Hollywood</option><option value="MOHEGAN SUN">Mohegan Sun</option>
+              <option value="MONTE CARLO">Monte Carlo</option><option value="ALLEGIANT STADIUM">Allegiant Stadium</option>
+              <option value="DURANGO">Durango</option><option value="MGM GRAND">MGM Grand</option>
+              <option value="RED ROCK">Red Rock</option><option value="SUNSET STATION">Sunset Station</option>
+              <option value="T-MOBILE ARENA">T-Mobile Arena</option><option value="VIRGIN LAS VEGAS">Virgin Las Vegas</option>
+              <option value="WYNN LAS VEGAS">Wynn Las Vegas</option><option value="CRUISE">Cruise</option>
+              <option value="DRAFTKINGS">DraftKings</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Start Date</label><input type="date" id="f-date"></div>
+          <div class="form-group"><label class="form-label">End Date (optional)</label><input type="date" id="f-date-end"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Event Name</label><input type="text" id="f-name" placeholder="e.g. $100K Slot Tournament"></div>
+          <div class="form-group"><label class="form-label">Note (optional)</label><input type="text" id="f-note" placeholder="e.g. Fact Sheet available"></div>
+        </div>
+        <div class="form-row form-row-3">
+          <div class="form-group"><label class="form-label">Type</label>
+            <select id="f-type">
+              <option value="regular">Regular</option><option value="big">Big Event ⭐</option><option value="recurring">Recurring 🔁</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost btn-sm" onclick="closeAdd()">Cancel</button>
+          <button class="btn btn-gold btn-sm" onclick="addEvent()">Add Event</button>
+        </div>
+      </div>
+      <div id="eventsList"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Share View Modal -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal" style="width:480px;max-height:70vh;">
+    <div class="modal-header">
+      <div class="modal-title">⬡ Share View-Only Link</div>
+      <button class="btn btn-ghost btn-sm" onclick="closeShare()">✕ Close</button>
+    </div>
+    <div class="modal-body" style="padding:24px 22px;">
+      <div style="margin-bottom:16px;font-size:13px;color:var(--text-dim);line-height:1.6;">
+        Share this link with your team. Recipients can <strong style="color:var(--text);">view all events</strong> but <em style="color:#e08080;">cannot add events or generate reports.</em>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input type="text" id="shareUrl" readonly style="flex:1;font-size:12px;font-family:'DM Mono',monospace;color:var(--gold);background:rgba(0,0,0,0.5);cursor:pointer;" onclick="this.select()">
+        <button class="btn btn-gold btn-sm" id="copyShareBtn" onclick="copyShareLink()">Copy Link</button>
+      </div>
+      <div style="margin-top:18px;padding:12px 14px;border:1px solid rgba(201,168,76,0.1);border-radius:3px;background:rgba(201,168,76,0.03);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">What viewers CAN do</div>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.7;">✓ &nbsp;Browse all venues &amp; events<br>✓ &nbsp;Filter by upcoming / past<br>✓ &nbsp;View event details &amp; notes</div>
+      </div>
+      <div style="margin-top:10px;padding:12px 14px;border:1px solid rgba(180,60,60,0.15);border-radius:3px;background:rgba(120,30,30,0.06);">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">What viewers CANNOT do</div>
+        <div style="font-size:12px;color:#e08080;line-height:1.7;">✗ &nbsp;Add or delete events<br>✗ &nbsp;Generate or copy reports<br>✗ &nbsp;Mark events as done</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeShare()">Close</button>
+      <a href="#" id="openShareLink" target="_blank" class="btn btn-outline btn-sm" style="text-decoration:none;display:inline-block;">Open in New Tab ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- Report Modal -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">♦ Email Report</div>
+      <button class="btn btn-ghost btn-sm" onclick="closeReport()">✕ Close</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:flex-end;">
+        <div class="form-group" style="flex:2;min-width:160px;">
+          <label class="form-label">Report Title</label>
+          <input type="text" id="report-title" value="PACE PROPERTY EVENTS UPDATE" oninput="buildReport()">
+        </div>
+        <div class="form-group" style="flex:1;min-width:110px;">
+          <label class="form-label">To</label>
+          <input type="text" id="report-to" value="Team" oninput="buildReport()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Include Past</label>
+          <select id="report-past" onchange="buildReport()"><option value="no">No</option><option value="yes">Yes</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Header Color</label>
+          <select id="report-color" onchange="buildReport()">
+            <option value="#8a6a1a">Casino Gold</option>
+            <option value="#6b1414">Casino Red</option>
+            <option value="#14386b">Royal Navy</option>
+            <option value="#14476b">Deep Blue</option>
+            <option value="#2a1460">Royal Purple</option>
+            <option value="#1a4a2e">Emerald</option>
+          </select>
+        </div>
+      </div>
+      <div class="email-preview-wrap" id="reportContent"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeReport()">Close</button>
+      <button class="btn btn-outline btn-sm" onclick="copyHtml()">Copy HTML</button>
+      <button class="btn btn-gold btn-sm" onclick="copyText()">📋 Copy Plain Text</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const IS_VIEW = new URLSearchParams(location.search).has('view');
+
+const VENUES_ORDER = [
+  'BIG EVENT','BAHA MAR','CASINO ROYALE','HARD ROCK PUNTA CANA','HARD ROCK HOLLYWOOD',
+  'MOHEGAN SUN','MONTE CARLO','ALLEGIANT STADIUM','DURANGO','MGM GRAND','RED ROCK',
+  'SUNSET STATION','T-MOBILE ARENA','VIRGIN LAS VEGAS','WYNN LAS VEGAS','CRUISE','DRAFTKINGS'
+];
+
+let events = [];
+let currentVenue = 'ALL';
+let currentFilter = 'all';
+
+(function setupHeader(){
+  const wrap = document.getElementById('headerActions');
+  if (IS_VIEW) {
+    wrap.innerHTML = '<span class="view-badge">♦ View Only</span>';
+  } else {
+    wrap.innerHTML = `
+      <button class="btn btn-ghost btn-sm" onclick="toggleAdd()">♣ Add Event</button>
+      <button class="btn btn-outline btn-sm" onclick="openReport()">♦ Generate Report</button>
+      <button class="btn btn-ghost btn-sm" onclick="openShare()" style="border-color:rgba(201,168,76,0.3);color:var(--gold-light);">⬡ Share View ↗</button>
+    `;
+  }
+})();
+
+function parseDate(s){
+  if(!s)return null;
+  const y=new Date().getFullYear(),t=s.trim();
+  const m=t.match(/^(\d{1,2})\/(\d{1,2})$/);
+  if(m)return new Date(y,+m[1]-1,+m[2]);
+  const i=t.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(i)return new Date(+i[1],+i[2]-1,+i[3]);
+  return null;
+}
+function today(){const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());}
+function isPast(e){const t=today(),d=e.endDate||e.date;return d&&d<t;}
+function isToday(e){const t=today();return e.date&&e.date.getTime()===t.getTime();}
+function isSoon(e){const t=today(),d=e.date-t;return d>=0&&d<=7*864e5;}
+function shortDate(d){if(!d)return'';return d.toLocaleDateString('en-US',{month:'long',day:'numeric'});}
+function uid(){return Math.random().toString(36).slice(2);}
+
+const raw=[
+  {v:'BIG EVENT',n:'FIFA World Cup Final',d:'7/19',t:'big'},
+  {v:'BIG EVENT',n:'The Rematch: May Weather VS. Manny Pacquiao @ Sphere Las Vegas',d:'9/19',t:'big'},
+  {v:'BAHA MAR',n:'$100,000 Cinco de Mayo Slot Tournament',d:'5/9'},
+  {v:'BAHA MAR',n:'$100,000 Spring Spin-tacular Slot Tournament',d:'5/16'},
+  {v:'BAHA MAR',n:'$100k Summer Splash Slot Tournament',d:'7/24',de:'7/25'},
+  {v:'BAHA MAR',n:'$250k Poker Tournament',d:'8/14',de:'8/15',note:'Fact sheet available'},
+  {v:'BAHA MAR',n:'$100k Slot Tournament',d:'9/12'},
+  {v:'BAHA MAR',n:'$250k Blackjack Tournament',d:'10/3'},
+  {v:'BAHA MAR',n:'Culinary & Arts Festival',d:'10/22'},
+  {v:'BAHA MAR',n:"3rd Annual Skin's Golf Event",d:'11/7'},
+  {v:'BAHA MAR',n:'Wahoo Fishing Tournament',d:'11/12'},
+  {v:'BAHA MAR',n:'Baha Mar Hoops',d:'11/19'},
+  {v:'CASINO ROYALE',n:'Spin Royale – Spring Trials ($20K Prize Pool)',d:'5/7',de:'5/9'},
+  {v:'CASINO ROYALE',n:'Spin Royale – Grand Finals ($20K Prize Pool)',d:'11/5',de:'11/7'},
+  {v:'CASINO ROYALE',n:"Winner's Circle ($5K – both tournament players)",d:'11/7'},
+  {v:'HARD ROCK PUNTA CANA',n:'Memorial Day Weekend $300K Blackjack Tournament',d:'5/21',de:'5/24',note:'Fact Sheet available'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Every Sunday – $100K Head to Head Blackjack Challenge',t:'recurring'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Mon & Wed – $1.8M Roaring Jaguar & Free Play Drawings Bonus Entries',t:'recurring'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Every Saturday 3–6pm – $1.8M Roaring Jaguar & Free Play Drawings',t:'recurring'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Every Saturday 7pm – $1.8M Roaring Jaguar Grand Prize Drawings',t:'recurring'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Every Tuesday 8am–5pm – $100K Bonus Times Slot Tournament',t:'recurring'},
+  {v:'HARD ROCK HOLLYWOOD',n:"Guns N' Roses",d:'5/5'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Sting',d:'5/6'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Gavin Adcock',d:'5/7'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Yellowcard',d:'5/8'},
+  {v:'HARD ROCK HOLLYWOOD',n:'$100K PD Slot Tournament',d:'5/9'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Bush',d:'5/12'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Eagles',d:'5/13'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Bill Burr Live',d:'5/15'},
+  {v:'HARD ROCK HOLLYWOOD',n:'$100K WTA Blackjack Tournament',d:'5/15'},
+  {v:'HARD ROCK HOLLYWOOD',n:"We Them One's Comedy Tour",d:'5/17'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Cazzu',d:'5/21'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Jeff Dunham: Artificial Intelligence',d:'5/24'},
+  {v:'HARD ROCK HOLLYWOOD',n:'"Weird Al" Yankovic: Bigger & Weirder 2026 Tour',d:'5/26'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Keith Urban',d:'5/29'},
+  {v:'HARD ROCK HOLLYWOOD',n:'The Black Crowes and Whiskey Myers',d:'5/30'},
+  {v:'HARD ROCK HOLLYWOOD',n:'YUNGBLUD',d:'6/2'},
+  {v:'HARD ROCK HOLLYWOOD',n:'BKFC Fight Night Hollywood',d:'6/4'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Charlie Puth',d:'6/5'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Morgan Jay',d:'6/6'},
+  {v:'HARD ROCK HOLLYWOOD',n:'George Lopez',d:'6/11'},
+  {v:'HARD ROCK HOLLYWOOD',n:'The Red Clay Strays',d:'6/18'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Josh Groban',d:'6/20'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Matt Rife',d:'6/26',de:'6/27'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Ratones Paranoicos',d:'7/1'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Madison Beer',d:'7/2'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Gabriel "Fluffy" Iglesias',d:'7/10'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Lionel Richie and Earth, Wind & Fire',d:'7/24'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Disturbed',d:'7/25'},
+  {v:'HARD ROCK HOLLYWOOD',n:'Vishal–Sheykhar',d:'7/26'},
+  {v:'MOHEGAN SUN',n:'The Electric Light Orchestra Experience',d:'5/8'},
+  {v:'MOHEGAN SUN',n:'Reality Fighting MMA and Grappling Superfights',d:'5/9'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Seattle Storm',d:'5/10'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Las Vegas Aces',d:'5/13',de:'5/15'},
+  {v:'MOHEGAN SUN',n:'Blackstreet',d:'5/17'},
+  {v:'MOHEGAN SUN',n:'Charlie Puth',d:'5/23'},
+  {v:'MOHEGAN SUN',n:'5 Seconds of Summer',d:'5/29'},
+  {v:'MOHEGAN SUN',n:'Air Supply',d:'5/30'},
+  {v:'MOHEGAN SUN',n:'Teddy Swims',d:'6/4'},
+  {v:'MOHEGAN SUN',n:'Carin Leon: De Sonora Para El Mundo',d:'6/6'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. New York Liberty',d:'6/8'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Indiana Fever',d:'6/13'},
+  {v:'MOHEGAN SUN',n:'Wet Leg',d:'6/14'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Washington Mystics',d:'6/17'},
+  {v:'MOHEGAN SUN',n:'Lauren Daigle',d:'6/18'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Toronto Tempo',d:'6/19'},
+  {v:'MOHEGAN SUN',n:'Tucker Wetmore',d:'6/21'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Chicago Sky',d:'6/22'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Washington Mystics',d:'6/26'},
+  {v:'MOHEGAN SUN',n:'Blue Man Group',d:'6/27',de:'6/29'},
+  {v:'MOHEGAN SUN',n:'Arrival from Sweden',d:'7/5'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Minnesota Lynx',d:'7/8'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Golden State Valkyries',d:'7/10'},
+  {v:'MOHEGAN SUN',n:'bbno$',d:'7/11'},
+  {v:'MOHEGAN SUN',n:'The Pussycat Dolls',d:'7/12'},
+  {v:'MOHEGAN SUN',n:'Connecticut Sun vs. Portland Fire',d:'7/14'},
+  {v:'MOHEGAN SUN',n:'Weird Al Yankovic',d:'7/15'},
+  {v:'MOHEGAN SUN',n:'The Guess Who',d:'7/16'},
+  {v:'MOHEGAN SUN',n:'Shinedown',d:'7/17'},
+  {v:'MOHEGAN SUN',n:'Derek Hough - Symphony of Dance: Encore',d:'7/26'},
+  {v:'MOHEGAN SUN',n:'Blues Traveler/Gin Blossoms with Spin Doctors',d:'7/31'},
+  {v:'MOHEGAN SUN',n:'25th Anniversary of Mohegan Sun Arena – Metallica',d:'11/19',de:'11/20',t:'big'},
+  {v:'MONTE CARLO',n:'Top Marques Monaco',d:'5/6',de:'5/10'},
+  {v:'MONTE CARLO',n:'Sébastien Tellier',d:'7/3'},
+  {v:'MONTE CARLO',n:'Jon Batiste',d:'7/7'},
+  {v:'MONTE CARLO',n:'Jason Derulo',d:'7/8'},
+  {v:'MONTE CARLO',n:'Aya Nakamura',d:'7/22'},
+  {v:'MONTE CARLO',n:'Juanes',d:'7/23'},
+  {v:'MONTE CARLO',n:'John Legend',d:'7/26'},
+  {v:'MONTE CARLO',n:'Vanessa Paradis',d:'7/31'},
+  {v:'ALLEGIANT STADIUM',n:'Ed Sheeran',d:'7/18'},
+  {v:'RED ROCK',n:'Tyler Hubbard',d:'5/29'},
+  {v:'RED ROCK',n:'Iration – Where It All Began Summer Tour 2026',d:'8/1',note:'With Kanaka Fyah & Tunnel Vision'},
+  {v:'SUNSET STATION',n:'$35K Invitational Slot Tournament',d:'5/22',de:'5/24'},
+  {v:'CRUISE',n:'Celebrity Beyond – 7 Nights',d:'11/30',note:'Virgin Voyages also available'},
+  {v:'DRAFTKINGS',n:'The Masters'},
+  {v:'DRAFTKINGS',n:'March Madness',note:'Purchase as needed'},
+  {v:'DRAFTKINGS',n:'World Cup Suites (4 tickets per suite, each state)',note:'All states where games are played'},
+  {v:'DRAFTKINGS',n:'NBA Finals'},
+];
+raw.forEach(r=>events.push({
+  id:uid(),venue:r.v,name:r.n,
+  date:parseDate(r.d||''),endDate:parseDate(r.de||''),
+  note:r.note||'',type:r.t||'regular'
+}));
+
+function render(){
+  const t=today();
+  let fl=[...events];
+  if(currentVenue!=='ALL')fl=fl.filter(e=>e.venue===currentVenue);
+  if(currentFilter==='upcoming')fl=fl.filter(e=>!isPast(e));
+  if(currentFilter==='past')fl=fl.filter(e=>isPast(e));
+  fl.sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;return a.date-b.date;});
+
+  const pool=currentVenue==='ALL'?events:events.filter(e=>e.venue===currentVenue);
+  document.getElementById('stat-total').textContent=pool.length;
+  document.getElementById('stat-upcoming').textContent=pool.filter(e=>!isPast(e)).length;
+  document.getElementById('stat-past').textContent=pool.filter(e=>isPast(e)).length;
+  const mo=t.getMonth(),yr=t.getFullYear();
+  document.getElementById('stat-month').textContent=pool.filter(e=>e.date&&e.date.getMonth()===mo&&e.date.getFullYear()===yr).length;
+
+  VENUES_ORDER.forEach(v=>{
+    const el=document.getElementById('count-'+v);
+    if(el)el.textContent=events.filter(e=>e.venue===v&&!isPast(e)).length;
+  });
+  document.getElementById('count-ALL').textContent=events.filter(e=>!isPast(e)).length;
+
+  const el=document.getElementById('eventsList');
+  if(!fl.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">♠</div><div>No events found</div></div>';return;}
+
+  if(currentVenue==='ALL'){
+    const bv={};fl.forEach(e=>{if(!bv[e.venue])bv[e.venue]=[];bv[e.venue].push(e);});
+    let h='';
+    VENUES_ORDER.forEach(v=>{
+      if(!bv[v]||!bv[v].length)return;
+      h+=`<div class="group-label"><span>${v}</span><span>${bv[v].length}</span></div>`;
+      bv[v].forEach(e=>h+=mkCard(e));
+    });
+    el.innerHTML=h;
+  } else {
+    el.innerHTML=fl.map(mkCard).join('');
+  }
+}
+
+function mkCard(e){
+  const past=isPast(e),tod=isToday(e),soon=isSoon(e)&&!past;
+  let cls='event-card';
+  if(past)cls+=' is-past';if(tod)cls+=' is-today';if(soon)cls+=' is-soon';
+  const day=e.date?e.date.getDate().toString().padStart(2,'0'):'—';
+  const mon=e.date?e.date.toLocaleDateString('en-US',{month:'short'}).toUpperCase():'';
+  const endDay=e.endDate?'–'+e.endDate.getDate().toString().padStart(2,'0'):'';
+  let badges='';
+  if(e.type==='big')badges+='<span class="badge badge-big">⭐ Big</span>';
+  if(e.type==='recurring')badges+='<span class="badge badge-rec">🔁 Recurring</span>';
+  if(tod)badges+='<span class="badge badge-today">TODAY</span>';
+  if(past)badges+='<span class="badge badge-past">Completed</span>';
+  let actions='';
+  if(!IS_VIEW){
+    actions=`<div class="event-actions">
+      ${!past?`<button class="btn btn-ghost btn-sm" onclick="markDone('${e.id}')">Mark Done</button>`:''}
+      <button class="btn btn-danger btn-sm" onclick="delEv('${e.id}')">Delete</button>
+    </div>`;
+  }
+  return `<div class="${cls}">
+    <div class="date-block">
+      <div class="date-month">${mon}</div>
+      <div class="date-day">${day}</div>
+      ${endDay?`<div class="date-end">${endDay}</div>`:''}
+    </div>
+    <div class="event-info">
+      <div class="event-name">${e.name}</div>
+      <div class="event-venue-label">${e.venue}</div>
+      ${e.note?`<div class="event-note">${e.note}</div>`:''}
+      ${badges?`<div class="event-badges">${badges}</div>`:''}
+    </div>
+    ${actions}
+    ${past?'<div class="done-stamp">✓ Done</div>':''}
+  </div>`;
+}
+
+function filterVenue(v){
+  currentVenue=v;
+  document.querySelectorAll('.venue-btn').forEach(b=>b.classList.remove('active'));
+  const b=document.getElementById('venue-'+v);if(b)b.classList.add('active');
+  document.getElementById('toolbarTitle').textContent=v==='ALL'?'All Venues':v;
+  render();
+}
+function setFilter(f,el){
+  currentFilter=f;
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');render();
+}
+function toggleAdd(){if(!IS_VIEW)document.getElementById('addForm').classList.toggle('open');}
+function closeAdd(){document.getElementById('addForm').classList.remove('open');}
+function addEvent(){
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){alert('Please enter an event name.');return;}
+  events.push({id:uid(),venue:document.getElementById('f-venue').value,name,
+    date:parseDate(document.getElementById('f-date').value),
+    endDate:parseDate(document.getElementById('f-date-end').value),
+    note:document.getElementById('f-note').value.trim(),
+    type:document.getElementById('f-type').value});
+  ['f-name','f-note','f-date','f-date-end'].forEach(id=>document.getElementById(id).value='');
+  closeAdd();render();
+}
+function markDone(id){
+  const e=events.find(x=>x.id===id);if(!e)return;
+  const y=new Date();y.setDate(y.getDate()-1);
+  e.date=new Date(y.getFullYear(),y.getMonth(),y.getDate());render();
+}
+function delEv(id){if(!confirm('Delete this event?'))return;events=events.filter(e=>e.id!==id);render();}
+
+// ── REPORT ──
+function buildReport(){
+  const title=document.getElementById('report-title').value;
+  const to=document.getElementById('report-to').value;
+  const showPast=document.getElementById('report-past').value==='yes';
+  const accent=document.getElementById('report-color').value;
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  let evs=showPast?events:events.filter(e=>!isPast(e));
+  evs=[...evs].sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;return a.date-b.date;});
+
+  // Derive a lighter tint of accent for row backgrounds
+  let rows='';
+  VENUES_ORDER.forEach(v=>{
+    const vevs=evs.filter(e=>e.venue===v);
+    if(!vevs.length)return;
+
+    // Property header row — bold, colored
+    rows+=`<tr>
+      <td colspan="2" style="padding:18px 28px 5px 28px;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td style="border-left:4px solid ${accent};padding:7px 0 7px 14px;background:${accent}18;">
+              <span style="font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:bold;color:${accent};letter-spacing:0.12em;text-transform:uppercase;text-shadow:none;">${v}</span>
+              <span style="font-family:Arial,sans-serif;font-size:10px;color:${accent};opacity:0.6;margin-left:8px;letter-spacing:0.06em;">&nbsp;♦&nbsp;</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>`;
+
+    vevs.forEach((e,i)=>{
+      let datePart='';
+      if(e.type==='recurring')datePart='Recurring';
+      else if(e.date){datePart=shortDate(e.date);if(e.endDate)datePart+=' – '+shortDate(e.endDate);}
+      const bg=i%2===0?'#ffffff':'#faf7f0';
+      const isBig=e.type==='big';
+      rows+=`<tr>
+        <td style="padding:0 28px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${bg};">
+            <tr>
+              <td style="padding:7px 10px;border-bottom:1px solid #ede8db;width:160px;vertical-align:top;">
+                <span style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#888888;">${datePart||'&nbsp;'}</span>
+              </td>
+              <td style="padding:7px 10px;border-bottom:1px solid #ede8db;vertical-align:top;">
+                ${isBig?'<span style="font-size:12px;margin-right:4px;">⭐</span>':''}<span style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1a1a1a;font-weight:${isBig?'700':'400'};">${e.name}</span>${e.note?`<span style="font-family:Arial,sans-serif;font-size:11px;color:#999999;font-style:italic;margin-left:6px;">(${e.note})</span>`:''}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>`;
+    });
+    rows+='<tr><td colspan="2" style="padding:4px 28px 0;"><div style="height:1px;background:#ddd;"></div></td></tr>';
+  });
+
+  const html=`<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#fdfaf4;max-width:680px;margin:0 auto;font-family:Arial,Helvetica,sans-serif;">
+  <tr><td style="background:${accent};padding:30px 28px 22px;">
+    <div style="font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:bold;color:#ffffff;letter-spacing:0.1em;text-transform:uppercase;line-height:1.2;">${title}</div>
+    <div style="font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.65);margin-top:8px;letter-spacing:0.05em;">${dateStr}</div>
+  </td></tr>
+  <tr><td style="background:#f0ece0;padding:10px 28px;border-bottom:2px solid ${accent};">
+    <span style="font-family:Arial,sans-serif;font-size:11px;color:#666;">TO: <strong style="color:#333;">${to}</strong></span>
+  </td></tr>
+  ${rows}
+  <tr><td style="background:${accent};padding:16px 28px;text-align:center;">
+    <span style="font-family:Georgia,serif;font-size:10px;color:rgba(255,255,255,0.6);letter-spacing:0.18em;text-transform:uppercase;">PACE Property Events Intelligence</span>
+  </td></tr>
+</table>`;
+
+  document.getElementById('reportContent').innerHTML=html;
+  return {html,title,dateStr,to,evs};
+}
+
+function openReport(){
+  if(IS_VIEW)return;
+  document.getElementById('reportModal').classList.add('open');
+  buildReport();
+}
+function closeReport(){document.getElementById('reportModal').classList.remove('open');}
+
+function copyHtml(){
+  const {html}=buildReport();
+  navigator.clipboard.writeText(html).then(()=>{
+    const b=event.target;b.textContent='✓ Copied!';
+    setTimeout(()=>b.textContent='Copy HTML',2000);
+  });
+}
+function copyText(){
+  const {evs,title,dateStr,to}=buildReport();
+  let t=`${title}\n${dateStr}\nTo: ${to}\n\n`;
+  VENUES_ORDER.forEach(v=>{
+    const vevs=evs.filter(e=>e.venue===v);if(!vevs.length)return;
+    t+=`${v}\n`;
+    vevs.forEach(e=>{
+      let d='';
+      if(e.type==='recurring')d='Recurring';
+      else if(e.date){d=shortDate(e.date);if(e.endDate)d+=' – '+shortDate(e.endDate);}
+      t+=`${d?d+' - ':''}${e.name}\n`;
+    });
+    t+='\n';
+  });
+  navigator.clipboard.writeText(t.trimEnd()).then(()=>{
+    const b=event.target;b.textContent='✓ Copied!';
+    setTimeout(()=>b.textContent='📋 Copy Plain Text',2000);
+  });
+}
+
+// ── SHARE ──
+function openShare(){
+  const url = location.href.split('?')[0] + '?view';
+  document.getElementById('shareUrl').value = url;
+  document.getElementById('openShareLink').href = url;
+  document.getElementById('shareModal').classList.add('open');
+}
+function closeShare(){document.getElementById('shareModal').classList.remove('open');}
+function copyShareLink(){
+  const url = document.getElementById('shareUrl').value;
+  navigator.clipboard.writeText(url).then(()=>{
+    const b = document.getElementById('copyShareBtn');
+    b.textContent = '✓ Copied!';
+    setTimeout(()=>b.textContent='Copy Link', 2000);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
