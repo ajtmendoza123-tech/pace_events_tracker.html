@@ -117,7 +117,8 @@ header{
 .event-info{min-width:0;}
 .event-name{font-weight:700;font-size:14px;color:var(--text);margin-bottom:2px;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.event-venue-label{font-size:11px;color:var(--text-dim);font-weight:500;}
+.event-venue-label{font-size:13px;color:var(--gold-dim);font-weight:700;letter-spacing:0.04em;}
+.event-enddate{font-size:11px;color:var(--text-dim);font-family:'DM Mono',monospace;margin-top:2px;}
 .event-note{font-size:11px;color:var(--gold-light);margin-top:3px;font-style:italic;}
 .event-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px;}
 .badge{font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 6px;border-radius:2px;}
@@ -148,9 +149,9 @@ select option{background:#0d0b05;}
 .form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;
   padding-top:12px;border-top:1px solid var(--border);}
 /* GROUP LABEL */
-.group-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;
-  text-transform:uppercase;color:var(--text-dim);
-  padding:12px 4px 5px;border-bottom:1px solid rgba(201,168,76,0.1);
+.group-label{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--gold);
+  padding:14px 4px 6px;border-bottom:1px solid rgba(201,168,76,0.18);
   margin-bottom:8px;display:flex;align-items:center;gap:8px;}
 .group-label span:first-child{flex:1;}
 /* MODAL */
@@ -395,6 +396,7 @@ function isPast(e){const t=today(),d=e.endDate||e.date;return d&&d<t;}
 function isToday(e){const t=today();return e.date&&e.date.getTime()===t.getTime();}
 function isSoon(e){const t=today(),d=e.date-t;return d>=0&&d<=7*864e5;}
 function shortDate(d){if(!d)return'';return d.toLocaleDateString('en-US',{month:'long',day:'numeric'});}
+function numDate(d){if(!d)return'';const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return m+'/'+day;}
 function uid(){return Math.random().toString(36).slice(2);}
 
 const STORAGE_KEY = 'pace_events_v1';
@@ -635,6 +637,7 @@ function mkCard(e){
     <div class="event-info">
       <div class="event-name">${e.name}</div>
       <div class="event-venue-label">${e.venue}</div>
+      <div class="event-enddate">${e.endDate ? '⇒ Ends: '+shortDate(e.endDate) : ''}</div>
       ${e.note?`<div class="event-note">${e.note}</div>`:''}
       ${badges?`<div class="event-badges">${badges}</div>`:''}
     </div>
@@ -698,9 +701,9 @@ function buildReport(){
       <td colspan="2" style="padding:18px 28px 5px 28px;">
         <table width="100%" cellpadding="0" cellspacing="0" border="0">
           <tr>
-            <td style="border-left:4px solid ${accent};padding:7px 0 7px 14px;background:${accent}18;">
-              <span style="font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:bold;color:${accent};letter-spacing:0.12em;text-transform:uppercase;text-shadow:none;">${v}</span>
-              <span style="font-family:Arial,sans-serif;font-size:10px;color:${accent};opacity:0.6;margin-left:8px;letter-spacing:0.06em;">&nbsp;♦&nbsp;</span>
+            <td style="background:${accent};padding:9px 16px;border-radius:3px;">
+              <span style="font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:bold;color:#ffffff;letter-spacing:0.14em;text-transform:uppercase;">${v}</span>
+              <span style="font-family:Arial,sans-serif;font-size:11px;color:rgba(255,255,255,0.55);margin-left:8px;">♦</span>
             </td>
           </tr>
         </table>
@@ -710,7 +713,7 @@ function buildReport(){
     vevs.forEach((e,i)=>{
       let datePart='';
       if(e.type==='recurring')datePart='Recurring';
-      else if(e.date){datePart=shortDate(e.date);if(e.endDate)datePart+=' – '+shortDate(e.endDate);}
+      else if(e.date){datePart=numDate(e.date);if(e.endDate)datePart+=' – '+numDate(e.endDate);}
       const bg=i%2===0?'#ffffff':'#faf7f0';
       const isBig=e.type==='big';
       rows+=`<tr>
