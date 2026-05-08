@@ -955,6 +955,14 @@ select option{background:#0d0b05;}
           <label class="form-label">Custom Link CTA Text</label>
           <input type="text" id="custom-link-text" placeholder="e.g. View the full calendar here 👉" style="font-size:12px;" oninput="buildReport()">
         </div>
+        <div class="form-group" style="flex:1;min-width:160px;">
+          <label class="form-label">Recipient / Client Name</label>
+          <input type="text" id="custom-recipient" placeholder="e.g. John, Team, Ms. Rivera" style="font-size:12px;" oninput="buildReport()">
+        </div>
+        <div class="form-group" style="min-width:150px;">
+          <label class="form-label">Send Date (optional)</label>
+          <input type="date" id="custom-send-date" style="font-size:12px;" oninput="buildReport()">
+        </div>
         <div class="form-group" style="width:100%;">
           <label class="form-label">Personal Body Message (appears after the intro paragraph)</label>
           <textarea id="custom-body" placeholder="Add a personal note — e.g. Hope everyone's having a great week! Let me know if any of these events need priority follow-up." rows="3" style="font-size:12px;resize:vertical;width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:3px;font-family:inherit;" oninput="buildReport()"></textarea>
@@ -966,25 +974,26 @@ select option{background:#0d0b05;}
       </div>
 
       <!-- Draft Tabs -->
-      <div class="email-tabs" style="flex-wrap:wrap;">
-        <div class="email-tab active" onclick="setDraft('standard',this)">📋 Standard</div>
-        <div class="email-tab" onclick="setDraft('brief',this)">⚡ Brief</div>
-        <div class="email-tab" onclick="setDraft('formal',this)">🎩 Formal</div>
-        <div class="email-tab" onclick="setDraft('excited',this)">🎉 Exciting</div>
-        <div class="email-tab" onclick="setDraft('reminder',this)">🔔 Reminder</div>
-        <div class="email-tab" onclick="setDraft('vip',this)">💎 VIP</div>
-        <div class="email-tab" onclick="setDraft('sales',this)">🎯 Sales Push</div>
-        <div class="email-tab" onclick="setDraft('weekly',this)">📅 Weekly Digest</div>
-        <div class="email-tab" onclick="setDraft('newalerts',this)">🚨 New Alert</div>
-        <div class="email-tab" onclick="setDraft('client',this)">🤝 Client-Facing</div>
-        <div class="email-tab" onclick="setDraft('urgency',this)">🔥 Urgency</div>
-        <div class="email-tab" onclick="setDraft('newsletter',this)">📰 Newsletter</div>
+      <div class="email-tabs" style="flex-wrap:wrap;" id="draftTabs">
+        <div class="email-tab active" onclick="setDraft('standard',this)" data-draft="standard">📋 Standard</div>
+        <div class="email-tab" onclick="setDraft('brief',this)" data-draft="brief">⚡ Brief</div>
+        <div class="email-tab" onclick="setDraft('formal',this)" data-draft="formal">🎩 Formal</div>
+        <div class="email-tab" onclick="setDraft('excited',this)" data-draft="excited">🎉 Exciting</div>
+        <div class="email-tab" onclick="setDraft('reminder',this)" data-draft="reminder">🔔 Reminder</div>
+        <div class="email-tab" onclick="setDraft('vip',this)" data-draft="vip">💎 VIP</div>
+        <div class="email-tab" onclick="setDraft('sales',this)" data-draft="sales">🎯 Sales Push</div>
+        <div class="email-tab" onclick="setDraft('weekly',this)" data-draft="weekly">📅 Weekly Digest</div>
+        <div class="email-tab" onclick="setDraft('newalerts',this)" data-draft="newalerts">🚨 New Alert</div>
+        <div class="email-tab" onclick="setDraft('client',this)" data-draft="client">🤝 Client-Facing</div>
+        <div class="email-tab" onclick="setDraft('urgency',this)" data-draft="urgency">🔥 Urgency</div>
+        <div class="email-tab" onclick="setDraft('newsletter',this)" data-draft="newsletter">📰 Newsletter</div>
       </div>
 
       <div class="email-preview-wrap" id="reportContent"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost btn-sm" onclick="closeReport()">Close</button>
+      <button class="btn btn-ghost btn-sm" onclick="printView()">🖨 Print / PDF</button>
       <button class="btn btn-gold btn-sm" onclick="copyEmail(this)">📋 Copy Email</button>
     </div>
   </div>
@@ -1538,9 +1547,22 @@ function buildReport(){
   const customClosing  = (document.getElementById('custom-closing')   ||{}).value||'';
   const customBody     = (document.getElementById('custom-body')      ||{}).value||'';
   const customLinkText = (document.getElementById('custom-link-text') ||{}).value||'';
+  const customRecipient= (document.getElementById('custom-recipient') ||{}).value.trim()||'';
+  const customSendDate = (document.getElementById('custom-send-date') ||{}).value||'';
+
+  // Resolve greeting — swap [Client Name] if recipient field is filled
+  let resolvedGreeting = baseDraft.greeting;
+  if(customRecipient){
+    resolvedGreeting = resolvedGreeting.replace('[Client Name]', customRecipient);
+    if(!resolvedGreeting.includes(customRecipient)){
+      // generic greetings: prepend name
+      resolvedGreeting = resolvedGreeting.replace(/^(Hi|Hey|Dear)\b([^,]*),?/i,
+        (m,salut)=>`${salut} ${customRecipient},`);
+    }
+  }
 
   const draft = {
-    greeting: baseDraft.greeting,
+    greeting: resolvedGreeting,
     intro:    baseDraft.intro,
     link:     customLinkText || baseDraft.link,
     closing:  customClosing  || baseDraft.closing,
@@ -1549,7 +1571,7 @@ function buildReport(){
   };
 
   const viewUrl = 'https://ajtmendoza123-tech.github.io/pace_events_tracker.html/?view';
-  const now     = new Date();
+  const now     = customSendDate ? new Date(customSendDate+'T12:00:00') : new Date();
   const dateStr = now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
 
   let evs = showPast ? events : events.filter(e=>!isPast(e));
@@ -1600,21 +1622,6 @@ function buildReport(){
     </td></tr>`;
   });
 
-  // WhatsApp plain-text
-  let waLines = '';
-  VENUES_ORDER.forEach(v=>{
-    const vevs = evs.filter(e=>e.venue===v);
-    if(!vevs.length) return;
-    waLines += `*${v}*\n`;
-    vevs.forEach(e=>{
-      let d = '';
-      if(e.type==='recurring') d='(Recurring)';
-      else if(e.date){d=shortDate(e.date);if(e.endDate)d+=' – '+shortDate(e.endDate);}
-      waLines += `♦ ${d?d+' — ':''}${e.name}${e.note?' ('+e.note+')':''}\n`;
-    });
-    waLines += '\n';
-  });
-
   const closingHtml = draft.closing.split('\n')
     .map(l=>`<p style="margin:0;font-family:Arial,sans-serif;font-size:13px;color:${bText};line-height:1.8;">${l||'&nbsp;'}</p>`)
     .join('');
@@ -1622,8 +1629,6 @@ function buildReport(){
   const extraBodyHtml = draft.extraBody
     ? `<p style="margin:10px 0 0;font-size:13px;color:${bText};line-height:1.8;padding:10px 14px;border-left:3px solid ${t.divider};background:${t.dark?'rgba(255,255,255,0.04)':t.rowAlt};border-radius:0 4px 4px 0;font-style:italic;">${draft.extraBody.replace(/\n/g,'<br>')}</p>`
     : '';
-
-  const waBg = t.dark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.025)';
 
   const html = `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${t.bg};${bgExtra}font-family:Arial,sans-serif;">
 <tr><td>
@@ -1720,23 +1725,22 @@ function buildReport(){
   subjectBar.innerHTML = `<span style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);flex-shrink:0;">📎 Subject:</span><span style="font-size:12px;font-weight:600;color:var(--text);flex:1;">${draft.subject}</span>`;
 
   document.getElementById('reportContent').innerHTML = html;
-  return {html, evs, draft, waLines};
-}
 
-
-function copyWhatsApp(btn){
-  const {evs,draft,waLines}=buildReport();
-  const viewUrl='https://ajtmendoza123-tech.github.io/pace_events_tracker.html/?view';
-  const text=`*♠ PACE Gaming — Upcoming Events ♠*\n\n${draft.greeting}\n\n${waLines.trim()}\n\n♦ ${draft.link}\n${viewUrl}\n\n${draft.closing.split('\n')[0]}\n\n— Prepared by Anne Joy Therese`;
-  navigator.clipboard.writeText(text.trim()).then(()=>{
-    btn.textContent='✓ Copied!';
-    setTimeout(()=>{btn.textContent='💬 Copy for WhatsApp';},2500);
-  }).catch(()=>{
-    const ta=document.createElement('textarea');ta.value=text.trim();
-    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-    btn.textContent='✓ Copied!';setTimeout(()=>{btn.textContent='💬 Copy for WhatsApp';},2500);
+  // Update tab event count badges
+  const showPastCheck = document.getElementById('report-past').value==='yes';
+  const evCount = (showPastCheck ? events : events.filter(e=>!isPast(e))).length;
+  document.querySelectorAll('#draftTabs .email-tab').forEach(tab=>{
+    const base = tab.dataset.draft;
+    const labels = {standard:'📋 Standard',brief:'⚡ Brief',formal:'🎩 Formal',excited:'🎉 Exciting',
+      reminder:'🔔 Reminder',vip:'💎 VIP',sales:'🎯 Sales Push',weekly:'📅 Weekly Digest',
+      newalerts:'🚨 New Alert',client:'🤝 Client-Facing',urgency:'🔥 Urgency',newsletter:'📰 Newsletter'};
+    tab.innerHTML = `${labels[base]||base} <span style="font-family:'DM Mono',monospace;font-size:9px;opacity:0.55;margin-left:3px;">(${evCount})</span>`;
   });
+
+  return {html, evs, draft};
 }
+
+
 function openReport(){
   if(IS_VIEW)return;
   document.getElementById('reportModal').classList.add('open');
@@ -1816,7 +1820,6 @@ function exportCSV(){
 
 // ── PRINT VIEW ──
 function printView(){
-  const printWin=window.open('','_blank','width=900,height=700');
   const upcomingEvs=events.filter(e=>!isPast(e)).sort((a,b)=>{if(!a.date&&!b.date)return 0;if(!a.date)return 1;if(!b.date)return-1;return a.date-b.date;});
   let tableRows='';
   VENUES_ORDER.forEach(v=>{
@@ -1831,8 +1834,18 @@ function printView(){
     });
   });
   const dateStr=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  printWin.document.write(`<!DOCTYPE html><html><head><title>PACE Gaming — Events</title><style>*{box-sizing:border-box;}body{font-family:Arial,sans-serif;margin:0;padding:20px;color:#111;}h1{color:#0d2240;border-bottom:3px solid #1cc8c8;padding-bottom:10px;}table{width:100%;border-collapse:collapse;}@media print{.no-print{display:none;}}</style></head><body><h1>◈ PACE Gaming — Upcoming Property Events</h1><p style="color:#666;font-size:12px;">Generated: ${dateStr} &nbsp;|&nbsp; ${upcomingEvs.length} upcoming events</p><table><thead><tr style="background:#f5f5f5;"><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">DATE</th><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">EVENT</th><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">TYPE</th><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">NOTES</th></tr></thead><tbody>${tableRows}</tbody></table><p class="no-print" style="margin-top:20px;"><button onclick="window.print()" style="padding:10px 20px;background:#0d2240;color:white;border:none;border-radius:4px;cursor:pointer;font-size:14px;">🖨 Print / Save as PDF</button></p></body></html>`);
-  printWin.document.close();
+  const markup=`<!DOCTYPE html><html><head><title>PACE Gaming — Events</title><style>*{box-sizing:border-box;}body{font-family:Arial,sans-serif;margin:0;padding:20px;color:#111;}h1{color:#0d2240;border-bottom:3px solid #1cc8c8;padding-bottom:10px;}table{width:100%;border-collapse:collapse;}@media print{body{padding:10px;}}</style></head><body><h1>◈ PACE Gaming — Upcoming Property Events</h1><p style="color:#666;font-size:12px;">Generated: ${dateStr} &nbsp;|&nbsp; ${upcomingEvs.length} upcoming events</p><table><thead><tr style="background:#f5f5f5;"><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">DATE</th><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">EVENT</th><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">TYPE</th><th style="text-align:left;padding:8px 12px;font-size:11px;letter-spacing:.05em;">NOTES</th></tr></thead><tbody>${tableRows}</tbody></table></body></html>`;
+
+  // Use a hidden iframe — never blocked by popup blockers
+  let iframe=document.getElementById('_printFrame');
+  if(!iframe){
+    iframe=document.createElement('iframe');
+    iframe.id='_printFrame';
+    iframe.style.cssText='position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:none;';
+    document.body.appendChild(iframe);
+  }
+  iframe.srcdoc=markup;
+  iframe.onload=()=>{ iframe.contentWindow.focus(); iframe.contentWindow.print(); };
 }
 
 render();
