@@ -108,6 +108,30 @@ input:focus,select:focus,textarea:focus { border-color:var(--accent); box-shadow
 .empty-state { text-align:center; padding:60px 24px; color:var(--text-3); }
 .empty-icon { font-size:36px; margin-bottom:10px; opacity:0.3; }
 .rtab { padding:7px 20px; font-size:13px; font-weight:600; font-family:'Inter',sans-serif; border:none; cursor:pointer; transition:all 0.15s; }
+/* Search bar */
+.search-wrap { position:relative; display:flex; align-items:center; }
+.search-input { font-family:'Inter',sans-serif; font-size:13px; background:var(--surface); border:1px solid var(--border); border-radius:20px; color:var(--text); padding:6px 14px 6px 34px; outline:none; width:200px; transition:all 0.2s; }
+.search-input:focus { border-color:var(--accent); box-shadow:0 0 0 2px rgba(0,181,181,0.12); width:260px; }
+.search-icon { position:absolute; left:11px; font-size:13px; color:var(--text-4); pointer-events:none; }
+.search-clear { position:absolute; right:10px; font-size:12px; color:var(--text-4); cursor:pointer; display:none; border:none; background:none; padding:0; line-height:1; }
+/* Duplicate warning toast */
+.dup-warning { background:#fff8ed; border:1px solid #f59e0b; border-left:4px solid #f59e0b; border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:12px; display:none; }
+.dup-warning.show { display:flex; align-items:flex-start; gap:10px; }
+.dup-warning-icon { font-size:16px; flex-shrink:0; margin-top:1px; }
+.dup-warning-text { font-size:12px; color:#92400e; line-height:1.5; }
+.dup-warning-text strong { display:block; font-size:13px; margin-bottom:2px; color:#78350f; }
+/* Quick add improvements */
+.form-hint { font-size:10px; color:var(--text-4); margin-top:3px; font-style:italic; }
+.add-form-title { font-family:'Inter',sans-serif; font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px; display:flex; align-items:center; justify-content:space-between; }
+.add-form-subtitle { font-size:11px; color:var(--text-3); margin-bottom:14px; }
+/* Name autocomplete suggestions */
+.suggestions-wrap { position:relative; }
+.suggestions-list { position:absolute; top:100%; left:0; right:0; background:#fff; border:1px solid var(--accent-mid); border-top:none; border-radius:0 0 var(--radius-sm) var(--radius-sm); z-index:50; max-height:160px; overflow-y:auto; display:none; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+.suggestions-list.open { display:block; }
+.suggestion-item { padding:8px 12px; font-size:13px; cursor:pointer; color:var(--text-2); display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border); }
+.suggestion-item:last-child { border-bottom:none; }
+.suggestion-item:hover { background:var(--accent-light); color:var(--accent-dark); }
+.suggestion-venue { font-size:10px; font-weight:600; color:var(--text-4); background:var(--surface2); padding:1px 6px; border-radius:3px; }
 </style>
 </head>
 <body>
@@ -160,6 +184,11 @@ input:focus,select:focus,textarea:focus { border-color:var(--accent); box-shadow
     </div>
     <div class="toolbar">
       <div class="toolbar-title" id="toolbarTitle">All Venues</div>
+      <div class="search-wrap">
+        <span class="search-icon">&#128269;</span>
+        <input class="search-input" id="searchInput" type="text" placeholder="Search events..." oninput="onSearch(this.value)" autocomplete="off">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Clear">&#10005;</button>
+      </div>
       <div class="filter-pills">
         <div class="pill active" onclick="setFilter('all',this)">All</div>
         <div class="pill" onclick="setFilter('upcoming',this)">Upcoming</div>
@@ -168,7 +197,21 @@ input:focus,select:focus,textarea:focus { border-color:var(--accent); box-shadow
     </div>
     <div class="events-container">
       <div class="add-form" id="addForm">
-        <div class="add-form-title">Add New Event</div>
+        <div class="add-form-title">
+          <span>&#10010; Add New Event</span>
+          <span style="font-size:11px;font-weight:400;color:var(--text-4);">Press Esc to cancel</span>
+        </div>
+        <div class="add-form-subtitle">Fill in what you know — only Event Name is required.</div>
+
+        <!-- Duplicate warning banner -->
+        <div class="dup-warning" id="dupWarning">
+          <div class="dup-warning-icon">&#9888;&#65039;</div>
+          <div class="dup-warning-text">
+            <strong>Possible duplicate detected!</strong>
+            <span id="dupWarningText">A similar event already exists. Check before adding.</span>
+          </div>
+        </div>
+
         <div class="form-row form-row-3">
           <div class="form-group">
             <label class="form-label">Venue</label>
@@ -192,23 +235,49 @@ input:focus,select:focus,textarea:focus { border-color:var(--accent); box-shadow
               <option value="DRAFTKINGS">DraftKings</option>
               <option value="__custom__">+ Add New Property...</option>
             </select>
-            <input type="text" id="f-venue-custom" placeholder="New property name (e.g. BELLAGIO)" style="display:none;margin-top:6px;border-color:var(--accent);">
+            <input type="text" id="f-venue-custom" placeholder="New property name e.g. BELLAGIO" style="display:none;margin-top:6px;border-color:var(--accent);">
           </div>
-          <div class="form-group"><label class="form-label">Start Date</label><input type="date" id="f-date"></div>
-          <div class="form-group"><label class="form-label">End Date (optional)</label><input type="date" id="f-date-end"></div>
+          <div class="form-group">
+            <label class="form-label">Start Date</label>
+            <input type="date" id="f-date">
+            <span class="form-hint">Leave blank for TBD</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">End Date <span style="font-weight:400;text-transform:none;">(optional)</span></label>
+            <input type="date" id="f-date-end">
+            <span class="form-hint">Only for multi-day events</span>
+          </div>
         </div>
+
         <div class="form-row">
-          <div class="form-group"><label class="form-label">Event Name</label><input type="text" id="f-name" placeholder="e.g. $100K Slot Tournament"></div>
-          <div class="form-group"><label class="form-label">Note (optional)</label><input type="text" id="f-note" placeholder="e.g. Fact Sheet available"></div>
-        </div>
-        <div class="form-row form-row-3">
-          <div class="form-group"><label class="form-label">Type</label>
-            <select id="f-type"><option value="regular">Regular</option><option value="big">Big Event</option><option value="recurring">Recurring</option></select>
+          <div class="form-group suggestions-wrap">
+            <label class="form-label">Event Name <span style="color:var(--red);font-size:10px;">*</span></label>
+            <input type="text" id="f-name" placeholder="e.g. $100K Slot Tournament" oninput="onNameInput(this.value)" autocomplete="off">
+            <div class="suggestions-list" id="nameSuggestions"></div>
+            <span class="form-hint">Type to see similar existing events</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Note <span style="font-weight:400;text-transform:none;">(optional)</span></label>
+            <input type="text" id="f-note" placeholder="e.g. Fact Sheet available">
+            <span class="form-hint">e.g. registration details, links</span>
           </div>
         </div>
+
+        <div class="form-row form-row-3">
+          <div class="form-group">
+            <label class="form-label">Event Type</label>
+            <select id="f-type">
+              <option value="regular">Regular</option>
+              <option value="big">&#11088; Big Event</option>
+              <option value="recurring">&#128257; Recurring</option>
+            </select>
+            <span class="form-hint">Big = high priority, Recurring = no expiry</span>
+          </div>
+        </div>
+
         <div class="form-actions">
           <button class="btn btn-ghost btn-sm" onclick="closeAdd()">Cancel</button>
-          <button class="btn btn-primary btn-sm" onclick="addEvent()">Add Event</button>
+          <button class="btn btn-primary btn-sm" onclick="addEvent()">&#10010; Add Event</button>
         </div>
       </div>
       <div id="eventsList"></div>
@@ -497,6 +566,13 @@ function render(){
   if(currentVenue !== "ALL") fl = fl.filter(function(e){ return e.venue===currentVenue; });
   if(currentFilter === "upcoming") fl = fl.filter(function(e){ return !isPast(e); });
   if(currentFilter === "past") fl = fl.filter(function(e){ return isPast(e); });
+  if(currentSearch){
+    fl = fl.filter(function(e){
+      return e.name.toLowerCase().indexOf(currentSearch) !== -1
+        || e.venue.toLowerCase().indexOf(currentSearch) !== -1
+        || (e.note && e.note.toLowerCase().indexOf(currentSearch) !== -1);
+    });
+  }
   fl.sort(function(a,b){ if(!a.date&&!b.date)return 0; if(!a.date)return 1; if(!b.date)return-1; return a.date-b.date; });
   var pool = currentVenue==="ALL" ? events : events.filter(function(e){ return e.venue===currentVenue; });
   document.getElementById("stat-total").textContent = pool.length;
@@ -507,7 +583,7 @@ function render(){
   VENUES_ORDER.forEach(function(v){ var el=document.getElementById("count-"+v); if(el) el.textContent=events.filter(function(e){ return e.venue===v&&!isPast(e); }).length; });
   document.getElementById("count-ALL").textContent = events.filter(function(e){ return !isPast(e); }).length;
   var el = document.getElementById("eventsList");
-  if(!fl.length){ el.innerHTML="<div class=\"empty-state\"><div class=\"empty-icon\">&#128197;</div><div>No events found</div></div>"; return; }
+  if(!fl.length){ el.innerHTML="<div class=\"empty-state\"><div class=\"empty-icon\">&#128269;</div><div>"+(currentSearch?"No events matching &ldquo;"+currentSearch+"&rdquo;":"No events found")+"</div>"+(currentSearch?"<div style=\"margin-top:8px;\"><button class=\"btn btn-ghost btn-sm\" onclick=\"clearSearch()\">Clear search</button></div>":"")+  "</div>"; return; }
   if(currentVenue === "ALL"){
     var bv = {};
     fl.forEach(function(e){ if(!bv[e.venue]) bv[e.venue]=[]; bv[e.venue].push(e); });
@@ -542,9 +618,36 @@ function mkCard(e){
   "</div>";
 }
 
+var currentSearch = "";
+function onSearch(val){
+  currentSearch = val.trim().toLowerCase();
+  var clearBtn = document.getElementById("searchClear");
+  if(clearBtn) clearBtn.style.display = currentSearch ? "block" : "none";
+  render();
+}
+function clearSearch(){
+  currentSearch = "";
+  var inp = document.getElementById("searchInput");
+  if(inp) inp.value = "";
+  var clearBtn = document.getElementById("searchClear");
+  if(clearBtn) clearBtn.style.display = "none";
+  render();
+}
 function filterVenue(v){ currentVenue=v; document.querySelectorAll(".venue-btn").forEach(function(b){ b.classList.remove("active"); }); var b=document.getElementById("venue-"+v); if(b) b.classList.add("active"); document.getElementById("toolbarTitle").textContent=v==="ALL"?"All Venues":v; render(); }
 function setFilter(f,el){ currentFilter=f; document.querySelectorAll(".pill").forEach(function(p){ p.classList.remove("active"); }); el.classList.add("active"); render(); }
-function toggleAdd(){ if(!IS_VIEW) document.getElementById("addForm").classList.toggle("open"); }
+function toggleAdd(){
+  if(!IS_VIEW){
+    var f = document.getElementById("addForm");
+    f.classList.toggle("open");
+    if(f.classList.contains("open")){
+      setTimeout(function(){ document.getElementById("f-name").focus(); }, 80);
+    }
+  }
+}
+// Esc key closes add form
+document.addEventListener("keydown", function(e){
+  if(e.key==="Escape") closeAdd();
+});
 function closeAdd(){ document.getElementById("addForm").classList.remove("open"); }
 function toggleCustomVenue(sel){
   var customInput = document.getElementById("f-venue-custom");
@@ -564,23 +667,105 @@ function getVenueValue(){
   }
   return sel.value;
 }
+// Check for duplicates — returns matching event or null
+function findDuplicate(name, venue){
+  var n = name.trim().toLowerCase();
+  return events.find(function(e){
+    var sameName = e.name.toLowerCase() === n;
+    var similarName = e.name.toLowerCase().indexOf(n) !== -1 || n.indexOf(e.name.toLowerCase()) !== -1;
+    var sameVenue = e.venue === venue;
+    return (sameName || (similarName && n.length > 5)) && sameVenue;
+  }) || null;
+}
+
+// Live name input: show suggestions + duplicate warning
+function onNameInput(val){
+  hideDupWarning();
+  var venue = getVenueValue();
+  var q = val.trim().toLowerCase();
+  var list = document.getElementById("nameSuggestions");
+
+  if(q.length < 2){ list.classList.remove("open"); list.innerHTML=""; return; }
+
+  // Find similar events across all venues for suggestions
+  var matches = events.filter(function(e){
+    return e.name.toLowerCase().indexOf(q) !== -1;
+  }).slice(0, 6);
+
+  if(matches.length){
+    list.innerHTML = matches.map(function(e){
+      return "<div class=\"suggestion-item\" onclick=\"pickSuggestion('"+e.name.replace(/'/g,"\'")+"')\">"
+        +"<span style=\"flex:1;\">"+e.name+"</span>"
+        +"<span class=\"suggestion-venue\">"+e.venue+"</span>"
+        +"</div>";
+    }).join("");
+    list.classList.add("open");
+  } else {
+    list.classList.remove("open"); list.innerHTML="";
+  }
+
+  // Show duplicate warning if exact/near-exact match in same venue
+  var dup = findDuplicate(val, venue);
+  if(dup && val.trim().length > 3){
+    showDupWarning(dup);
+  }
+}
+
+function pickSuggestion(name){
+  document.getElementById("f-name").value = name;
+  document.getElementById("nameSuggestions").classList.remove("open");
+  onNameInput(name);
+}
+
+function showDupWarning(dup){
+  var w = document.getElementById("dupWarning");
+  var t = document.getElementById("dupWarningText");
+  var dateStr = dup.date ? " on "+shortDate(dup.date) : "";
+  t.textContent = "\""+dup.name+"\" already exists at "+dup.venue+dateStr+". Double-check before adding!";
+  w.classList.add("show");
+}
+function hideDupWarning(){
+  document.getElementById("dupWarning").classList.remove("show");
+}
+
 function addEvent(){
   var name = document.getElementById("f-name").value.trim();
   if(!name){ alert("Please enter an event name."); return; }
   var venue = getVenueValue();
   if(!venue){ alert("Please enter a name for the new property."); return; }
-  // Auto-register new venue into VENUES_ORDER and sidebar if it doesn't exist
+
+  // Hard duplicate block — exact same name + venue
+  var exactDup = events.find(function(e){
+    return e.name.trim().toLowerCase() === name.toLowerCase() && e.venue === venue;
+  });
+  if(exactDup){
+    showDupWarning(exactDup);
+    document.getElementById("f-name").style.borderColor = "var(--red)";
+    setTimeout(function(){ document.getElementById("f-name").style.borderColor=""; }, 3000);
+    return; // Block the add
+  }
+
+  // Auto-register new venue
   if(VENUES_ORDER.indexOf(venue) === -1){
     VENUES_ORDER.push(venue);
     addVenueToSidebar(venue);
     addVenueToDropdown(venue);
   }
-  events.push({id:uid(),venue:venue,name:name,date:parseDate(document.getElementById("f-date").value),endDate:parseDate(document.getElementById("f-date-end").value),note:document.getElementById("f-note").value.trim(),type:document.getElementById("f-type").value});
-  // Reset venue select back to first option
-  var sel = document.getElementById("f-venue");
-  sel.value = "BIG EVENT";
+
+  events.push({
+    id:uid(), venue:venue, name:name,
+    date:parseDate(document.getElementById("f-date").value),
+    endDate:parseDate(document.getElementById("f-date-end").value),
+    note:document.getElementById("f-note").value.trim(),
+    type:document.getElementById("f-type").value
+  });
+
+  // Reset form cleanly
+  document.getElementById("f-venue").value = "BIG EVENT";
   document.getElementById("f-venue-custom").style.display = "none";
   document.getElementById("f-venue-custom").value = "";
+  document.getElementById("nameSuggestions").classList.remove("open");
+  hideDupWarning();
   ["f-name","f-note","f-date","f-date-end"].forEach(function(id){ document.getElementById(id).value=""; });
   closeAdd(); markUnsaved(); render();
 }
