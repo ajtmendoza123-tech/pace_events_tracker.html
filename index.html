@@ -783,9 +783,15 @@ function mkCard(e){
       "<button class=\"btn btn-danger btn-sm\" onclick=\"delEv('"+e.id+"')\">Delete</button>"+
     "</div>";
   }
-  return "<div class=\""+cls+"\">"+
+  var cbHtml = IS_VIEW ? "" :
+    "<label class=\"event-checkbox\" onclick=\"event.stopPropagation()\">"+
+    "<input type=\"checkbox\" id=\"cb-"+e.id+"\" onchange=\"onCardCheck(this,'"+e.id+"')\"/>"+
+    "</label>";
+  return "<div class=\""+cls+"\" id=\"card-"+e.id+"\" onclick=\"onCardClick(event,'"+e.id+"')\">"+
+    cbHtml+
     "<div class=\"date-block\"><div class=\"date-month\">"+mon+"</div><div class=\"date-day\">"+day+"</div>"+(endDay?"<div class=\"date-end\">"+endDay+"</div>":"")+
     (e.type==="recurring"?"<div class=\"date-end\">&#128257;</div>":"")+
+    (tod?"<div class=\"date-bell\">&#128276;</div>":"")+
     "</div>"+
     "<div class=\"event-info\"><div class=\"event-name\">"+e.name+"</div><div class=\"event-venue-label\">"+e.venue+"</div>"+(e.note?"<div class=\"event-note\">"+e.note+"</div>":"")+(badges?"<div class=\"event-badges\">"+badges+"</div>":"")+
     "</div>"+
