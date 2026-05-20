@@ -207,6 +207,116 @@ select:focus{background-color:var(--surface);}
 
 /* SHARE THEME BAR — light themes only */
 .share-theme-bar{display:none;}
+
+/* ── PUBLIC VIEW OVERRIDES ── */
+body.IS_VIEW .sidebar { display: none; }
+body.IS_VIEW .layout { display: block; }
+body.IS_VIEW .main { height: calc(100vh - 58px); overflow-y: auto; }
+body.IS_VIEW .btn-select-mode { display: none; }
+body.IS_VIEW .bulk-action-bar { display: none !important; }
+body.IS_VIEW .event-actions { display: none !important; }
+
+/* Public hero band */
+.public-hero {
+  display: none;
+  background: var(--navy);
+  color: #fff;
+  padding: 28px 32px 24px;
+  border-bottom: 3px solid var(--gold-light);
+}
+body.IS_VIEW .public-hero { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.public-hero-title {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+}
+.public-hero-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 4px;
+  font-weight: 400;
+}
+.public-hero-stats {
+  display: flex;
+  gap: 24px;
+}
+.public-hero-stat {
+  text-align: center;
+}
+.public-hero-stat-num {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--gold-light);
+  line-height: 1;
+}
+.public-hero-stat-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+/* Public venue nav pills (replaces sidebar) */
+.public-venue-nav {
+  display: none;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+body.IS_VIEW .public-venue-nav { display: flex; }
+.public-venue-nav::-webkit-scrollbar { display: none; }
+
+.pub-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-mid);
+  background: transparent;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pub-pill:hover { background: var(--navy-light); color: var(--navy); border-color: var(--navy); }
+.pub-pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.pub-pill .pub-pill-count {
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.pub-pill:not(.active) .pub-pill-count {
+  background: var(--surface2);
+  color: var(--text-4);
+}
+
+/* Hide internal stats bar in public, use hero stats instead */
+body.IS_VIEW .stats-bar { display: none; }
+
+/* Public toolbar — simpler */
+body.IS_VIEW .toolbar-title { font-size: 15px; color: var(--text-3); font-weight: 600; font-family: var(--font); }
+body.IS_VIEW .toolbar { background: var(--surface2); border-bottom: 1px solid var(--border); }
+
+/* Public event cards — slightly more airy */
+body.IS_VIEW .event-card { border-radius: 10px; margin-bottom: 8px; }
+body.IS_VIEW .events-container { padding: 20px 32px; max-width: 900px; margin: 0 auto; }
+
 body.IS_VIEW .share-theme-bar{display:flex;align-items:center;gap:8px;padding:8px 24px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
 .share-theme-bar span{font-size:10px;font-weight:600;color:var(--text-4);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--mono);}
 .swatch{width:20px;height:20px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:border 0.15s;}
@@ -237,6 +347,153 @@ body.theme-sky{--bg:#f0f8ff;--surface:#f8fcff;--surface2:#ddf0ff;--surface3:#c8e
 body.theme-mint{--bg:#f0fdf8;--surface:#f8fffc;--surface2:#d8f8ec;--surface3:#c0f0e0;--border:#98e0c8;--border-mid:#68c8a8;--border-strong:#40a888;--navy:#0a5840;--navy-mid:#187058;--navy-light:rgba(10,88,64,0.07);--text:#041c14;--text-2:#0a3020;--text-3:#285840;--text-4:#589878;--gold:#707010;--gold-light:#909018;--gold-pale:#f8f8d4;--gold-border:#c8c848;--teal:#0a7868;--teal-bg:#d0f4f0;--teal-border:#48b8a8;--green:#0a7840;--green-bg:#d0f8e4;--green-border:#48b878;--red:#a02828;--red-bg:#f8e0e0;--red-border:#d08080;--amber:#807010;--amber-bg:#f8f0d0;--amber-border:#c8b040;}
 
 .rtab{padding:7px 18px;font-size:13px;font-weight:600;font-family:var(--font);border:none;cursor:pointer;transition:all 0.15s;}
+
+/* ====== BULK DELETE ====== */
+.event-card.select-mode { cursor: pointer; }
+.event-card.select-mode:hover { border-color: var(--border-mid); }
+.event-card.selected {
+  border-color: #e05050 !important;
+  background: #fff5f5 !important;
+  box-shadow: 0 0 0 2px rgba(220,80,80,0.15) !important;
+}
+.event-card.selected .date-block { background: #e05050 !important; }
+
+.event-checkbox {
+  display: none;
+  width: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  cursor: pointer;
+}
+body.select-mode-active .event-checkbox { display: flex; }
+body.select-mode-active .date-block { display: none; }
+
+.event-checkbox input[type="checkbox"] {
+  width: 18px; height: 18px;
+  accent-color: #e05050;
+  cursor: pointer;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* Floating action bar */
+.bulk-action-bar {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  border-radius: 50px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 8px 40px rgba(30,45,90,0.35), 0 2px 8px rgba(30,45,90,0.2);
+  z-index: 500;
+  transition: bottom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+  min-width: 340px;
+  justify-content: center;
+}
+.bulk-action-bar.visible { bottom: 28px; }
+
+.bulk-count-label {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bulk-count-num {
+  background: #e05050;
+  color: #fff;
+  border-radius: 20px;
+  padding: 1px 10px;
+  font-size: 13px;
+  font-weight: 800;
+  min-width: 28px;
+  text-align: center;
+  transition: all 0.15s;
+}
+.bulk-sep { width: 1px; height: 22px; background: rgba(255,255,255,0.15); }
+
+.btn-bulk-cancel {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 30px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-bulk-cancel:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+.btn-bulk-all {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 30px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-bulk-all:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+.btn-bulk-delete {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 22px;
+  border-radius: 30px;
+  border: none;
+  background: #e05050;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-bulk-delete:hover { background: #cc3a3a; transform: scale(1.03); }
+.btn-bulk-delete:disabled { background: rgba(220,80,80,0.35); cursor: not-allowed; transform: none; }
+
+/* Select mode toolbar toggle */
+.btn-select-mode {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-mid);
+  background: transparent;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.btn-select-mode:hover { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+.btn-select-mode.active { background: var(--red-bg); border-color: var(--red-border); color: var(--red); font-weight: 700; }
+
+/* Shake animation on delete */
+@keyframes card-vanish {
+  0% { opacity:1; transform:translateX(0) scale(1); max-height:80px; margin-bottom:6px; }
+  40% { opacity:0.5; transform:translateX(12px) scale(0.97); }
+  100% { opacity:0; transform:translateX(40px) scale(0.94); max-height:0; margin-bottom:0; padding:0; }
+}
+.event-card.vanishing { animation: card-vanish 0.32s ease-in forwards; pointer-events:none; overflow:hidden; }
+
 </style>
 </head>
 <body>
@@ -249,6 +506,19 @@ body.theme-mint{--bg:#f0fdf8;--surface:#f8fffc;--surface2:#d8f8ec;--surface3:#c0
   </div>
   <div class="header-actions" id="headerActions"></div>
 </header>
+
+<!-- PUBLIC HERO (visible only in share view) -->
+<div class="public-hero">
+  <div>
+    <div class="public-hero-title">PACE Gaming Events</div>
+    <div class="public-hero-sub">Browse upcoming events across all featured properties</div>
+  </div>
+  <div class="public-hero-stats">
+    <div class="public-hero-stat"><div class="public-hero-stat-num" id="pub-stat-upcoming">—</div><div class="public-hero-stat-label">Upcoming</div></div>
+    <div class="public-hero-stat"><div class="public-hero-stat-num" id="pub-stat-venues">—</div><div class="public-hero-stat-label">Venues</div></div>
+    <div class="public-hero-stat"><div class="public-hero-stat-num" id="pub-stat-total">—</div><div class="public-hero-stat-label">Total Events</div></div>
+  </div>
+</div>
 
 <div class="layout">
   <aside class="sidebar">
@@ -285,6 +555,9 @@ body.theme-mint{--bg:#f0fdf8;--surface:#f8fffc;--surface2:#d8f8ec;--surface3:#c0
   </aside>
 
   <main class="main">
+    <!-- PUBLIC VENUE NAV (share view only) -->
+    <div class="public-venue-nav" id="publicVenueNav"></div>
+
     <div class="share-theme-bar" id="shareThemeBar">
       <span>Theme</span>
       <div class="swatch swatch-default active" title="Default" onclick="setShareTheme('light',this)"></div>
@@ -316,6 +589,7 @@ body.theme-mint{--bg:#f0fdf8;--surface:#f8fffc;--surface2:#d8f8ec;--surface3:#c0
         <div class="pill" onclick="setFilter('upcoming',this)">Upcoming</div>
         <div class="pill past-pill" onclick="setFilter('past',this)">Past</div>
       </div>
+      <button class="btn-select-mode" id="selectModeBtn" onclick="toggleSelectMode()" title="Select events to delete">&#9745; Select</button>
     </div>
 
     <div class="events-container">
@@ -706,6 +980,7 @@ function render(){
     VENUES_ORDER.forEach(function(v){ if(!bv[v]||!bv[v].length) return; h+="<div class=\"group-label\"><span style=\"flex:1;\">"+v+"</span><span style=\"background:var(--navy);color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;font-family:var(--mono);\">"+bv[v].length+" events</span></div>"; bv[v].forEach(function(e){ h+=mkCard(e); }); });
     el.innerHTML=h;
   } else { el.innerHTML=fl.map(mkCard).join(""); }
+  if(IS_VIEW){ updatePublicHeroStats(); buildPublicVenueNav(); }
 }
 
 function mkCard(e){
@@ -727,7 +1002,12 @@ function mkCard(e){
       "<button class=\"btn btn-danger btn-sm\" onclick=\"delEv('"+e.id+"')\">Delete</button>"+
     "</div>";
   }
-  return "<div class=\""+cls+"\">"+
+  var cbHtml = IS_VIEW ? "" :
+    "<label class=\"event-checkbox\" onclick=\"event.stopPropagation()\">"+
+    "<input type=\"checkbox\" id=\"cb-"+e.id+"\" onchange=\"onCardCheck(this,'"+e.id+"')\"/>"+
+    "</label>";
+  return "<div class=\""+cls+"\" id=\"card-"+e.id+"\" onclick=\"onCardClick(event,'"+e.id+"')\">"+
+    cbHtml+
     "<div class=\"date-block\"><div class=\"date-month\">"+mon+"</div><div class=\"date-day\">"+day+"</div>"+(endDay?"<div class=\"date-end\">"+endDay+"</div>":"")+
     (e.type==="recurring"?"<div class=\"date-end\">&#128257;</div>":"")+
     (tod?"<div class=\"date-bell\">&#128276;</div>":"")+
@@ -993,7 +1273,15 @@ function importBulk(){
 }
 
 function markDone(id){ var e=events.find(function(x){ return x.id===id; }); if(!e) return; var y=new Date(); y.setDate(y.getDate()-1); e.date=new Date(y.getFullYear(),y.getMonth(),y.getDate()); markUnsaved(); render(); }
-function delEv(id){ if(!confirm("Delete this event?")) return; events=events.filter(function(e){ return e.id!==id; }); markUnsaved(); render(); }
+function delEv(id){
+  if(!confirm("Delete this event?")) return;
+  var card = document.getElementById("card-"+id);
+  if(card) card.classList.add("vanishing");
+  setTimeout(function(){
+    events = events.filter(function(e){ return e.id!==id; });
+    markUnsaved(); render();
+  }, 320);
+}
 
 function renderReportPreview(){ buildReport(); }
 function buildReport(){
@@ -1216,7 +1504,182 @@ function closeShare(){ document.getElementById("shareModal").classList.remove("o
 function copyShareLink(){ navigator.clipboard.writeText(document.getElementById("shareUrl").value).then(function(){ var b=document.getElementById("copyShareBtn"); b.textContent="Copied!"; setTimeout(function(){ b.textContent="Copy Link"; },2000); }); }
 
 render();
+
+// ===== BULK DELETE / SELECT MODE =====
+var selectModeOn = false;
+var selectedIds = new Set();
+
+function toggleSelectMode(){
+  if(selectModeOn) exitSelectMode();
+  else enterSelectMode();
+}
+
+function enterSelectMode(){
+  selectModeOn = true;
+  selectedIds = new Set();
+  document.body.classList.add("select-mode-active");
+  var btn = document.getElementById("selectModeBtn");
+  if(btn){ btn.classList.add("active"); btn.innerHTML = "&#10005; Cancel"; }
+  updateBulkBar();
+}
+
+function exitSelectMode(){
+  selectModeOn = false;
+  selectedIds = new Set();
+  document.body.classList.remove("select-mode-active");
+  var btn = document.getElementById("selectModeBtn");
+  if(btn){ btn.classList.remove("active"); btn.innerHTML = "&#9745; Select"; }
+  // Uncheck all checkboxes
+  document.querySelectorAll(".event-checkbox input").forEach(function(cb){ cb.checked = false; });
+  document.querySelectorAll(".event-card.selected").forEach(function(card){ card.classList.remove("selected"); });
+  var bar = document.getElementById("bulkActionBar");
+  if(bar) bar.classList.remove("visible");
+}
+
+function onCardClick(evt, id){
+  if(!selectModeOn) return;
+  // Don't trigger if clicking a button inside the card
+  if(evt.target.tagName === "BUTTON" || evt.target.tagName === "INPUT") return;
+  evt.preventDefault();
+  toggleSelect(id);
+}
+
+function onCardCheck(cb, id){
+  if(cb.checked) selectedIds.add(id);
+  else selectedIds.delete(id);
+  var card = document.getElementById("card-"+id);
+  if(card){ card.classList.toggle("selected", cb.checked); }
+  updateBulkBar();
+}
+
+function toggleSelect(id){
+  var card = document.getElementById("card-"+id);
+  var cb = document.getElementById("cb-"+id);
+  if(!card) return;
+  var isSelected = selectedIds.has(id);
+  if(isSelected){
+    selectedIds.delete(id);
+    card.classList.remove("selected");
+    if(cb) cb.checked = false;
+  } else {
+    selectedIds.add(id);
+    card.classList.add("selected");
+    if(cb) cb.checked = true;
+  }
+  updateBulkBar();
+}
+
+function bulkSelectAll(){
+  var allCards = document.querySelectorAll(".event-card:not(.vanishing)");
+  var allSelected = selectedIds.size === allCards.length && allCards.length > 0;
+  if(allSelected){
+    // Deselect all
+    selectedIds = new Set();
+    allCards.forEach(function(card){
+      card.classList.remove("selected");
+      var cb = card.querySelector("input[type=checkbox]");
+      if(cb) cb.checked = false;
+    });
+    var btn = document.querySelector(".btn-bulk-all");
+    if(btn) btn.textContent = "Select All";
+  } else {
+    // Select all
+    allCards.forEach(function(card){
+      var id = card.id ? card.id.replace("card-","") : null;
+      if(id){
+        selectedIds.add(id);
+        card.classList.add("selected");
+        var cb = card.querySelector("input[type=checkbox]");
+        if(cb) cb.checked = true;
+      }
+    });
+    var btn = document.querySelector(".btn-bulk-all");
+    if(btn) btn.textContent = "Deselect All";
+  }
+  updateBulkBar();
+}
+
+function updateBulkBar(){
+  var bar = document.getElementById("bulkActionBar");
+  var numEl = document.getElementById("bulkCountNum");
+  var delBtn = document.getElementById("bulkDeleteBtn");
+  var n = selectedIds.size;
+  if(numEl) numEl.textContent = n;
+  if(delBtn) delBtn.disabled = n === 0;
+  if(bar) bar.classList.toggle("visible", selectModeOn);
+}
+
+function bulkDeleteSelected(){
+  var n = selectedIds.size;
+  if(n === 0) return;
+  if(!confirm("Delete " + n + " event" + (n > 1 ? "s" : "") + "? This cannot be undone.")) return;
+  var ids = Array.from(selectedIds);
+  ids.forEach(function(id){
+    var card = document.getElementById("card-"+id);
+    if(card) card.classList.add("vanishing");
+  });
+  setTimeout(function(){
+    events = events.filter(function(e){ return ids.indexOf(e.id) === -1; });
+    markUnsaved();
+    exitSelectMode();
+    render();
+  }, 320);
+}
+
+
+
+// ===== PUBLIC VIEW SETUP =====
+function setupPublicView(){
+  if(!IS_VIEW) return;
+  updatePublicHeroStats();
+  buildPublicVenueNav();
+}
+
+function updatePublicHeroStats(){
+  var upEl = document.getElementById("pub-stat-upcoming");
+  var vEl  = document.getElementById("pub-stat-venues");
+  var tEl  = document.getElementById("pub-stat-total");
+  var upcoming = events.filter(function(e){ return !isPast(e); }).length;
+  var venues   = new Set(events.map(function(e){ return e.venue; })).size;
+  if(upEl) upEl.textContent = upcoming;
+  if(vEl)  vEl.textContent  = venues;
+  if(tEl)  tEl.textContent  = events.length;
+}
+
+function buildPublicVenueNav(){
+  var nav = document.getElementById("publicVenueNav");
+  if(!nav) return;
+  // Count events per venue
+  var counts = {};
+  events.forEach(function(e){ counts[e.venue] = (counts[e.venue]||0)+1; });
+  // Build pills
+  var html = "<button class=\"pub-pill active\" onclick=\"pubFilterVenue('ALL',this)\">All <span class=\"pub-pill-count\">"+events.length+"</span></button>";
+  VENUES_ORDER.forEach(function(v){
+    if(!counts[v]) return;
+    html += "<button class=\"pub-pill\" onclick=\"pubFilterVenue('"+v+"',this)\">"+v+" <span class=\"pub-pill-count\">"+counts[v]+"</span></button>";
+  });
+  nav.innerHTML = html;
+}
+
+function pubFilterVenue(venue, btn){
+  document.querySelectorAll(".pub-pill").forEach(function(p){ p.classList.remove("active"); });
+  if(btn) btn.classList.add("active");
+  filterVenue(venue);
+}
+
+
 </script>
+
+
+
+<!-- BULK DELETE BAR -->
+<div class="bulk-action-bar" id="bulkActionBar">
+  <div class="bulk-count-label">&#9745; <span class="bulk-count-num" id="bulkCountNum">0</span> selected</div>
+  <div class="bulk-sep"></div>
+  <button class="btn-bulk-all" onclick="bulkSelectAll()">Select All</button>
+  <button class="btn-bulk-delete" id="bulkDeleteBtn" onclick="bulkDeleteSelected()" disabled>&#128465; Delete Selected</button>
+  <button class="btn-bulk-cancel" onclick="exitSelectMode()">Cancel</button>
+</div>
 
 </body>
 </html>
