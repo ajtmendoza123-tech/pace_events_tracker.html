@@ -6,45 +6,8 @@
 <title>PACE Gaming Events</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f4f6fb;
-  --surface: #ffffff;
-  --surface2: #f0f3f9;
-  --surface3: #e6eaf4;
-  --border: #dde2ef;
-  --border-mid: #c8cedf;
-  --border-strong: #adb5cc;
-  --navy: #1e2d5a;
-  --navy-mid: #2e4080;
-  --navy-light: rgba(30,45,90,0.06);
-  --gold: #a07820;
-  --gold-light: #c89830;
-  --gold-pale: #fdf6e3;
-  --gold-border: #e8cc80;
-  --teal: #1a8f8f;
-  --teal-bg: #e8f6f6;
-  --teal-border: #90d0d0;
-  --green: #1a7a48;
-  --green-bg: #e8f5ee;
-  --green-border: #80c8a0;
-  --red: #c03838;
-  --red-bg: #fceaea;
-  --red-border: #e8a0a0;
-  --amber: #b85000;
-  --amber-bg: #fff3e0;
-  --amber-border: #f0b870;
-  --text: #1a2040;
-  --text-2: #384070;
-  --text-3: #6070a0;
-  --text-4: #96a0c0;
-  --radius: 10px;
-  --radius-sm: 7px;
-  --font: 'Nunito Sans', sans-serif;
-  --display: 'Nunito', sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-  --shadow-sm: 0 1px 3px rgba(30,45,90,0.07), 0 2px 8px rgba(30,45,90,0.05);
-  --shadow: 0 2px 8px rgba(30,45,90,0.09), 0 6px 24px rgba(30,45,90,0.06);
-}
+
+:root{--bg:#f4f6fb;--surface:#ffffff;--surface2:#f0f3f9;--surface3:#e6eaf4;--border:#dde2ef;--border-mid:#c8cedf;--border-strong:#adb5cc;--navy:#1e2d5a;--navy-mid:#2e4080;--navy-light:rgba(30,45,90,0.06);--gold:#a07820;--gold-light:#c89830;--gold-pale:#fdf6e3;--gold-border:#e8cc80;--teal:#1a8f8f;--teal-bg:#e8f6f6;--teal-border:#90d0d0;--green:#1a7a48;--green-bg:#e8f5ee;--green-border:#80c8a0;--red:#c03838;--red-bg:#fceaea;--red-border:#e8a0a0;--amber:#b85000;--amber-bg:#fff3e0;--amber-border:#f0b870;--text:#1a2040;--text-2:#384070;--text-3:#6070a0;--text-4:#96a0c0;--radius:10px;--radius-sm:7px;--font:'Nunito Sans',sans-serif;--display:'Nunito',sans-serif;--mono:'JetBrains Mono',monospace;--shadow-sm:0 1px 3px rgba(30,45,90,0.07),0 2px 8px rgba(30,45,90,0.05);--shadow:0 2px 8px rgba(30,45,90,0.09),0 6px 24px rgba(30,45,90,0.06);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased;}
 ::-webkit-scrollbar{width:5px;height:5px;}
@@ -82,7 +45,7 @@ header{height:58px;background:var(--navy);display:flex;align-items:center;justif
 .layout{display:flex;height:calc(100vh - 58px);}
 
 /* SIDEBAR */
-.sidebar{width:232px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:10px 0 24px;box-shadow:2px 0 8px rgba(30,45,90,0.04);}
+.sidebar{width:232px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:10px 0 24px;}
 .sidebar-section{margin-bottom:4px;}
 .sidebar-label{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--text-4);padding:12px 16px 5px;text-transform:uppercase;font-weight:500;}
 .venue-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:9px 16px;background:transparent;border:none;border-left:3px solid transparent;cursor:pointer;font-family:var(--font);font-size:13.5px;font-weight:500;color:var(--text-3);text-align:left;transition:all 0.12s;}
@@ -118,8 +81,8 @@ header{height:58px;background:var(--navy);display:flex;align-items:center;justif
 
 /* EVENTS */
 .events-container{flex:1;padding:18px 22px;overflow-y:auto;background:var(--bg);}
-.group-label{font-family:var(--display);font-size:13px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--navy);background:var(--surface);border-radius:8px;padding:10px 14px;margin:18px 0 8px;display:flex;align-items:center;gap:10px;border-left:4px solid var(--navy);box-shadow:var(--shadow-sm);}
-.group-label span:last-child{display:inline-flex;align-items:center;}
+.group-label{font-family:var(--display);font-size:13px;font-weight:800;letter-spacing:0.01em;text-transform:uppercase;color:var(--navy);background:var(--surface);border-radius:8px;padding:10px 14px;margin:18px 0 8px;display:flex;align-items:center;gap:10px;border-left:4px solid var(--navy);box-shadow:var(--shadow-sm);}
+.group-label span:first-child{flex:1;}
 
 /* EVENT CARDS */
 .event-card{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);margin-bottom:6px;transition:all 0.14s;overflow:hidden;position:relative;}
@@ -205,294 +168,126 @@ select:focus{background-color:var(--surface);}
 .empty-state{text-align:center;padding:60px 24px;color:var(--text-4);}
 .empty-icon{font-size:36px;margin-bottom:12px;opacity:0.3;}
 
-/* SHARE THEME BAR — light themes only */
+/* SHARE THEME BAR */
 .share-theme-bar{display:none;}
-
-/* ── PUBLIC VIEW OVERRIDES ── */
-body.IS_VIEW .sidebar { display: none; }
-body.IS_VIEW .layout { display: block; }
-body.IS_VIEW .main { height: calc(100vh - 58px); overflow-y: auto; }
-body.IS_VIEW .btn-select-mode { display: none; }
-body.IS_VIEW .bulk-action-bar { display: none !important; }
-body.IS_VIEW .event-actions { display: none !important; }
-
-/* Public hero band */
-.public-hero {
-  display: none;
-  background: var(--navy);
-  color: #fff;
-  padding: 28px 32px 24px;
-  border-bottom: 3px solid var(--gold-light);
-}
-body.IS_VIEW .public-hero { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-.public-hero-title {
-  font-family: var(--display);
-  font-size: 26px;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.1;
-}
-.public-hero-sub {
-  font-size: 13px;
-  color: rgba(255,255,255,0.6);
-  margin-top: 4px;
-  font-weight: 400;
-}
-.public-hero-stats {
-  display: flex;
-  gap: 24px;
-}
-.public-hero-stat {
-  text-align: center;
-}
-.public-hero-stat-num {
-  font-family: var(--display);
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--gold-light);
-  line-height: 1;
-}
-.public-hero-stat-label {
-  font-size: 10px;
-  color: rgba(255,255,255,0.5);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 600;
-  margin-top: 3px;
-}
-
-/* Public venue nav pills (replaces sidebar) */
-.public-venue-nav {
-  display: none;
-  padding: 12px 24px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;
-  gap: 6px;
-  flex-wrap: nowrap;
-}
-body.IS_VIEW .public-venue-nav { display: flex; }
-.public-venue-nav::-webkit-scrollbar { display: none; }
-
-.pub-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 5px 13px;
-  border-radius: 20px;
-  border: 1.5px solid var(--border-mid);
-  background: transparent;
-  color: var(--text-3);
-  cursor: pointer;
-  transition: all 0.12s;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.pub-pill:hover { background: var(--navy-light); color: var(--navy); border-color: var(--navy); }
-.pub-pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
-.pub-pill .pub-pill-count {
-  background: rgba(255,255,255,0.2);
-  border-radius: 10px;
-  padding: 0 6px;
-  font-size: 10px;
-  font-weight: 700;
-}
-.pub-pill:not(.active) .pub-pill-count {
-  background: var(--surface2);
-  color: var(--text-4);
-}
-
-/* Hide internal stats bar in public, use hero stats instead */
-body.IS_VIEW .stats-bar { display: none; }
-
-/* Public toolbar — simpler */
-body.IS_VIEW .toolbar-title { font-size: 15px; color: var(--text-3); font-weight: 600; font-family: var(--font); }
-body.IS_VIEW .toolbar { background: var(--surface2); border-bottom: 1px solid var(--border); }
-
-/* Public event cards — slightly more airy */
-body.IS_VIEW .event-card { border-radius: 10px; margin-bottom: 8px; }
-body.IS_VIEW .events-container { padding: 20px 32px; max-width: 900px; margin: 0 auto; }
-
-body.IS_VIEW .share-theme-bar{display:flex;align-items:center;gap:8px;padding:8px 24px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
+body.IS_VIEW .share-theme-bar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
 .share-theme-bar span{font-size:10px;font-weight:600;color:var(--text-4);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--mono);}
 .swatch{width:20px;height:20px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:border 0.15s;}
 .swatch:hover,.swatch.active{border:2px solid var(--navy);box-shadow:0 0 0 2px rgba(30,45,90,0.15);}
 .swatch-default{background:linear-gradient(135deg,#f4f6fb,#fff);}
-.swatch-warm{background:linear-gradient(135deg,#fdf8f2,#f5ede0);}
-.swatch-slate{background:linear-gradient(135deg,#eef2f9,#e0e8f4);}
-.swatch-sage{background:linear-gradient(135deg,#f2f7f2,#d4e4d4);}
-.swatch-blush{background:linear-gradient(135deg,#fdf4f4,#f5e4e4);}
 .theme-swatch-btn{width:28px;height:28px;border-radius:6px;border:2px solid transparent;cursor:pointer;transition:all 0.15s;}
 .theme-swatch-btn:hover{transform:scale(1.1);border-color:var(--border-strong);}
 .theme-swatch-btn.active{border-color:var(--navy);box-shadow:0 0 0 2px rgba(30,45,90,0.15);}
 
 /* LIGHT THEMES */
-/* Warm Cream */
-body.share-warm{--bg:#fdf8f0;--surface:#fffdf8;--surface2:#f7ede0;--surface3:#f0e0cc;--border:#e8d4b8;--border-mid:#d0b890;--border-strong:#b09870;--navy:#7c4a10;--navy-mid:#9c6020;--navy-light:rgba(124,74,16,0.07);--text:#2c1a08;--text-2:#4a3018;--text-3:#7a6040;--text-4:#a88860;--gold:#a07820;--gold-light:#c89830;--gold-pale:#fdf0d8;--gold-border:#e8cc80;--teal:#1a7a70;--teal-bg:#e4f4f2;--teal-border:#80c8c0;--green:#2a7a3a;--green-bg:#e8f5ec;--green-border:#80c898;--red:#b83030;--red-bg:#fce8e8;--red-border:#e89898;--amber:#c06010;--amber-bg:#fff0d8;--amber-border:#f0b060;}
-/* Slate Blue */
-body.share-slate{--bg:#eef2fb;--surface:#f6f9ff;--surface2:#dce8f8;--surface3:#c8d8f0;--border:#b0c4e8;--border-mid:#88a4d0;--border-strong:#5878b0;--navy:#1a3a8a;--navy-mid:#2a52b0;--navy-light:rgba(26,58,138,0.07);--text:#0c1e40;--text-2:#1e3060;--text-3:#4a6090;--text-4:#8898b8;--gold:#7a6010;--gold-light:#a08020;--gold-pale:#f8f4d8;--gold-border:#d0bc60;--teal:#1a6a8a;--teal-bg:#dceef8;--teal-border:#70b0d0;--green:#1a6a40;--green-bg:#dcf0e8;--green-border:#70b890;--red:#b02828;--red-bg:#f8e0e0;--red-border:#d88080;--amber:#a05808;--amber-bg:#fcecd8;--amber-border:#e0a060;}
-/* Sage Green */
-body.share-sage{--bg:#f0f7f0;--surface:#f8fbf8;--surface2:#e0ece0;--surface3:#cce0cc;--border:#b4d0b4;--border-mid:#88b888;--border-strong:#609860;--navy:#1a5228;--navy-mid:#286838;--navy-light:rgba(26,82,40,0.07);--text:#0c2810;--text-2:#1c4020;--text-3:#486848;--text-4:#789878;--gold:#6a6010;--gold-light:#887820;--gold-pale:#f4f0d0;--gold-border:#c8b850;--teal:#1a6860;--teal-bg:#d8eeec;--teal-border:#68b0a8;--green:#1a6828;--green-bg:#d8eedd;--green-border:#68b078;--red:#983030;--red-bg:#f8e4e4;--red-border:#d08080;--amber:#886010;--amber-bg:#f8ecd4;--amber-border:#d8a850;}
-/* Blush Rose */
-body.share-blush{--bg:#fdf2f4;--surface:#fff6f8;--surface2:#f8e4e8;--surface3:#f0d4d8;--border:#e8c0c8;--border-mid:#d090a0;--border-strong:#b06878;--navy:#8a2038;--navy-mid:#a83050;--navy-light:rgba(138,32,56,0.07);--text:#2c0c14;--text-2:#481820;--text-3:#784858;--text-4:#b08090;--gold:#906020;--gold-light:#b07828;--gold-pale:#fdf4d8;--gold-border:#e0c060;--teal:#1a7078;--teal-bg:#d8f0f4;--teal-border:#60b8c0;--green:#287040;--green-bg:#d8f0e4;--green-border:#60b080;--red:#b02838;--red-bg:#fce8ea;--red-border:#e09098;--amber:#a05018;--amber-bg:#fcecd8;--amber-border:#e0a060;}
-/* Soft Lavender */
-body.theme-lavender{--bg:#f5f2fd;--surface:#faf8ff;--surface2:#ede8fb;--surface3:#e0d8f8;--border:#ccc4f0;--border-mid:#a898e0;--border-strong:#8070c8;--navy:#4428a0;--navy-mid:#5838c0;--navy-light:rgba(68,40,160,0.07);--text:#1c1040;--text-2:#302060;--text-3:#605898;--text-4:#9890c0;--gold:#806018;--gold-light:#a07828;--gold-pale:#f8f0d8;--gold-border:#d0b848;--teal:#286888;--teal-bg:#d8eef8;--teal-border:#68b0d0;--green:#286840;--green-bg:#d8f0e4;--green-border:#68b080;--red:#982038;--red-bg:#f8e0e8;--red-border:#d07888;--amber:#906018;--amber-bg:#f8ecd4;--amber-border:#d8a048;}
-/* Clear Sky */
-body.theme-sky{--bg:#f0f8ff;--surface:#f8fcff;--surface2:#ddf0ff;--surface3:#c8e8ff;--border:#a8d8f8;--border-mid:#78c0f0;--border-strong:#48a0e0;--navy:#0a4878;--navy-mid:#1860a0;--navy-light:rgba(10,72,120,0.07);--text:#041828;--text-2:#0a3050;--text-3:#305878;--text-4:#6898b8;--gold:#806018;--gold-light:#a07828;--gold-pale:#f8f0d8;--gold-border:#d0b848;--teal:#0a7888;--teal-bg:#d8f0f8;--teal-border:#58b8d0;--green:#1a7040;--green-bg:#d8f0e4;--green-border:#58b878;--red:#a82828;--red-bg:#f8e0e0;--red-border:#d08080;--amber:#906018;--amber-bg:#f8ecd4;--amber-border:#d8a048;}
-/* Fresh Mint */
-body.theme-mint{--bg:#f0fdf8;--surface:#f8fffc;--surface2:#d8f8ec;--surface3:#c0f0e0;--border:#98e0c8;--border-mid:#68c8a8;--border-strong:#40a888;--navy:#0a5840;--navy-mid:#187058;--navy-light:rgba(10,88,64,0.07);--text:#041c14;--text-2:#0a3020;--text-3:#285840;--text-4:#589878;--gold:#707010;--gold-light:#909018;--gold-pale:#f8f8d4;--gold-border:#c8c848;--teal:#0a7868;--teal-bg:#d0f4f0;--teal-border:#48b8a8;--green:#0a7840;--green-bg:#d0f8e4;--green-border:#48b878;--red:#a02828;--red-bg:#f8e0e0;--red-border:#d08080;--amber:#807010;--amber-bg:#f8f0d0;--amber-border:#c8b040;}
+body.share-warm{--bg:#fdf8f0;--surface:#fffdf8;--surface2:#f7ede0;--surface3:#f0e0cc;--border:#e8d4b8;--border-mid:#d0b890;--border-strong:#b09870;--navy:#7c4a10;--navy-mid:#9c6020;--navy-light:rgba(124,74,16,0.07);--text:#2c1a08;--text-2:#4a3018;--text-3:#7a6040;--text-4:#a88860;}
+body.share-slate{--bg:#eef2fb;--surface:#f6f9ff;--surface2:#dce8f8;--surface3:#c8d8f0;--border:#b0c4e8;--border-mid:#88a4d0;--border-strong:#5878b0;--navy:#1a3a8a;--navy-mid:#2a52b0;--navy-light:rgba(26,58,138,0.07);--text:#0c1e40;--text-2:#1e3060;--text-3:#4a6090;--text-4:#8898b8;}
+body.share-sage{--bg:#f0f7f0;--surface:#f8fbf8;--surface2:#e0ece0;--surface3:#cce0cc;--border:#b4d0b4;--border-mid:#88b888;--border-strong:#609860;--navy:#1a5228;--navy-mid:#286838;--navy-light:rgba(26,82,40,0.07);--text:#0c2810;--text-2:#1c4020;--text-3:#486848;--text-4:#789878;}
+body.share-blush{--bg:#fdf2f4;--surface:#fff6f8;--surface2:#f8e4e8;--surface3:#f0d4d8;--border:#e8c0c8;--border-mid:#d090a0;--border-strong:#b06878;--navy:#8a2038;--navy-mid:#a83050;--navy-light:rgba(138,32,56,0.07);--text:#2c0c14;--text-2:#481820;--text-3:#784858;--text-4:#b08090;}
+body.theme-lavender{--bg:#f5f2fd;--surface:#faf8ff;--surface2:#ede8fb;--surface3:#e0d8f8;--border:#ccc4f0;--border-mid:#a898e0;--border-strong:#8070c8;--navy:#4428a0;--navy-mid:#5838c0;--navy-light:rgba(68,40,160,0.07);--text:#1c1040;--text-2:#302060;--text-3:#605898;--text-4:#9890c0;}
+body.theme-sky{--bg:#f0f8ff;--surface:#f8fcff;--surface2:#ddf0ff;--surface3:#c8e8ff;--border:#a8d8f8;--border-mid:#78c0f0;--border-strong:#48a0e0;--navy:#0a4878;--navy-mid:#1860a0;--navy-light:rgba(10,72,120,0.07);--text:#041828;--text-2:#0a3050;--text-3:#305878;--text-4:#6898b8;}
+body.theme-mint{--bg:#f0fdf8;--surface:#f8fffc;--surface2:#d8f8ec;--surface3:#c0f0e0;--border:#98e0c8;--border-mid:#68c8a8;--border-strong:#40a888;--navy:#0a5840;--navy-mid:#187058;--navy-light:rgba(10,88,64,0.07);--text:#041c14;--text-2:#0a3020;--text-3:#285840;--text-4:#589878;}
+body.theme-peach{--bg:#fff5f0;--surface:#fffaf8;--surface2:#fce8d8;--surface3:#f8d8c0;--border:#f0c4a8;--border-mid:#e0a080;--border-strong:#c87858;--navy:#8a3818;--navy-mid:#b04820;--navy-light:rgba(138,56,24,0.07);--text:#2c1008;--text-2:#4a2010;--text-3:#806040;--text-4:#b89070;}
+body.theme-stone{--bg:#f5f4f2;--surface:#fafaf8;--surface2:#eae8e4;--surface3:#dcdad4;--border:#ccc8c0;--border-mid:#a8a4a0;--border-strong:#888480;--navy:#3c3830;--navy-mid:#504c44;--navy-light:rgba(60,56,48,0.07);--text:#1c1a16;--text-2:#38342e;--text-3:#685e54;--text-4:#9a9088;}
+body.theme-dusk{--bg:#f5f0f8;--surface:#faf8fc;--surface2:#ece0f4;--surface3:#e0ccee;--border:#d0b8e8;--border-mid:#b898d8;--border-strong:#9878c0;--navy:#5c2878;--navy-mid:#783898;--navy-light:rgba(92,40,120,0.07);--text:#200c30;--text-2:#3c1850;--text-3:#705888;--text-4:#a888c0;}
+body.theme-arctic{--bg:#f0fafe;--surface:#f8fdff;--surface2:#d8f0fc;--surface3:#c0e4f8;--border:#a0d4f0;--border-mid:#70b8e0;--border-strong:#4898c8;--navy:#0a3858;--navy-mid:#184870;--navy-light:rgba(10,56,88,0.07);--text:#041420;--text-2:#0c2a40;--text-3:#305878;--text-4:#6898b8;}
+body.theme-forest{--bg:#f0f8f0;--surface:#f8fdf8;--surface2:#d4eccc;--surface3:#bce0b0;--border:#9cd098;--border-mid:#70b868;--border-strong:#489840;--navy:#1a4818;--navy-mid:#286028;--navy-light:rgba(26,72,24,0.07);--text:#081808;--text-2:#143014;--text-3:#406040;--text-4:#70a070;}
+body.theme-lemon{--bg:#fffef0;--surface:#ffffe8;--surface2:#f8f4b0;--surface3:#f0ec88;--border:#e4e070;--border-mid:#c8c048;--border-strong:#a8a030;--navy:#3c3808;--navy-mid:#504810;--navy-light:rgba(60,56,8,0.07);--text:#181400;--text-2:#302800;--text-3:#605808;--text-4:#988810;}
+body.theme-rose{--bg:#fff8f8;--surface:#fffcfc;--surface2:#fce0e4;--surface3:#f8c8d0;--border:#f0a8b4;--border-mid:#e07888;--border-strong:#c05068;--navy:#880828;--navy-mid:#a81038;--navy-light:rgba(136,8,40,0.07);--text:#280008;--text-2:#440010;--text-3:#784050;--text-4:#b07080;}
+body.theme-cloud{--bg:#f8faff;--surface:#fdfeff;--surface2:#eaf0ff;--surface3:#d8e4fe;--border:#c0d0fc;--border-mid:#94aef8;--border-strong:#6888f0;--navy:#1828a0;--navy-mid:#2838c0;--navy-light:rgba(24,40,160,0.07);--text:#080c30;--text-2:#101848;--text-3:#405090;--text-4:#8090c8;}
+body.theme-sand{--bg:#fdf8ee;--surface:#fffdf8;--surface2:#f4e8c8;--surface3:#ecd8a8;--border:#e0c880;--border-mid:#c8a850;--border-strong:#a88830;--navy:#603808;--navy-mid:#804810;--navy-light:rgba(96,56,8,0.07);--text:#201000;--text-2:#382000;--text-3:#706030;--text-4:#a89060;}
+body.theme-grape{--bg:#f8f0fc;--surface:#fdf8ff;--surface2:#eed8f8;--surface3:#e0c0f4;--border:#d0a0ec;--border-mid:#b878e0;--border-strong:#9850c8;--navy:#5c0888;--navy-mid:#7818a8;--navy-light:rgba(92,8,136,0.07);--text:#1c0028;--text-2:#300040;--text-3:#683880;--text-4:#a868c0;}
+body.theme-ocean{--bg:#f0f8f8;--surface:#f8fdfd;--surface2:#c8ecec;--surface3:#b0e0e0;--border:#88d0d0;--border-mid:#58b8b8;--border-strong:#309898;--navy:#0a4848;--navy-mid:#186060;--navy-light:rgba(10,72,72,0.07);--text:#041818;--text-2:#0c3030;--text-3:#306060;--text-4:#609898;}
+body.theme-steel{--bg:#f4f6f8;--surface:#fafbfc;--surface2:#dce4ec;--surface3:#c8d4e0;--border:#b0c0d0;--border-mid:#8898a8;--border-strong:#607080;--navy:#203040;--navy-mid:#304858;--navy-light:rgba(32,48,64,0.07);--text:#0c1820;--text-2:#1c2c38;--text-3:#506070;--text-4:#8098a8;}
 
-.rtab{padding:7px 18px;font-size:13px;font-weight:600;font-family:var(--font);border:none;cursor:pointer;transition:all 0.15s;}
+/* ── PUBLIC VIEW OVERRIDES ── */
+body.IS_VIEW .sidebar { display: none; }
+body.IS_VIEW .layout { display: flex; height: calc(100vh - 58px); }
+body.IS_VIEW .main { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+body.IS_VIEW .btn-select-mode { display: none; }
+body.IS_VIEW .bulk-action-bar { display: none !important; }
+body.IS_VIEW .event-actions { display: none !important; }
+body.IS_VIEW .stats-bar { display: none; }
+body.IS_VIEW .toolbar-title { display: none; }
 
-/* ====== BULK DELETE ====== */
-.event-card.select-mode { cursor: pointer; }
-.event-card.select-mode:hover { border-color: var(--border-mid); }
-.event-card.selected {
-  border-color: #e05050 !important;
-  background: #fff5f5 !important;
-  box-shadow: 0 0 0 2px rgba(220,80,80,0.15) !important;
-}
-.event-card.selected .date-block { background: #e05050 !important; }
-
-.event-checkbox {
+/* Public sidebar */
+.public-sidebar {
   display: none;
-  width: 44px;
+  width: 210px;
   flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  cursor: pointer;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  flex-direction: column;
 }
-body.select-mode-active .event-checkbox { display: flex; }
-body.select-mode-active .date-block { display: none; }
+body.IS_VIEW .public-sidebar { display: flex; }
+.pub-sidebar-logo { padding: 16px 16px 12px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.pub-sidebar-brand { font-family: var(--display); font-size: 14px; font-weight: 800; color: var(--navy); }
+.pub-sidebar-tagline { font-size: 9px; color: var(--text-4); margin-top: 2px; font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.pub-sidebar-stats { padding: 10px 12px; margin: 0 10px 8px; background: var(--navy); border-radius: 8px; }
+.pub-stat-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px; }
+.pub-stat-row:last-child { margin-bottom: 0; }
+.pub-stat-val { font-family: var(--display); font-size: 20px; font-weight: 800; color: #fff; line-height: 1; }
+.pub-stat-lbl { font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; }
+.pub-sidebar-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; color: var(--text-4); padding: 10px 16px 4px; text-transform: uppercase; font-weight: 600; }
+.pub-venue-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 7px 16px; background: transparent; border: none; border-left: 3px solid transparent; cursor: pointer; font-family: var(--font); font-size: 12px; font-weight: 500; color: var(--text-3); text-align: left; transition: all 0.12s; gap: 6px; }
+.pub-venue-btn:hover { background: var(--navy-light); color: var(--text-2); border-left-color: var(--border-mid); }
+.pub-venue-btn.active { background: var(--navy-light); color: var(--navy); font-weight: 700; border-left-color: var(--navy); }
+.pub-venue-count { font-family: var(--mono); font-size: 9px; font-weight: 700; color: var(--text-4); background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 1px 6px; min-width: 18px; text-align: center; flex-shrink: 0; }
+.pub-venue-btn.active .pub-venue-count { background: var(--navy); color: #fff; border-color: var(--navy); }
 
-.event-checkbox input[type="checkbox"] {
-  width: 18px; height: 18px;
-  accent-color: #e05050;
-  cursor: pointer;
-  border-radius: 4px;
-  flex-shrink: 0;
+/* Public main area */
+body.IS_VIEW .main { overflow-y: auto; }
+body.IS_VIEW .events-container { padding: 18px 24px; }
+body.IS_VIEW .event-venue-label {
+  display: inline-flex; align-items: center; margin-top: 5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--navy); background: var(--navy-light);
+  border: 1.5px solid var(--border-mid); border-radius: 20px; padding: 2px 9px; font-family: var(--mono);
 }
+body.IS_VIEW .event-card { border-radius: 10px; margin-bottom: 8px; }
+body.IS_VIEW .event-card:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+body.IS_VIEW .date-block { width: 66px; padding: 13px 6px; }
+body.IS_VIEW .date-month { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; color: rgba(255,255,255,0.6); }
+body.IS_VIEW .date-day { font-size: 26px; font-weight: 800; line-height: 1; }
+body.IS_VIEW .event-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+body.IS_VIEW .event-info { padding: 11px 15px; }
+body.IS_VIEW .group-label {
+  font-size: 13px; font-weight: 800; letter-spacing: 0.03em; color: var(--navy);
+  font-family: var(--display); text-transform: uppercase;
+  padding: 8px 14px; background: var(--surface); box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--navy); border-bottom: none; border-radius: 8px; margin: 18px 0 8px;
+}
+body.IS_VIEW .toolbar { padding: 8px 16px; gap: 8px; background: var(--surface2); }
+body.IS_VIEW .public-venue-nav { display: none !important; }
+body.IS_VIEW .share-theme-bar { padding: 8px 16px; background: var(--surface); border-bottom: 1px solid var(--border); flex-shrink: 0; }
 
-/* Floating action bar */
-.bulk-action-bar {
-  position: fixed;
-  bottom: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--navy);
-  border-radius: 50px;
-  padding: 12px 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  box-shadow: 0 8px 40px rgba(30,45,90,0.35), 0 2px 8px rgba(30,45,90,0.2);
-  z-index: 500;
-  transition: bottom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  white-space: nowrap;
-  min-width: 340px;
-  justify-content: center;
-}
-.bulk-action-bar.visible { bottom: 28px; }
-
-.bulk-count-label {
-  font-family: var(--display);
-  font-size: 14px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.9);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.bulk-count-num {
-  background: #e05050;
-  color: #fff;
-  border-radius: 20px;
-  padding: 1px 10px;
-  font-size: 13px;
-  font-weight: 800;
-  min-width: 28px;
-  text-align: center;
-  transition: all 0.15s;
-}
-.bulk-sep { width: 1px; height: 22px; background: rgba(255,255,255,0.15); }
-
-.btn-bulk-cancel {
-  font-family: var(--font);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 7px 16px;
-  border-radius: 30px;
-  border: 1.5px solid rgba(255,255,255,0.2);
-  background: transparent;
-  color: rgba(255,255,255,0.8);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-bulk-cancel:hover { background: rgba(255,255,255,0.1); color: #fff; }
-
-.btn-bulk-all {
-  font-family: var(--font);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 7px 16px;
-  border-radius: 30px;
-  border: 1.5px solid rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.8);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-bulk-all:hover { background: rgba(255,255,255,0.15); color: #fff; }
-
-.btn-bulk-delete {
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 700;
-  padding: 8px 22px;
-  border-radius: 30px;
-  border: none;
-  background: #e05050;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-bulk-delete:hover { background: #cc3a3a; transform: scale(1.03); }
-.btn-bulk-delete:disabled { background: rgba(220,80,80,0.35); cursor: not-allowed; transform: none; }
-
-/* Select mode toolbar toggle */
-.btn-select-mode {
-  font-family: var(--font);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1.5px solid var(--border-mid);
-  background: transparent;
-  color: var(--text-3);
-  cursor: pointer;
-  transition: all 0.15s;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.btn-select-mode:hover { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
-.btn-select-mode.active { background: var(--red-bg); border-color: var(--red-border); color: var(--red); font-weight: 700; }
-
-/* Shake animation on delete */
-@keyframes card-vanish {
-  0% { opacity:1; transform:translateX(0) scale(1); max-height:80px; margin-bottom:6px; }
-  40% { opacity:0.5; transform:translateX(12px) scale(0.97); }
-  100% { opacity:0; transform:translateX(40px) scale(0.94); max-height:0; margin-bottom:0; padding:0; }
-}
-.event-card.vanishing { animation: card-vanish 0.32s ease-in forwards; pointer-events:none; overflow:hidden; }
+/* BULK DELETE */
+.event-card.select-mode{cursor:pointer;}
+.event-card.selected{border-color:#e05050!important;background:#fff5f5!important;box-shadow:0 0 0 2px rgba(220,80,80,0.15)!important;}
+.event-card.selected .date-block{background:#e05050!important;}
+.event-checkbox{display:none;width:44px;flex-shrink:0;align-items:center;justify-content:center;align-self:stretch;cursor:pointer;}
+body.select-mode-active .event-checkbox{display:flex;}
+body.select-mode-active .date-block{display:none;}
+.event-checkbox input[type="checkbox"]{width:18px;height:18px;accent-color:#e05050;cursor:pointer;border-radius:4px;flex-shrink:0;}
+.bulk-action-bar{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);background:var(--navy);border-radius:50px;padding:12px 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 40px rgba(30,45,90,0.35);z-index:500;transition:bottom 0.3s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;min-width:340px;justify-content:center;}
+.bulk-action-bar.visible{bottom:28px;}
+.bulk-count-label{font-family:var(--display);font-size:14px;font-weight:700;color:rgba(255,255,255,0.9);display:flex;align-items:center;gap:6px;}
+.bulk-count-num{background:#e05050;color:#fff;border-radius:20px;padding:1px 10px;font-size:13px;font-weight:800;min-width:28px;text-align:center;}
+.bulk-sep{width:1px;height:22px;background:rgba(255,255,255,0.15);}
+.btn-bulk-cancel{font-family:var(--font);font-size:12px;font-weight:600;padding:7px 16px;border-radius:30px;border:1.5px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.8);cursor:pointer;transition:all 0.15s;}
+.btn-bulk-cancel:hover{background:rgba(255,255,255,0.1);color:#fff;}
+.btn-bulk-all{font-family:var(--font);font-size:12px;font-weight:600;padding:7px 16px;border-radius:30px;border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);cursor:pointer;transition:all 0.15s;}
+.btn-bulk-all:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.btn-bulk-delete{font-family:var(--font);font-size:13px;font-weight:700;padding:8px 22px;border-radius:30px;border:none;background:#e05050;color:#fff;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:6px;}
+.btn-bulk-delete:hover{background:#cc3a3a;transform:scale(1.03);}
+.btn-bulk-delete:disabled{background:rgba(220,80,80,0.35);cursor:not-allowed;transform:none;}
+.btn-select-mode{font-family:var(--font);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;border:1.5px solid var(--border-mid);background:transparent;color:var(--text-3);cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;gap:5px;}
+.btn-select-mode:hover{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
+.btn-select-mode.active{background:var(--red-bg);border-color:var(--red-border);color:var(--red);font-weight:700;}
+@keyframes card-vanish{0%{opacity:1;transform:translateX(0) scale(1);max-height:80px;margin-bottom:6px;}40%{opacity:0.5;transform:translateX(12px) scale(0.97);}100%{opacity:0;transform:translateX(40px) scale(0.94);max-height:0;margin-bottom:0;padding:0;}}
+.event-card.vanishing{animation:card-vanish 0.32s ease-in forwards;pointer-events:none;overflow:hidden;}
+.rtab{padding:7px 18px;font-size:13px;font-weight:600;font-family:var(--font);border:none;cursor:pointer;transition:all 0.15s;}
 
 </style>
 </head>
@@ -507,20 +302,25 @@ body.select-mode-active .date-block { display: none; }
   <div class="header-actions" id="headerActions"></div>
 </header>
 
-<!-- PUBLIC HERO (visible only in share view) -->
-<div class="public-hero">
-  <div>
-    <div class="public-hero-title">PACE Gaming Events</div>
-    <div class="public-hero-sub">Browse upcoming events across all featured properties</div>
-  </div>
-  <div class="public-hero-stats">
-    <div class="public-hero-stat"><div class="public-hero-stat-num" id="pub-stat-upcoming">—</div><div class="public-hero-stat-label">Upcoming</div></div>
-    <div class="public-hero-stat"><div class="public-hero-stat-num" id="pub-stat-venues">—</div><div class="public-hero-stat-label">Venues</div></div>
-    <div class="public-hero-stat"><div class="public-hero-stat-num" id="pub-stat-total">—</div><div class="public-hero-stat-label">Total Events</div></div>
-  </div>
-</div>
-
 <div class="layout">
+  <!-- PUBLIC SIDEBAR (share view only) -->
+  <div class="public-sidebar" id="publicSidebar">
+    <div class="pub-sidebar-logo">
+      <div class="pub-sidebar-brand">PACE Gaming</div>
+      <div class="pub-sidebar-tagline">Events Calendar</div>
+    </div>
+    <div class="pub-sidebar-stats">
+      <div class="pub-stat-row">
+        <div class="pub-stat-val" id="pub-stat-upcoming">—</div>
+        <div class="pub-stat-lbl">Upcoming</div>
+      </div>
+      <div class="pub-stat-row">
+        <div class="pub-stat-val" id="pub-stat-total">—</div>
+        <div class="pub-stat-lbl">Total</div>
+      </div>
+    </div>
+    <div id="publicVenueList"></div>
+  </div>
   <aside class="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-label">All</div>
@@ -555,19 +355,22 @@ body.select-mode-active .date-block { display: none; }
   </aside>
 
   <main class="main">
-    <!-- PUBLIC VENUE NAV (share view only) -->
     <div class="public-venue-nav" id="publicVenueNav"></div>
 
     <div class="share-theme-bar" id="shareThemeBar">
       <span>Theme</span>
       <div class="swatch swatch-default active" title="Default" onclick="setShareTheme('light',this)"></div>
-      <div class="swatch swatch-warm" title="Warm Cream" onclick="setShareTheme('warm',this)"></div>
-      <div class="swatch swatch-slate" title="Slate Blue" onclick="setShareTheme('slate',this)"></div>
-      <div class="swatch swatch-sage" title="Sage Green" onclick="setShareTheme('sage',this)"></div>
-      <div class="swatch swatch-blush" title="Blush Rose" onclick="setShareTheme('blush',this)"></div>
-      <div class="swatch" title="Soft Lavender" onclick="setShareTheme('lavender',this)" style="background:linear-gradient(135deg,#f5f2fd,#ede4fb);"></div>
-      <div class="swatch" title="Clear Sky" onclick="setShareTheme('sky',this)" style="background:linear-gradient(135deg,#f0f8ff,#e0f2fe);"></div>
-      <div class="swatch" title="Fresh Mint" onclick="setShareTheme('mint',this)" style="background:linear-gradient(135deg,#f0fdf8,#d1fae5);"></div>
+      <div class="swatch" title="Warm"      onclick="setShareTheme('warm',this)"     style="background:linear-gradient(135deg,#fdf8f2,#fef3e2);"></div>
+      <div class="swatch" title="Slate"     onclick="setShareTheme('slate',this)"    style="background:linear-gradient(135deg,#eef2f9,#c8d8f4);"></div>
+      <div class="swatch" title="Sage"      onclick="setShareTheme('sage',this)"     style="background:linear-gradient(135deg,#f2f7f2,#c8e4c8);"></div>
+      <div class="swatch" title="Blush"     onclick="setShareTheme('blush',this)"    style="background:linear-gradient(135deg,#fdf4f4,#f8d4d4);"></div>
+      <div class="swatch" title="Lavender"  onclick="setShareTheme('lavender',this)" style="background:linear-gradient(135deg,#f5f2fd,#ddd4f8);"></div>
+      <div class="swatch" title="Sky"       onclick="setShareTheme('sky',this)"      style="background:linear-gradient(135deg,#f0f8ff,#c8e8fc);"></div>
+      <div class="swatch" title="Mint"      onclick="setShareTheme('mint',this)"     style="background:linear-gradient(135deg,#f0fdf8,#c0f0dc);"></div>
+      <div class="swatch" title="Peach"     onclick="setShareTheme('peach',this)"    style="background:linear-gradient(135deg,#fff5f0,#fcd8c0);"></div>
+      <div class="swatch" title="Stone"     onclick="setShareTheme('stone',this)"    style="background:linear-gradient(135deg,#f5f4f2,#e0dcd8);"></div>
+      <div class="swatch" title="Ocean"     onclick="setShareTheme('ocean',this)"    style="background:linear-gradient(135deg,#f0f8f8,#b8e4e8);"></div>
+      <div class="swatch" title="Sand"      onclick="setShareTheme('sand',this)"     style="background:linear-gradient(135deg,#fdf8ee,#f0e4c0);"></div>
     </div>
 
     <div class="stats-bar">
@@ -589,7 +392,7 @@ body.select-mode-active .date-block { display: none; }
         <div class="pill" onclick="setFilter('upcoming',this)">Upcoming</div>
         <div class="pill past-pill" onclick="setFilter('past',this)">Past</div>
       </div>
-      <button class="btn-select-mode" id="selectModeBtn" onclick="toggleSelectMode()" title="Select events to delete">&#9745; Select</button>
+      <button class="btn-select-mode" id="selectModeBtn" onclick="toggleSelectMode()">&#9745; Select</button>
     </div>
 
     <div class="events-container">
@@ -631,8 +434,7 @@ body.select-mode-active .date-block { display: none; }
           <button class="bulk-toggle" onclick="toggleBulk()">&#128203; Paste &amp; Import</button>
         </div>
         <div class="bulk-panel" id="bulkPanel">
-          <div class="form-group" style="margin-bottom:10px;">
-            <label class="form-label">Paste your event list</label>
+          <div class="form-group" style="margin-bottom:10px;"><label class="form-label">Paste your event list</label>
             <textarea id="bulkText" rows="6" style="font-family:var(--mono);font-size:12px;line-height:1.7;resize:vertical;" placeholder="5/13 to 15 - Connecticut Sun vs. Las Vegas Aces&#10;5/17 - Blackstreet&#10;6/27 to 29 - Blue Man Group" oninput="previewBulk()"></textarea>
           </div>
           <div class="bulk-result" id="bulkResult"></div>
@@ -654,10 +456,7 @@ body.select-mode-active .date-block { display: none; }
 <!-- EDIT MODAL -->
 <div class="edit-overlay" id="editOverlay">
   <div class="edit-modal">
-    <div class="edit-modal-header">
-      <div class="edit-modal-title">Edit Event</div>
-      <button class="btn btn-ghost btn-sm" style="color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.18);" onclick="closeEdit()">Close</button>
-    </div>
+    <div class="edit-modal-header"><div class="edit-modal-title">Edit Event</div><button class="btn btn-ghost btn-sm" style="color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.18);" onclick="closeEdit()">Close</button></div>
     <div class="edit-modal-body">
       <input type="hidden" id="edit-id">
       <div class="form-row form-row-3" style="margin-bottom:12px;">
@@ -671,10 +470,7 @@ body.select-mode-active .date-block { display: none; }
         <div class="form-group"><label class="form-label">Event Type</label><select id="edit-type"><option value="regular">Regular</option><option value="big">⭐ Big Event</option><option value="recurring">🔁 Recurring</option></select></div>
       </div>
     </div>
-    <div class="edit-modal-footer">
-      <button class="btn btn-ghost btn-sm" onclick="closeEdit()">Cancel</button>
-      <button class="btn btn-primary btn-sm" onclick="saveEdit()">&#10003; Save Changes</button>
-    </div>
+    <div class="edit-modal-footer"><button class="btn btn-ghost btn-sm" onclick="closeEdit()">Cancel</button><button class="btn btn-primary btn-sm" onclick="saveEdit()">&#10003; Save Changes</button></div>
   </div>
 </div>
 
@@ -707,37 +503,12 @@ body.select-mode-active .date-block { display: none; }
       <div class="form-group" style="flex:1;min-width:100px;"><label class="form-label">To</label><input type="text" id="report-to" value="Team" oninput="buildReport()"></div>
       <div class="form-group"><label class="form-label">Include Past</label><select id="report-past" onchange="buildReport()"><option value="no">No</option><option value="yes">Yes</option></select></div>
       <div class="form-group"><label class="form-label">Accent Color</label><select id="report-color" onchange="buildReport()">
-  <optgroup label="Blues &amp; Teals">
-    <option value="#1e2d5a">🔵 Navy Blue</option>
-    <option value="#1e40af">🔵 Royal Blue</option>
-    <option value="#0284c7">🩵 Sky Blue</option>
-    <option value="#0e7490">🩵 Deep Cyan</option>
-    <option value="#0d9488">🟢 Teal</option>
-    <option value="#00b5b5">🩵 Pace Teal</option>
-  </optgroup>
-  <optgroup label="Greens">
-    <option value="#15803d">🟢 Emerald</option>
-    <option value="#166534">🟢 Forest Green</option>
-    <option value="#4d7c0f">🫒 Olive Green</option>
-  </optgroup>
-  <optgroup label="Purples &amp; Pinks">
-    <option value="#6d28d9">💜 Violet</option>
-    <option value="#7c3aed">💜 Purple</option>
-    <option value="#9d174d">🩷 Crimson Rose</option>
-    <option value="#be185d">🩷 Hot Pink</option>
-  </optgroup>
-  <optgroup label="Reds &amp; Oranges">
-    <option value="#b91c1c">🔴 Classic Red</option>
-    <option value="#c2410c">🟠 Burnt Orange</option>
-    <option value="#b45309">🟡 Amber Gold</option>
-    <option value="#92400e">🟤 Warm Brown</option>
-  </optgroup>
-  <optgroup label="Neutrals">
-    <option value="#374151">⚫ Slate Gray</option>
-    <option value="#1f2937">⚫ Charcoal</option>
-    <option value="#78716c">🩶 Warm Gray</option>
-  </optgroup>
-</select></div>
+        <optgroup label="Blues &amp; Teals"><option value="#1e2d5a">Navy Blue</option><option value="#1e40af">Royal Blue</option><option value="#0284c7">Sky Blue</option><option value="#0e7490">Deep Cyan</option><option value="#0d9488">Teal</option><option value="#00b5b5">Pace Teal</option></optgroup>
+        <optgroup label="Greens"><option value="#15803d">Emerald</option><option value="#166534">Forest Green</option><option value="#4d7c0f">Olive Green</option></optgroup>
+        <optgroup label="Purples &amp; Pinks"><option value="#6d28d9">Violet</option><option value="#7c3aed">Purple</option><option value="#9d174d">Crimson Rose</option><option value="#be185d">Hot Pink</option></optgroup>
+        <optgroup label="Reds &amp; Oranges"><option value="#b91c1c">Classic Red</option><option value="#c2410c">Burnt Orange</option><option value="#b45309">Amber Gold</option><option value="#92400e">Warm Brown</option></optgroup>
+        <optgroup label="Neutrals"><option value="#374151">Slate Gray</option><option value="#1f2937">Charcoal</option><option value="#78716c">Warm Gray</option></optgroup>
+      </select></div>
     </div>
     <div style="display:flex;flex:1;overflow:hidden;min-height:0;">
       <div style="flex:1;overflow-y:auto;padding:16px 18px;border-right:1px solid var(--border);background:var(--bg);">
@@ -747,18 +518,18 @@ body.select-mode-active .date-block { display: none; }
       <div style="width:320px;flex-shrink:0;overflow-y:auto;padding:16px 18px;background:var(--surface);">
         <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-4);margin-bottom:10px;font-family:var(--mono);">Email Draft</div>
         <div class="form-group" style="margin-bottom:10px;"><label class="form-label">Template</label><select id="draft-template" onchange="applyDraftTemplate(this.value)">
-    <option value="general">📋 General Event Update</option>
-    <option value="warm">🤝 Warm Outreach</option>
-    <option value="followup">🔁 Follow-Up / Check-In</option>
-    <option value="urgent">⚡ Urgent — Limited Availability</option>
-    <option value="vip">💼 VIP Client Exclusive</option>
-    <option value="intro">👋 New Contact Intro</option>
-    <option value="monthly">📅 Monthly Digest</option>
-    <option value="re_engage">💬 Re-Engagement</option>
-    <option value="partnership">🤝 Partnership Outreach</option>
-    <option value="agent_toolkit">🗂️ Agent Toolkit — Full Property Lineup</option>
-    <option value="agent_pitch">📊 Quick Pitch — Why PACE Gaming</option>
-</select></div>
+          <option value="general">📋 General Event Update</option>
+          <option value="warm">🤝 Warm Outreach</option>
+          <option value="followup">🔁 Follow-Up / Check-In</option>
+          <option value="urgent">⚡ Urgent — Limited Availability</option>
+          <option value="vip">💼 VIP Client Exclusive</option>
+          <option value="intro">👋 New Contact Intro</option>
+          <option value="monthly">📅 Monthly Digest</option>
+          <option value="re_engage">💬 Re-Engagement</option>
+          <option value="partnership">🤝 Partnership Outreach</option>
+          <option value="agent_toolkit">🗂️ Agent Toolkit</option>
+          <option value="agent_pitch">📊 Quick Pitch</option>
+        </select></div>
         <div class="form-group" style="margin-bottom:10px;"><label class="form-label">Subject</label><input type="text" id="draft-subject" style="font-weight:700;"></div>
         <div class="form-group"><label class="form-label">Body (editable)</label><textarea id="draft-body" rows="18" style="font-size:12px;line-height:1.7;font-family:var(--mono);resize:vertical;"></textarea></div>
         <button class="btn btn-primary" style="width:100%;margin-top:10px;justify-content:center;" onclick="copyDraft()">&#128203; Copy Email Draft</button>
@@ -797,17 +568,27 @@ if(IS_VIEW) document.body.classList.add("IS_VIEW");
       "<button class=\"btn-hdr\" onclick=\"toggleThemePicker()\" title=\"Change Theme\">🎨</button>"+
       "<div id=\"themePicker\" style=\"display:none;position:absolute;top:60px;right:16px;background:var(--surface);border:1.5px solid var(--border-strong);border-radius:12px;padding:12px 14px;box-shadow:0 8px 32px rgba(0,0,0,0.18);z-index:300;min-width:220px;\">"+
         "<div style=\"font-size:9px;font-weight:800;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase;margin-bottom:10px;\">App Theme</div>"+
-        "<div style=\"display:flex;flex-wrap:wrap;gap:8px;\">"+
-          "<div style=\"display:grid;grid-template-columns:repeat(4,1fr);gap:6px;\">"+
-          "<button onclick=\"setAppTheme('light',this)\" class=\"theme-swatch-btn active\" style=\"background:linear-gradient(135deg,#f4f6fb,#ffffff);border:2px solid #1e2d5a;\" title=\"Default — Cool White\"></button>"+
-          "<button onclick=\"setAppTheme('warm',this)\" class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#fdf8f2,#fef3e2);\" title=\"Warm Cream\"></button>"+
-          "<button onclick=\"setAppTheme('slate',this)\" class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#eef2f9,#dce8ff);\" title=\"Slate Blue\"></button>"+
-          "<button onclick=\"setAppTheme('sage',this)\" class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f2f7f2,#e0f0e0);\" title=\"Sage Green\"></button>"+
-          "<button onclick=\"setAppTheme('blush',this)\" class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#fdf4f4,#fde8e8);\" title=\"Blush Rose\"></button>"+
-          "<button onclick=\"setAppTheme('lavender',this)\" class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f5f2fd,#ede4fb);\" title=\"Soft Lavender\"></button>"+
-          "<button onclick=\"setAppTheme('sky',this)\" class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f0f8ff,#e0f2fe);\" title=\"Clear Sky\"></button>"+
-          "<button onclick=\"setAppTheme('mint',this)\" class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f0fdf8,#d1fae5);\" title=\"Fresh Mint\"></button>"+
-          "</div>"+
+        "<div style=\"display:grid;grid-template-columns:repeat(5,1fr);gap:5px;width:185px;\">"+
+          "<button onclick=\"setAppTheme('light',this)\"    class=\"theme-swatch-btn active\" style=\"background:linear-gradient(135deg,#f4f6fb,#fff);\" title=\"Default\"></button>"+
+          "<button onclick=\"setAppTheme('warm',this)\"     class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#fdf8f2,#fef3e2);\" title=\"Warm Cream\"></button>"+
+          "<button onclick=\"setAppTheme('slate',this)\"    class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#eef2f9,#c8d8f4);\" title=\"Slate Blue\"></button>"+
+          "<button onclick=\"setAppTheme('sage',this)\"     class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f2f7f2,#c8e4c8);\" title=\"Sage Green\"></button>"+
+          "<button onclick=\"setAppTheme('blush',this)\"    class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#fdf4f4,#f8d4d4);\" title=\"Blush Rose\"></button>"+
+          "<button onclick=\"setAppTheme('lavender',this)\" class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f5f2fd,#ddd4f8);\" title=\"Lavender\"></button>"+
+          "<button onclick=\"setAppTheme('sky',this)\"      class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f0f8ff,#c8e8fc);\" title=\"Clear Sky\"></button>"+
+          "<button onclick=\"setAppTheme('mint',this)\"     class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f0fdf8,#c0f0dc);\" title=\"Fresh Mint\"></button>"+
+          "<button onclick=\"setAppTheme('peach',this)\"    class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#fff5f0,#fcd8c0);\" title=\"Peach\"></button>"+
+          "<button onclick=\"setAppTheme('stone',this)\"    class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f5f4f2,#e0dcd8);\" title=\"Stone\"></button>"+
+          "<button onclick=\"setAppTheme('dusk',this)\"     class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f5f0f8,#e8d0f0);\" title=\"Dusk\"></button>"+
+          "<button onclick=\"setAppTheme('arctic',this)\"   class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f0fafe,#d0eef8);\" title=\"Arctic\"></button>"+
+          "<button onclick=\"setAppTheme('forest',this)\"   class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f0f8f0,#c0dcc0);\" title=\"Forest\"></button>"+
+          "<button onclick=\"setAppTheme('lemon',this)\"    class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#fffef0,#f8f0b0);\" title=\"Lemon\"></button>"+
+          "<button onclick=\"setAppTheme('rose',this)\"     class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#fff8f8,#fcc0c8);\" title=\"Rose\"></button>"+
+          "<button onclick=\"setAppTheme('cloud',this)\"    class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f8faff,#e8eeff);\" title=\"Cloud\"></button>"+
+          "<button onclick=\"setAppTheme('sand',this)\"     class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#fdf8ee,#f0e4c0);\" title=\"Sand\"></button>"+
+          "<button onclick=\"setAppTheme('grape',this)\"    class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f8f0fc,#e0c0f0);\" title=\"Grape\"></button>"+
+          "<button onclick=\"setAppTheme('ocean',this)\"    class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f0f8f8,#b8e4e8);\" title=\"Ocean\"></button>"+
+          "<button onclick=\"setAppTheme('steel',this)\"    class=\"theme-swatch-btn\" style=\"background:linear-gradient(135deg,#f4f6f8,#d0d8e4);\" title=\"Steel\"></button>"+
         "</div>"+
       "</div>";
   }
@@ -986,7 +767,7 @@ function render(){
 function mkCard(e){
   var past=isPast(e),tod=isToday(e),soon=isSoon(e)&&!past;
   var cls="event-card"+(past?" is-past":"")+(tod?" is-today":"")+(soon?" is-soon":"")+(e.type==="recurring"?" is-recurring-card":"");
-  var day=e.date?e.date.getDate().toString().padStart(2,"0"):"—";
+  var day=e.date?e.date.getDate().toString():"—";
   var mon=e.date?e.date.toLocaleDateString("en-US",{month:"short"}).toUpperCase():"";
   var endDay=e.endDate?"–"+e.endDate.getDate().toString().padStart(2,"0"):"";
   var badges="";
@@ -1002,15 +783,9 @@ function mkCard(e){
       "<button class=\"btn btn-danger btn-sm\" onclick=\"delEv('"+e.id+"')\">Delete</button>"+
     "</div>";
   }
-  var cbHtml = IS_VIEW ? "" :
-    "<label class=\"event-checkbox\" onclick=\"event.stopPropagation()\">"+
-    "<input type=\"checkbox\" id=\"cb-"+e.id+"\" onchange=\"onCardCheck(this,'"+e.id+"')\"/>"+
-    "</label>";
-  return "<div class=\""+cls+"\" id=\"card-"+e.id+"\" onclick=\"onCardClick(event,'"+e.id+"')\">"+
-    cbHtml+
+  return "<div class=\""+cls+"\">"+
     "<div class=\"date-block\"><div class=\"date-month\">"+mon+"</div><div class=\"date-day\">"+day+"</div>"+(endDay?"<div class=\"date-end\">"+endDay+"</div>":"")+
     (e.type==="recurring"?"<div class=\"date-end\">&#128257;</div>":"")+
-    (tod?"<div class=\"date-bell\">&#128276;</div>":"")+
     "</div>"+
     "<div class=\"event-info\"><div class=\"event-name\">"+e.name+"</div><div class=\"event-venue-label\">"+e.venue+"</div>"+(e.note?"<div class=\"event-note\">"+e.note+"</div>":"")+(badges?"<div class=\"event-badges\">"+badges+"</div>":"")+
     "</div>"+
@@ -1061,11 +836,11 @@ function saveEdit(){
 }
 
 // ===== APP THEME (internal) =====
-var ALL_THEMES=["light","warm","slate","sage","blush","lavender","sky","mint"];
+var ALL_THEMES=["light","warm","slate","sage","blush"];
 function setAppTheme(theme,el){
   ALL_THEMES.forEach(function(t){ document.body.classList.remove("share-"+t); document.body.classList.remove("theme-"+t); });
   if(theme==="warm"||theme==="slate"||theme==="sage"||theme==="blush") document.body.classList.add("share-"+theme);
-  else if(theme==="lavender"||theme==="sky"||theme==="mint") document.body.classList.add("theme-"+theme);
+  else if(theme!=="light") document.body.classList.add("theme-"+theme);
   document.querySelectorAll(".theme-swatch-btn").forEach(function(b){ b.classList.remove("active"); });
   if(el) el.classList.add("active");
   localStorage.setItem("pace_app_theme",theme);
@@ -1086,7 +861,7 @@ if(!IS_VIEW){
   var at=localStorage.getItem("pace_app_theme")||"dark";
   if(at&&at!=="light"){
     if(at==="warm"||at==="slate"||at==="sage"||at==="blush") document.body.classList.add("share-"+at);
-    else if(at==="lavender"||at==="sky"||at==="mint") document.body.classList.add("theme-"+at);
+    else document.body.classList.add("theme-"+at);
   }
 }
 
@@ -1094,7 +869,7 @@ if(!IS_VIEW){
 function setShareTheme(theme, el){
   ALL_THEMES.forEach(function(t){ document.body.classList.remove("share-"+t); document.body.classList.remove("theme-"+t); });
   if(theme==="warm"||theme==="slate"||theme==="sage"||theme==="blush") document.body.classList.add("share-"+theme);
-  else if(theme==="lavender"||theme==="sky"||theme==="mint") document.body.classList.add("theme-"+theme);
+  else if(theme!=="light") document.body.classList.add("theme-"+theme);
   document.querySelectorAll(".swatch").forEach(function(s){ s.classList.remove("active"); });
   if(el) el.classList.add("active");
   localStorage.setItem("pace_share_theme",theme);
@@ -1104,7 +879,7 @@ if(IS_VIEW){
   var st=localStorage.getItem("pace_share_theme");
   if(st&&st!=="light"){
     if(st==="warm"||st==="slate"||st==="sage"||st==="blush") document.body.classList.add("share-"+st);
-    else if(st==="lavender"||st==="sky"||st==="mint") document.body.classList.add("theme-"+st);
+    else document.body.classList.add("theme-"+st);
     var sw=document.querySelector(".swatch-"+st)||document.querySelector("[title='"+st.charAt(0).toUpperCase()+st.slice(1)+"']");
     if(sw){ document.querySelectorAll(".swatch").forEach(function(s){ s.classList.remove("active"); }); sw.classList.add("active"); }
   }
@@ -1284,6 +1059,7 @@ function delEv(id){
 }
 
 function renderReportPreview(){ buildReport(); }
+function renderReportPreview(){ buildReport(); }
 function buildReport(){
   var title=document.getElementById("report-title").value;
   var to=document.getElementById("report-to").value;
@@ -1410,7 +1186,6 @@ function applyDraftTemplate(tpl){
   var to=document.getElementById("report-to").value;
   var now=new Date();
   var shortD=(now.getMonth()+1)+"/"+(now.getDate())+"/"+now.getFullYear();
-  var monthName=now.toLocaleDateString("en-US",{month:"long",year:"numeric"});
   var viewLink=location.href.split("?")[0]+"?view";
   var evs=window._reportEvs||[];
   var upCount=evs.filter(function(e){ return !isPast(e)&&e.type!=="recurring"; }).length;
@@ -1418,41 +1193,34 @@ function applyDraftTemplate(tpl){
   var linkLine="For the full list, click the link below:\n"+viewLink;
   var subj="", body="";
 
-
-  // ── FOR PARTNERS / AGENTS ────────────────────────────────────────────────
   if(tpl==="general"){
     subj="[PACE Gaming] "+title+" | "+shortD;
     body="Hi "+to+",\n\nPlease see the updated list of upcoming property events below.\n\n"+linkLine+"\n\nLet me know if you need fact sheets or more details for any property.\n\nBest regards,\nAnne Joy Therese\nPACE Gaming";
   } else if(tpl==="warm"){
     subj="Exciting Upcoming Events | PACE Gaming | "+shortD;
-    body="Hi "+to+",\n\nHope you're doing well!\n\nI wanted to share some exciting upcoming events across our featured properties — great opportunities for your clients who love premium gaming and entertainment experiences.\n\n"+linkLine+"\n\nWould love to hear if any of these are a good fit for your clients. Happy to send fact sheets or put together a tailored pitch!\n\nTalk soon,\nAnne Joy Therese\nPACE Gaming";
+    body="Hi "+to+",\n\nHope you are doing well!\n\nI wanted to share some exciting upcoming events across our featured properties -- great opportunities for your clients who love premium gaming and entertainment experiences.\n\n"+linkLine+"\n\nWould love to hear if any of these are a good fit. Happy to send fact sheets or put together a tailored pitch!\n\nTalk soon,\nAnne Joy Therese\nPACE Gaming";
   } else if(tpl==="followup"){
-    subj="Following Up — PACE Gaming Events | "+shortD;
-    body="Hi "+to+",\n\nJust following up to make sure my last update didn't get buried! Here's the refreshed event list.\n\n"+linkLine+"\n\nLet me know if anything stands out or if you have questions. Always happy to help!\n\nWarm regards,\nAnne Joy Therese\nPACE Gaming";
+    subj="Following Up -- PACE Gaming Events | "+shortD;
+    body="Hi "+to+",\n\nJust following up to make sure my last update didn't get buried! Please find the updated event list below.\n\n"+linkLine+"\n\nLet me know if anything stands out or if you have questions. Happy to help!\n\nWarm regards,\nAnne Joy Therese\nPACE Gaming";
   } else if(tpl==="urgent"){
-    subj="⚡ Heads Up — Limited Availability | PACE Gaming Events | "+shortD;
-    body="Hi "+to+",\n\nQuick heads up — spots are filling fast on several upcoming events"+(bigCount>0?", including "+bigCount+" major highlighted event"+(bigCount>1?"s":""):"")+".\n\n"+linkLine+"\n\nI'd recommend looping in your leads as soon as possible. Happy to send booking details or fact sheets right away.\n\nBest,\nAnne Joy Therese\nPACE Gaming";
+    subj="URGENT: Limited Availability | PACE Gaming Events | "+shortD;
+    body="Hi "+to+",\n\nQuick heads up -- spots are filling fast on some of our upcoming events"+(bigCount>0?" including "+bigCount+" major highlighted event"+(bigCount>1?"s":""):"")+  "!\n\n"+linkLine+"\n\nI would recommend reaching out to your leads as soon as possible. Happy to send booking details or fact sheets right away.\n\nBest,\nAnne Joy Therese\nPACE Gaming";
   } else if(tpl==="vip"){
     subj="Exclusive Events for Your VIP Clients | PACE Gaming | "+shortD;
-    body="Hi "+to+",\n\nI've put together a curated selection of premium upcoming events — exclusive tournaments, world-class entertainment, and luxury hospitality across our featured properties.\n\n"+linkLine+"\n\nI'd love to arrange a personalized walkthrough or put together a custom package for your clients.\n\nWarmly,\nAnne Joy Therese\nPACE Gaming";
+    body="Hi "+to+",\n\nI have put together a curated selection of premium upcoming events -- exclusive tournaments, world-class entertainment, and luxury hospitality across our featured properties.\n\n"+linkLine+"\n\nI would love to arrange a personalized walkthrough or put together a custom package for your clients.\n\nWarmly,\nAnne Joy Therese\nPACE Gaming";
   } else if(tpl==="intro"){
     subj="Introducing PACE Gaming Events | "+shortD;
-    body="Hi "+to+",\n\nGreat connecting with you! I wanted to share what we have coming up at PACE Gaming — a curated lineup of the best events across our premium gaming and entertainment properties.\n\n"+linkLine+"\n\nI'd love to learn more about your clients' interests and find the perfect fit. Would you be open to a quick call this week?\n\nLooking forward to connecting,\nAnne Joy Therese\nPACE Gaming";
+    body="Hi "+to+",\n\nGreat connecting with you! I wanted to share what we have coming up at PACE Gaming -- a curated selection of the best events across our premium gaming and entertainment properties.\n\n"+linkLine+"\n\nI'd love to learn more about your clients' interests and find the perfect fit. Would you be open to a quick call this week?\n\nLooking forward to connecting,\nAnne Joy Therese\nPACE Gaming";
   } else if(tpl==="monthly"){
+    var monthName=now.toLocaleDateString("en-US",{month:"long",year:"numeric"});
     subj="PACE Gaming Monthly Events Digest | "+monthName;
-    body="Hi "+to+",\n\nHere is your monthly snapshot of upcoming events across all our featured properties for "+monthName+".\n\nThis month we have "+upCount+" upcoming event"+(upCount!==1?"s":"")+(bigCount>0?", including "+bigCount+" major highlight"+(bigCount>1?"s":""):"")+".\n\n"+linkLine+"\n\nAs always, I'm happy to provide fact sheets, coordinate site visits, or put together a tailored package for any of your clients.\n\nHave a great month ahead!\nAnne Joy Therese\nPACE Gaming";
+    body="Hi "+to+",\n\nHere is your monthly snapshot of upcoming events across all our featured properties for "+monthName+".\n\nThis month we have "+upCount+" upcoming events"+(bigCount>0?", including "+bigCount+" major highlights":"")+". Full details are available at the link below.\n\n"+linkLine+"\n\nAs always, I'm happy to provide fact sheets, coordinate site visits, or put together a tailored package for any of your clients.\n\nHave a great month ahead!\nAnne Joy Therese\nPACE Gaming";
   } else if(tpl==="re_engage"){
-    subj="Long Time No See — New Events at PACE Gaming | "+shortD;
-    body="Hi "+to+",\n\nIt's been a while! I wanted to reach back out because we have some really exciting new events lined up that I think your clients would love.\n\n"+linkLine+"\n\nWe've added fresh properties and exclusive tournaments to the lineup since we last spoke. Would love to catch up!\n\nHope to hear from you soon,\nAnne Joy Therese\nPACE Gaming";
+    subj="Long Time No See! New Events at PACE Gaming | "+shortD;
+    body="Hi "+to+",\n\nIt's been a while -- I wanted to reach back out because we have some really exciting new events lined up that I think your clients would love.\n\n"+linkLine+"\n\nWe've added some fresh properties and exclusive tournaments to the lineup since we last spoke. Would love to catch up and see how things are going on your end!\n\nHope to hear from you soon,\nAnne Joy Therese\nPACE Gaming";
   } else if(tpl==="partnership"){
     subj="Let's Talk — PACE Gaming Events Partnership | "+shortD;
-    body="Hi "+to+",\n\nI hope this finds you well. I'm reaching out because I believe there's a great opportunity for us to work together on an ongoing basis.\n\nPACE Gaming curates premium events across some of the world's best gaming and entertainment properties. We currently have "+upCount+" upcoming events and would love to explore how we can bring these experiences to your network.\n\n"+linkLine+"\n\nI'd love to schedule a quick call to discuss. Would you be available for 15 minutes this week?\n\nLooking forward to connecting,\nAnne Joy Therese\nPACE Gaming";
-  } else if(tpl==="agent_toolkit"){
-    subj="Your PACE Gaming Agent Toolkit — Full Property Lineup | "+shortD;
-    body="Hi "+to+",\n\nAttached is your updated PACE Gaming agent toolkit — the full lineup of upcoming events across all our featured properties.\n\nHighlights this period:\n• "+upCount+" upcoming events across all properties\n"+(bigCount>0?"• "+bigCount+" major event"+(bigCount>1?"s":"")+" with high client appeal\n":"")+"• Tournaments, live entertainment, resort experiences & more\n\n"+linkLine+"\n\nThis link is shareable — feel free to send it directly to your clients so they can browse the full calendar.\n\nAny questions or custom requests, I'm here.\n\nAlways,\nAnne Joy Therese\nPACE Gaming";
-  } else if(tpl==="agent_pitch"){
-    subj="Why PACE Gaming? Here's the Quick Story | "+shortD;
-    body="Hi "+to+",\n\nIf you're looking for something truly different to offer your clients, PACE Gaming is it.\n\nWe curate exclusive access to premium gaming tournaments, luxury resort events, and world-class entertainment across iconic properties — Baha Mar, Hard Rock, Mohegan Sun, Monte Carlo, and more.\n\nRight now we have "+upCount+" upcoming events your clients can attend.\n\n"+linkLine+"\n\nI'd love to walk you through our top picks and talk about how we can work together. A quick 15-minute call could open a lot of doors for your clients.\n\nLet's connect,\nAnne Joy Therese\nPACE Gaming";
+    body="Hi "+to+",\n\nI hope this message finds you well. I'm reaching out because I believe there's a great opportunity for us to work together on an ongoing basis.\n\nPACE Gaming curates premium events across some of the world's best gaming and entertainment properties. We currently have "+upCount+" upcoming events and would love to explore how we can partner to bring these experiences to your network.\n\n"+linkLine+"\n\nI'd love to schedule a call to discuss how we can best collaborate. Would you be available for a 15-minute intro this week?\n\nLooking forward to connecting,\nAnne Joy Therese\nPACE Gaming";
   }
 
   document.getElementById("draft-subject").value=subj;
@@ -1510,95 +1278,57 @@ var selectModeOn = false;
 var selectedIds = new Set();
 
 function toggleSelectMode(){
-  if(selectModeOn) exitSelectMode();
-  else enterSelectMode();
+  if(selectModeOn) exitSelectMode(); else enterSelectMode();
 }
-
 function enterSelectMode(){
-  selectModeOn = true;
-  selectedIds = new Set();
+  selectModeOn = true; selectedIds = new Set();
   document.body.classList.add("select-mode-active");
   var btn = document.getElementById("selectModeBtn");
   if(btn){ btn.classList.add("active"); btn.innerHTML = "&#10005; Cancel"; }
   updateBulkBar();
 }
-
 function exitSelectMode(){
-  selectModeOn = false;
-  selectedIds = new Set();
+  selectModeOn = false; selectedIds = new Set();
   document.body.classList.remove("select-mode-active");
   var btn = document.getElementById("selectModeBtn");
   if(btn){ btn.classList.remove("active"); btn.innerHTML = "&#9745; Select"; }
-  // Uncheck all checkboxes
   document.querySelectorAll(".event-checkbox input").forEach(function(cb){ cb.checked = false; });
   document.querySelectorAll(".event-card.selected").forEach(function(card){ card.classList.remove("selected"); });
   var bar = document.getElementById("bulkActionBar");
   if(bar) bar.classList.remove("visible");
 }
-
 function onCardClick(evt, id){
   if(!selectModeOn) return;
-  // Don't trigger if clicking a button inside the card
   if(evt.target.tagName === "BUTTON" || evt.target.tagName === "INPUT") return;
-  evt.preventDefault();
-  toggleSelect(id);
+  evt.preventDefault(); toggleSelect(id);
 }
-
 function onCardCheck(cb, id){
-  if(cb.checked) selectedIds.add(id);
-  else selectedIds.delete(id);
+  if(cb.checked) selectedIds.add(id); else selectedIds.delete(id);
   var card = document.getElementById("card-"+id);
-  if(card){ card.classList.toggle("selected", cb.checked); }
+  if(card) card.classList.toggle("selected", cb.checked);
   updateBulkBar();
 }
-
 function toggleSelect(id){
   var card = document.getElementById("card-"+id);
   var cb = document.getElementById("cb-"+id);
   if(!card) return;
-  var isSelected = selectedIds.has(id);
-  if(isSelected){
-    selectedIds.delete(id);
-    card.classList.remove("selected");
-    if(cb) cb.checked = false;
-  } else {
-    selectedIds.add(id);
-    card.classList.add("selected");
-    if(cb) cb.checked = true;
-  }
+  if(selectedIds.has(id)){ selectedIds.delete(id); card.classList.remove("selected"); if(cb) cb.checked = false; }
+  else { selectedIds.add(id); card.classList.add("selected"); if(cb) cb.checked = true; }
   updateBulkBar();
 }
-
 function bulkSelectAll(){
   var allCards = document.querySelectorAll(".event-card:not(.vanishing)");
   var allSelected = selectedIds.size === allCards.length && allCards.length > 0;
   if(allSelected){
-    // Deselect all
     selectedIds = new Set();
-    allCards.forEach(function(card){
-      card.classList.remove("selected");
-      var cb = card.querySelector("input[type=checkbox]");
-      if(cb) cb.checked = false;
-    });
-    var btn = document.querySelector(".btn-bulk-all");
-    if(btn) btn.textContent = "Select All";
+    allCards.forEach(function(card){ card.classList.remove("selected"); var cb = card.querySelector("input[type=checkbox]"); if(cb) cb.checked = false; });
+    var btn = document.querySelector(".btn-bulk-all"); if(btn) btn.textContent = "Select All";
   } else {
-    // Select all
-    allCards.forEach(function(card){
-      var id = card.id ? card.id.replace("card-","") : null;
-      if(id){
-        selectedIds.add(id);
-        card.classList.add("selected");
-        var cb = card.querySelector("input[type=checkbox]");
-        if(cb) cb.checked = true;
-      }
-    });
-    var btn = document.querySelector(".btn-bulk-all");
-    if(btn) btn.textContent = "Deselect All";
+    allCards.forEach(function(card){ var id = card.id ? card.id.replace("card-","") : null; if(id){ selectedIds.add(id); card.classList.add("selected"); var cb = card.querySelector("input[type=checkbox]"); if(cb) cb.checked = true; } });
+    var btn = document.querySelector(".btn-bulk-all"); if(btn) btn.textContent = "Deselect All";
   }
   updateBulkBar();
 }
-
 function updateBulkBar(){
   var bar = document.getElementById("bulkActionBar");
   var numEl = document.getElementById("bulkCountNum");
@@ -1608,69 +1338,60 @@ function updateBulkBar(){
   if(delBtn) delBtn.disabled = n === 0;
   if(bar) bar.classList.toggle("visible", selectModeOn);
 }
-
 function bulkDeleteSelected(){
   var n = selectedIds.size;
   if(n === 0) return;
   if(!confirm("Delete " + n + " event" + (n > 1 ? "s" : "") + "? This cannot be undone.")) return;
   var ids = Array.from(selectedIds);
-  ids.forEach(function(id){
-    var card = document.getElementById("card-"+id);
-    if(card) card.classList.add("vanishing");
-  });
-  setTimeout(function(){
-    events = events.filter(function(e){ return ids.indexOf(e.id) === -1; });
-    markUnsaved();
-    exitSelectMode();
-    render();
-  }, 320);
+  ids.forEach(function(id){ var card = document.getElementById("card-"+id); if(card) card.classList.add("vanishing"); });
+  setTimeout(function(){ events = events.filter(function(e){ return ids.indexOf(e.id) === -1; }); markUnsaved(); exitSelectMode(); render(); }, 320);
 }
 
-
-
-// ===== PUBLIC VIEW SETUP =====
-function setupPublicView(){
-  if(!IS_VIEW) return;
-  updatePublicHeroStats();
-  buildPublicVenueNav();
-}
-
+// ===== PUBLIC VIEW =====
 function updatePublicHeroStats(){
   var upEl = document.getElementById("pub-stat-upcoming");
-  var vEl  = document.getElementById("pub-stat-venues");
   var tEl  = document.getElementById("pub-stat-total");
   var upcoming = events.filter(function(e){ return !isPast(e); }).length;
-  var venues   = new Set(events.map(function(e){ return e.venue; })).size;
   if(upEl) upEl.textContent = upcoming;
-  if(vEl)  vEl.textContent  = venues;
   if(tEl)  tEl.textContent  = events.length;
 }
 
 function buildPublicVenueNav(){
-  var nav = document.getElementById("publicVenueNav");
-  if(!nav) return;
-  // Count events per venue
-  var counts = {};
-  events.forEach(function(e){ counts[e.venue] = (counts[e.venue]||0)+1; });
-  // Build pills
-  var html = "<button class=\"pub-pill active\" onclick=\"pubFilterVenue('ALL',this)\">All <span class=\"pub-pill-count\">"+events.length+"</span></button>";
-  VENUES_ORDER.forEach(function(v){
-    if(!counts[v]) return;
-    html += "<button class=\"pub-pill\" onclick=\"pubFilterVenue('"+v+"',this)\">"+v+" <span class=\"pub-pill-count\">"+counts[v]+"</span></button>";
-  });
-  nav.innerHTML = html;
+  var list = document.getElementById("publicVenueList");
+  if(!list) return;
+  var counts = {}, totalUpcoming = 0;
+  events.forEach(function(e){ if(!isPast(e)){ counts[e.venue] = (counts[e.venue]||0)+1; totalUpcoming++; } });
+  var html = "";
+  var intlVenues  = ["BIG EVENT","BAHA MAR","CASINO ROYALE","HARD ROCK PUNTA CANA","HARD ROCK HOLLYWOOD","MOHEGAN SUN","MONTE CARLO"];
+  var lvVenues    = ["ALLEGIANT STADIUM","DURANGO","MGM GRAND","RED ROCK","SUNSET STATION","T-MOBILE ARENA","VIRGIN LAS VEGAS","WYNN LAS VEGAS"];
+  var otherVenues = ["CRUISE","DRAFTKINGS"];
+  function renderGroup(label, venues){
+    var hasAny = venues.some(function(v){ return counts[v]; });
+    if(!hasAny) return;
+    html += "<div class=\"pub-sidebar-label\">"+label+"</div>";
+    venues.forEach(function(v){
+      if(!counts[v]) return;
+      html += "<button class=\"pub-venue-btn"+(currentVenue===v?" active":"")+"\""+" onclick=\"pubFilterVenue('"+v+"',this)\">"+
+        "<span style=\"flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;\">"+v+"</span>"+
+        "<span class=\"pub-venue-count\">"+counts[v]+"</span>"+
+      "</button>";
+    });
+  }
+  html += "<div class=\"pub-sidebar-label\">All</div>";
+  html += "<button class=\"pub-venue-btn"+(currentVenue==="ALL"?" active":"")+"\""+" onclick=\"pubFilterVenue('ALL',this)\">"+
+    "<span style=\"flex:1;\">All Venues</span>"+
+    "<span class=\"pub-venue-count\">"+totalUpcoming+"</span>"+
+  "</button>";
+  renderGroup("International", intlVenues);
+  renderGroup("Las Vegas", lvVenues);
+  renderGroup("Other", otherVenues);
+  list.innerHTML = html;
 }
 
 function pubFilterVenue(venue, btn){
-  document.querySelectorAll(".pub-pill").forEach(function(p){ p.classList.remove("active"); });
-  if(btn) btn.classList.add("active");
   filterVenue(venue);
 }
-
-
 </script>
-
-
 
 <!-- BULK DELETE BAR -->
 <div class="bulk-action-bar" id="bulkActionBar">
