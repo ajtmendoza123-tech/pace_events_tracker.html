@@ -430,17 +430,26 @@ body.select-mode-active .date-block{display:none;}
           <div class="form-group"><label class="form-label">Event Type</label><select id="f-type"><option value="regular">Regular</option><option value="big">⭐ Big Event</option><option value="recurring">🔁 Recurring</option></select></div>
         </div>
         <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;">
-          <span style="font-size:12px;color:var(--text-4);">Adding multiple events?</span>
-          <button class="bulk-toggle" onclick="toggleBulk()">&#128203; Paste &amp; Import</button>
+          <span style="font-size:12px;color:var(--text-4);">Adding multiple events at once?</span>
+          <button class="btn btn-outline btn-sm" onclick="toggleBulk()" style="color:var(--navy);border-color:var(--navy);">&#128203; Paste &amp; Import List</button>
         </div>
         <div class="bulk-panel" id="bulkPanel">
+          <div style="font-size:11px;color:var(--text-4);margin-bottom:8px;line-height:1.7;background:var(--surface2);border-radius:6px;padding:8px 10px;">
+            <strong style="color:var(--text-3);display:block;margin-bottom:3px;">✓ Supported formats:</strong>
+            <code style="font-family:var(--mono);font-size:10px;">7/19 - Fifa World Cup Final</code><br>
+            <code style="font-family:var(--mono);font-size:10px;">10/2 to 3 - $250k Blackjack Tournament</code><br>
+            <code style="font-family:var(--mono);font-size:10px;">11/15 to 18 - Mark Wahlberg Celebrity Golf</code><br>
+            <code style="font-family:var(--mono);font-size:10px;">Every Sunday - $100K Blackjack Challenge</code><br>
+            <span style="color:var(--text-4);font-size:10px;">Section headers (BAHA MAR, ALL CAPS) are auto-skipped.</span>
+          </div>
           <div class="form-group" style="margin-bottom:10px;"><label class="form-label">Paste your event list</label>
-            <textarea id="bulkText" rows="6" style="font-family:var(--mono);font-size:12px;line-height:1.7;resize:vertical;" placeholder="5/13 to 15 - Connecticut Sun vs. Las Vegas Aces&#10;5/17 - Blackstreet&#10;6/27 to 29 - Blue Man Group" oninput="previewBulk()"></textarea>
+            <textarea id="bulkText" rows="10" style="font-family:var(--mono);font-size:12px;line-height:1.8;resize:vertical;" placeholder="7/19 - Fifa World Cup Final&#10;10/2 to 3 - $250k Blackjack Tournament&#10;11/15 to 18 - Mark Wahlberg Celebrity Golf Invitational 2026&#10;11/19 - Baha Mar Hoops&#10;Every Sunday - $100K Head to Head Blackjack Challenge" oninput="previewBulk()"></textarea>
           </div>
           <div class="bulk-result" id="bulkResult"></div>
-          <div style="display:flex;gap:8px;margin-top:10px;">
+          <div style="display:flex;gap:8px;margin-top:10px;align-items:center;">
             <button class="btn btn-ghost btn-sm" onclick="toggleBulk()">Cancel</button>
             <button class="btn btn-primary btn-sm" id="bulkImportBtn" onclick="importBulk()" style="display:none;">&#10010; Import All</button>
+            <span id="bulkSkipNote" style="font-size:11px;color:var(--text-4);display:none;"></span>
           </div>
         </div>
         <div class="form-actions">
@@ -1009,34 +1018,109 @@ function toggleBulk(){
 function parseBulkLine(line){
   line=line.trim(); if(!line) return null;
   var yr=new Date().getFullYear();
-  var dateStart=null,dateEnd=null,name="",m;
-  m=line.match(/^(\d{1,2})\/(\d{1,2})\s+to\s+(\d{1,2})\s*[-–]\s*(.+)$/i);
+  var dateStart=null,dateEnd=null,name="",type="regular",m;
+
+  // Strip markdown bold: **text** or __text__
+  line=line.replace(/\*\*([^*]+)\*\*/g,"$1").replace(/__([^_]+)__/g,"$1");
+  // Normalize dashes/en-dash/em-dash separators
+  line=line.replace(/\s*[\u2013\u2014]\s*/g," - ");
+
+  // Skip pure section headers (ALL CAPS line, or ends with colon, or "EVENTS:" pattern)
+  if(/^[A-Z\s\d&\/().,'!-]+$/.test(line)&&line.length<60&&!/\d\/\d/.test(line)) return null;
+  if(/^[A-Z][A-Z\s]+:?$/.test(line.trim())&&line.length<50) return null;
+
+  // Detect recurring keywords -> type=recurring, no date
+  var recurringPhrases=["every sunday","every monday","every tuesday","every wednesday","every thursday","every friday","every saturday","every day","daily","weekly","monthly","the month of","recurring"];
+  var lc=line.toLowerCase();
+  var isRecurring=recurringPhrases.some(function(p){ return lc.indexOf(p)===0||lc.indexOf("every")===0; });
+  if(isRecurring){
+    // Clean up: strip leading "Every Sunday -" style
+    name=line.replace(/^(every\s+\w+\s+(?:from\s+[\d:apmAPM]+\s+to\s+[\d:apmAPM]+\s*)?)/i,"").replace(/^[-–]\s*/,"").trim()||line;
+    if(!name||name.length<2) name=line;
+    return {date:null,endDate:null,name:name,type:"recurring"};
+  }
+
+  // M/D to D - name  (same month multi-day, e.g. 10/2 to 3)
+  m=line.match(/^(\d{1,2})\/(\d{1,2})\s+to\s+(\d{1,2})\s*-\s*(.+)$/i);
   if(m){ dateStart=new Date(yr,+m[1]-1,+m[2]); dateEnd=new Date(yr,+m[1]-1,+m[3]); name=m[4].trim(); }
-  if(!name){ m=line.match(/^(\d{1,2})\/(\d{1,2})\s+to\s+(\d{1,2})\/(\d{1,2})\s*[-–]\s*(.+)$/i); if(m){ dateStart=new Date(yr,+m[1]-1,+m[2]); dateEnd=new Date(yr,+m[3]-1,+m[4]); name=m[5].trim(); } }
-  if(!name){ m=line.match(/^(\d{1,2})\/(\d{1,2})-(\d{1,2})\s*[-–]\s*(.+)$/i); if(m){ dateStart=new Date(yr,+m[1]-1,+m[2]); dateEnd=new Date(yr,+m[1]-1,+m[3]); name=m[4].trim(); } }
-  if(!name){ m=line.match(/^(\d{1,2})\/(\d{1,2})\s*[-–]\s*(.+)$/); if(m){ dateStart=new Date(yr,+m[1]-1,+m[2]); name=m[3].trim(); } }
+
+  // M/D to M/D - name  (cross-month multi-day, e.g. 11/30 to 12/2)
+  if(!name){ m=line.match(/^(\d{1,2})\/(\d{1,2})\s+to\s+(\d{1,2})\/(\d{1,2})\s*-\s*(.+)$/i); if(m){ dateStart=new Date(yr,+m[1]-1,+m[2]); dateEnd=new Date(yr,+m[3]-1,+m[4]); name=m[5].trim(); } }
+
+  // M/D-D - name (compact range, e.g. 5/21-24)
+  if(!name){ m=line.match(/^(\d{1,2})\/(\d{1,2})-(\d{1,2})\s*-\s*(.+)$/i); if(m){ dateStart=new Date(yr,+m[1]-1,+m[2]); dateEnd=new Date(yr,+m[1]-1,+m[3]); name=m[4].trim(); } }
+
+  // M/D - name  (single day)
+  if(!name){ m=line.match(/^(\d{1,2})\/(\d{1,2})\s*-\s*(.+)$/); if(m){ dateStart=new Date(yr,+m[1]-1,+m[2]); name=m[3].trim(); } }
+
+  // Name only (no date) — still import it
   if(!name&&line.length>2) name=line;
   if(!name) return null;
-  return {date:dateStart,endDate:dateEnd,name:name};
+
+  // Clean HTML entities from name
+  name=name.replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&nbsp;/g," ");
+
+  // Detect if it looks like a big event
+  var bigKeywords=["world cup","championship","finals","super bowl","nba finals","world series","ufc","boxing","sphere"];
+  var bigMatch=bigKeywords.some(function(k){ return name.toLowerCase().indexOf(k)!==-1; });
+
+  return {date:dateStart,endDate:dateEnd,name:name,type:bigMatch?"big":type};
 }
 function previewBulk(){
   var text=document.getElementById("bulkText").value;
   var venue=getVenueValue()||"BIG EVENT";
-  var lines=text.split("\n"); var parsed=[];
-  lines.forEach(function(l){ var r=parseBulkLine(l); if(r) parsed.push(r); });
-  var resultEl=document.getElementById("bulkResult"); var importBtn=document.getElementById("bulkImportBtn");
-  if(!parsed.length){ resultEl.classList.remove("show"); resultEl.innerHTML=""; importBtn.style.display="none"; return; }
-  var dupCount=0;
-  var html2="<div style=\"font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;\">"+parsed.length+" event"+(parsed.length!==1?"s":"")+" detected &mdash; <span style=\"color:var(--accent);\">"+venue+"</span></div>";
-  parsed.forEach(function(r){
-    var isDup=events.some(function(e){ return e.name.toLowerCase()===r.name.toLowerCase()&&e.venue===venue; });
-    if(isDup) dupCount++;
-    var dateStr=r.date?((r.date.getMonth()+1)+"/"+r.date.getDate()+(r.endDate?" to "+(r.endDate.getMonth()+1)+"/"+r.endDate.getDate():"")):"No date";
-    html2+="<div class=\"bulk-preview-item"+(isDup?" is-dup":"")+"\"><span class=\"bulk-preview-date\">"+dateStr+"</span><span class=\"bulk-preview-name\">"+r.name+"</span>"+(isDup?"<span class=\"dup-tag\">DUP</span>":"")+  "</div>";
+  var lines=text.split("\n");
+  var parsed=[]; var skipped=0;
+  lines.forEach(function(l){
+    if(!l.trim()) return;
+    var r=parseBulkLine(l);
+    if(r) parsed.push(r); else skipped++;
   });
-  if(dupCount) html2+="<div style=\"font-size:11px;color:#92400e;margin-top:6px;\">&#9888;&#65039; "+dupCount+" possible duplicate"+(dupCount!==1?"s":"")+" flagged.</div>";
-  resultEl.innerHTML=html2; resultEl.classList.add("show"); importBtn.style.display="inline-flex";
+  var resultEl=document.getElementById("bulkResult");
+  var importBtn=document.getElementById("bulkImportBtn");
+  if(!parsed.length){ resultEl.classList.remove("show"); resultEl.innerHTML=""; importBtn.style.display="none"; return; }
+  var dupCount=0; var recCount=0; var bigCount=0;
+  var itemsHtml="";
+  parsed.forEach(function(r){
+    var rn=r.name.toLowerCase().trim();
+    var isDup=events.some(function(e){
+      var en=e.name.toLowerCase().trim();
+      return e.venue===venue&&(en===rn||(rn.length>8&&(en.indexOf(rn)!==-1||rn.indexOf(en)!==-1)));
+    });
+    if(isDup) dupCount++;
+    if(r.type==="recurring") recCount++;
+    if(r.type==="big") bigCount++;
+    var dateStr=r.type==="recurring"?"\uD83D\uDD01 Recurring":
+      r.date?((r.date.getMonth()+1)+"/"+r.date.getDate()+(r.endDate?"\u2013"+(r.endDate.getMonth()+1)+"/"+r.endDate.getDate():"")):"TBD";
+    itemsHtml+="<div class=\"bulk-preview-item"+(isDup?" is-dup":"")+"\">"+
+      "<span class=\"bulk-preview-date\" style=\""+(r.type==="recurring"?"color:var(--teal);":r.type==="big"?"color:var(--gold);":"")+"\""+(r.type==="big"?">&#11088; ":">")+dateStr+"</span>"+
+      "<span class=\"bulk-preview-name\">"+r.name+"</span>"+
+      (isDup?"<span class=\"dup-tag\">DUP</span>":"")+
+    "</div>";
+  });
+  var html2="<div style=\"font-size:11px;font-weight:700;color:var(--navy);margin-bottom:8px;\">"+
+    parsed.length+" event"+(parsed.length!==1?"s":"")+" ready &nbsp;&middot;&nbsp; <span style=\"font-weight:500;color:var(--text-3);\">"+venue+"</span>"+
+  "</div>";
+  if(dupCount){
+    html2+="<div style=\"display:flex;align-items:flex-start;gap:9px;background:#fff7ed;border:1.5px solid #f0b870;border-left:4px solid #b85000;border-radius:7px;padding:10px 12px;margin-bottom:10px;\">"+
+      "<span style=\"font-size:16px;line-height:1;flex-shrink:0;\">&#9888;&#65039;</span>"+
+      "<div>"+
+        "<div style=\"font-size:12px;font-weight:700;color:#8a3800;margin-bottom:2px;\">"+dupCount+" possible duplicate"+(dupCount!==1?"s":"")+" detected</div>"+
+        "<div style=\"font-size:11px;color:#b85000;line-height:1.6;\">These events may already exist for <strong>"+venue+"</strong>. They are highlighted below in orange. When you click Import, you can choose to skip them.</div>"+
+      "</div>"+
+    "</div>";
+  }
+  html2+=itemsHtml;
+  var notes=[];
+  if(skipped) notes.push(skipped+" line"+(skipped!==1?"s":"")+" skipped");
+  if(recCount) notes.push("&#128257; "+recCount+" recurring");
+  if(bigCount) notes.push("&#11088; "+bigCount+" big");
+  if(notes.length) html2+="<div style=\"font-size:11px;color:var(--text-3);margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);\">"+notes.join(" &nbsp;&middot;&nbsp; ")+"</div>";
+  resultEl.innerHTML=html2;
+  resultEl.classList.add("show");
+  importBtn.style.display="inline-flex";
 }
+
 function importBulk(){
   var text=document.getElementById("bulkText").value;
   var venue=getVenueValue()||"BIG EVENT";
@@ -1044,13 +1128,31 @@ function importBulk(){
   lines.forEach(function(l){ var r=parseBulkLine(l); if(r) parsed.push(r); });
   if(!parsed.length) return;
   if(VENUES_ORDER.indexOf(venue)===-1){ VENUES_ORDER.push(venue); addVenueToSidebar(venue); addVenueToDropdown(venue); }
-  var type=document.getElementById("f-type").value;
-  parsed.forEach(function(r){ events.push({id:uid(),venue:venue,name:r.name,date:r.date,endDate:r.endDate,note:"",type:type}); });
+  var defaultType=document.getElementById("f-type").value;
+  var dups=[], toImport=[];
+  parsed.forEach(function(r){
+    var rn=r.name.toLowerCase().trim();
+    var isDup=events.some(function(e){
+      var en=e.name.toLowerCase().trim();
+      return e.venue===venue&&(en===rn||(rn.length>8&&(en.indexOf(rn)!==-1||rn.indexOf(en)!==-1)));
+    });
+    if(isDup) dups.push(r.name);
+    else toImport.push(r);
+  });
+  if(dups.length){
+    var proceed=confirm("⚠️ "+dups.length+" duplicate"+(dups.length!==1?"s":"")+" found:\n\n"+dups.slice(0,5).join("\n")+(dups.length>5?"\n...and "+(dups.length-5)+" more":"")+
+      "\n\nClick OK to import everything (including duplicates).\nClick Cancel to import "+toImport.length+" non-duplicate"+(toImport.length!==1?"s":"")+" only.");
+    if(!proceed) parsed=toImport;
+  }
+  parsed.forEach(function(r){
+    var evType = (r.type&&r.type!=="regular") ? r.type : defaultType;
+    events.push({id:uid(),venue:venue,name:r.name,date:r.date,endDate:r.endDate,note:"",type:evType});
+  });
   markUnsaved(); render();
   var btn=document.getElementById("bulkImportBtn");
-  btn.textContent="Imported "+parsed.length+" event"+(parsed.length!==1?"s":"")+"!";
+  btn.textContent="✓ Imported "+parsed.length+" event"+(parsed.length!==1?"s":"")+"!";
   btn.style.background="var(--green)";
-  setTimeout(function(){ closeAdd(); document.getElementById("bulkText").value=""; document.getElementById("bulkPanel").classList.remove("open"); document.getElementById("bulkResult").classList.remove("show"); btn.innerHTML="&#10010; Import All Events"; btn.style.background=""; btn.style.display="none"; },1500);
+  setTimeout(function(){ closeAdd(); document.getElementById("bulkText").value=""; document.getElementById("bulkPanel").classList.remove("open"); document.getElementById("bulkResult").classList.remove("show"); btn.innerHTML="&#10010; Import All"; btn.style.background=""; btn.style.display="none"; },1500);
 }
 
 function markDone(id){ var e=events.find(function(x){ return x.id===id; }); if(!e) return; var y=new Date(); y.setDate(y.getDate()-1); e.date=new Date(y.getFullYear(),y.getMonth(),y.getDate()); markUnsaved(); render(); }
